@@ -1,0 +1,12 @@
+.modulo {
+  display: none; /* Oculta todos los módulos por defecto */
+   /* width: auto;*/
+    height: 52vh;
+    border: 1px solid black;
+    overflow-y: scroll; /* O overflow-y: auto; */
+   
+}
+
+.modulo.activo {
+  display: block; /* Muestra el módulo seleccionado */
+}
