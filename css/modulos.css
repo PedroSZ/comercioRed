@@ -1,6 +1,6 @@
 .modulo {
   display: none; /* Oculta todos los módulos por defecto */
-   /* width: auto;*/
+    /*width: 100%;*/
     height: 52vh;
     border: 1px solid black;
     overflow-y: scroll; /* O overflow-y: auto; */
@@ -10,3 +10,10 @@
 .modulo.activo {
   display: block; /* Muestra el módulo seleccionado */
 }
+
+
+/*
+class es con punto .
+id es hashtag #
+etiqueta es con nombre de etiqueta ejemplo p
+*/

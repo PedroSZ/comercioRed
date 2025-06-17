@@ -31,6 +31,7 @@
     }
     else{
         $userSession->closeSession();
+         header("location: index.php");
     }
 
 

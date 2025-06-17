@@ -7,7 +7,7 @@ $userSession = new Sesion(); //INICIA EL SESION START
 if(isset($_SESSION['user'])){
     $user = new Tipo_Usuario();//******AUTENTICAR USUARIOS (RF-01) (RF-02) (RF-03)
    	$user->establecerDatos($userSession->getCurrentUser());
-    switch ($user->getTipo()) {
+    switch ($user->getPuesto()) {
     	case 'Administrador': header('location: menuAdmin.php'); break;
     	case 'Usuario': header('location: menUser.php');	break;
     	case 'Cliente': header('location: menuEstudiante.php');	break;
@@ -22,7 +22,7 @@ if(isset($_SESSION['user'])){
         echo "Existe el usuario";
         $userSession->setCurrentUser($userForm);
         $user->establecerDatos($userForm);
-    switch ($user->getTipo()) {
+    switch ($user->getPuesto()) {
     	case 'Administrador': header('location: menuAdmin.php'); break;
     	case 'Usuario': header('location: menuUser.php');	break;
     	case 'Cliente': header('location: menuEstudiante.php');	break;

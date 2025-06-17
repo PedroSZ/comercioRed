@@ -51,7 +51,7 @@
       <p>Costo:</p>
     </td>
     <td>
-      <p><input name="costo" type="text"  placeholder="Ingresar costo" id ="rfc" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" title="Por favor especifica costo de producción" required></p>
+      <p><input name="costo" type="text"  placeholder="Ingresar costo" id ="costo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" title="Por favor especifica costo de producción" required></p>
     </td>
     <td COLSPAN=2 style="text-align: right;">
       <p><label>Precio:</label></p>

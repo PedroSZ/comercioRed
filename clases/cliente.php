@@ -46,7 +46,7 @@ class Cliente extends DB {
 	//******************************************************************
 
 	public function listar(){
-		$query = $this->connect()->prepare('SELECT * FROM usuario');
+		$query = $this->connect()->prepare('SELECT * FROM cliente');
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}

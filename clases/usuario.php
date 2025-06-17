@@ -3,6 +3,7 @@
 include_once 'connection.php';
 class Usuario extends DB {
 	private $id_usuario;
+	private $id_tipo;
 	private $rfc;
 	private $nombre;
 	private $a_paterno;
@@ -16,6 +17,7 @@ class Usuario extends DB {
 
 	//stters and getters ***********************************************
 	public function setIdusuario($id_usuario){ $this->id_usuario = $id_usuario; }
+	public function setIdtipo($id_tipo){ $this->id_tipo = $id_tipo; }
     public function setRfc($rfc){ $this->rfc = $rfc; }
 	public function setNombre($nombre){ $this->nombre = $nombre; }
 	public function setA_paterno($a_paterno){ $this->a_paterno = $a_paterno; }
@@ -29,6 +31,7 @@ class Usuario extends DB {
 
 
 	public function getIdusuario(){ return $this->id_usuario; }
+	public function getIdtipo(){ return $this->id_tipo; }
     public function getRfc(){ return $this->rfc; }
 	public function getNombre(){ return $this->nombre; }
 	public function getA_paterno(){ return $this->a_paterno; }
@@ -43,7 +46,7 @@ class Usuario extends DB {
 	//******************************************************************
 
 	public function listar(){
-		$query = $this->connect()->prepare('SELECT * FROM usuario');
+		$query = $this->connect()->prepare('SELECT * FROM usuario INNER JOIN tipo_usuario WHERE usuario.Id_Tipo = tipo_usuario.Usuario_id');
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
@@ -67,9 +70,9 @@ class Usuario extends DB {
 
 
 
-	public function consultarCodigo($codigo){
-		$query = $this->connect()->prepare('SELECT * FROM estudiante WHERE curp = :user');
-		$query->execute(['user' => $codigo]);
+	public function consultarId($id_usuario){
+		$query = $this->connect()->prepare('SELECT * FROM usuario INNER JOIN tipo_usuario ON Usuario.Id_Usuario = tipo_usuario.Usuario_id WHERE Id_Usuario = :user');
+		$query->execute(['user' => $id_usuario]);
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}
 
@@ -106,9 +109,10 @@ public function guardar() {
 	echo "aqui entramos a la funcion guardar";
 		try{
 			
-		$sql = "INSERT INTO usuario (Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento, Telefono, Email, Domicilio) VALUES(:rfc, :nombre, :a_paterno, :a_materno, :fecha_registro, :fecha_nacimiento, :telefono, :email, :domicilio)";
+		$sql = "INSERT INTO usuario (Id_tipo, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento, Telefono, Email, Domicilio) VALUES(:id_tipo, :rfc, :nombre, :a_paterno, :a_materno, :fecha_registro, :fecha_nacimiento, :telefono, :email, :domicilio)";
 		$query = $this->connect()->prepare($sql);
 		$query->execute([
+			'id_tipo' => $this->id_tipo,
 			'rfc' => $this->rfc,
 			'nombre' => $this->nombre,
 			'a_paterno' => $this->a_paterno,

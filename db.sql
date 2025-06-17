@@ -1,3 +1,9 @@
+DROP TABLE ventas;
+DROP TABLE usuario;
+DROP TABLE tipo_usuario;
+DROP TABLE productos;
+DROP TABLE cliente;
+
 CREATE DATABASE ComercioRed;
 USE ComercioRed;
 
@@ -20,7 +26,8 @@ CREATE TABLE `Tipo_Usuario` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Usuario` (
-  `Id_Usuario` int,
+  `Id_Usuario` int AUTO_INCREMENT PRIMARY KEY,
+  `Id_Tipo` int,
   `Rfc` varchar(16),
   `Nombre` varchar(30) NOT NULL,
   `A_paterno` varchar(30),
@@ -30,7 +37,7 @@ CREATE TABLE `Usuario` (
   `Telefono` varchar(12) NOT NULL,
   `Email` varchar(30) NOT NULL,
   `Domicilio` varchar(50),
-   FOREIGN KEY (Id_Usuario) REFERENCES Tipo_Usuario(Usuario_id)
+   FOREIGN KEY (Id_Tipo) REFERENCES Tipo_Usuario(Usuario_id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE `Cliente` (
@@ -65,4 +72,13 @@ CREATE TABLE `Ventas` (
 
 INSERT INTO tipo_usuario (Usuario, Pasword, Puesto) VALUES('admin', MD5('123'), 'Administrador');
 INSERT INTO tipo_usuario (Usuario, Pasword, Puesto) VALUES('Cajero', MD5('123'), 'Cajero');
-INSERT INTO tipo_usuario (Usuario, Pasword, Puesto) VALUES('Cliente', MD5('123'), 'Cliente');
+
+
+INSERT INTO usuario (Id_Tipo, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio) 
+VALUES('1','ZLPE770216000', 'Administrador', 'PruebaP', 'PruebaM', '2025-06-14', '1977-02-16', '0000000000', 'admin@company.dominio',
+'Domicilio de prueba No. 50 Col. Prueba C.P. 46600');
+
+INSERT INTO usuario (Id_Tipo, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio) 
+VALUES('2','ASISN890518000', 'Usuario', 'PruebaP', 'PruebaM', '2025-06-14', '1989-05-18', '0000000000', 'cajero@company.dominio',
+'Domicilio de prueba No. 49 Col. Prueba C.P. 46600');
+

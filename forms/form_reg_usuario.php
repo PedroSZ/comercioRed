@@ -3,6 +3,8 @@
   <table border="0" style=font-weight: 600; font-size: 17px;">
  
       <input name="fecha_registro" type="hidden" id ="fecha_registro" required >
+       <!--<input name="id_tipo" type="text" id ="id_tipo" required > -->
+     
     
   <tr>
     <td COLSPAN=2 style="text-align: right;"><p><label>Nombre:</label></p></td>
