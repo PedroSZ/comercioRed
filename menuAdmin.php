@@ -8,22 +8,20 @@
     if (!isset($_SESSION['user'])){
     header("location: index.php");
     }
-
-    if (!isset($_SESSION['user'])){
-    header("location: index.php");
-    }
-
     if(isset($_SESSION['user'])){
         $user = new Tipo_Usuario();
         $user->establecerDatos($userSession->getCurrentUser());
-        $tipo = $user->getTipo();
+        $tipo = $user->getPuesto();
+        $codigo = $user->getUsuario_id();
+
+
 		//mensaje de que no tiene privilegios
         if($tipo <> "Administrador") header('location: index.php');
         /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
         if (!isset($_SESSION['tiempo'])) {
             $_SESSION['tiempo']=time();
         }
-        else if (time() - $_SESSION['tiempo'] > 300) {
+        else if (time() - $_SESSION['tiempo'] > 500) {
             session_destroy();
             /* Aquí redireccionas a la url especifica */
             header("location: index.php");
@@ -35,6 +33,7 @@
     }
     else{
         $userSession->closeSession();
+         header("location: index.php");
     }
 
 
@@ -61,7 +60,19 @@
      <?php include_once 'modulos/mdl_menuAdmin.php'; ?>
     <div class="container">
       <h3>Bienvenido</h3>
-      <p> <?php echo $user->getNombre(); ?></p>
+      <p> <?php 
+     // echo $user->getUsuario(); 
+		include_once 'clases/usuario.php';
+		$idUs = $codigo;
+		$user2 = new Usuario();
+		$miUsuario = $user2->consultarId($codigo);
+		echo $miUsuario["Nombre"]. " " . $miUsuario["A_paterno"]. " " . $miUsuario["A_Materno"];
+  ?></p>
+
+
+
+
+
 
       <div id="RegUsuario" class="modulo">
         <h4>Registrar Usuario</h4>
@@ -86,55 +97,48 @@
 
       <div id="ConUsuario" class="modulo">
       <h2>Consulta de Usuario</h2>
-      <p>Formulario de registro</p>
+       <?php include_once 'listUsuarios.php'; ?> 
       </div>
 
       <div id="ConProducto" class="modulo">
       <h2>Consulta de Productos</h2>
-      <p>Formulario de registro</p>
+      <?php include_once 'listProductos.php'; ?> 
       </div>
 
       <div id="ConCliente" class="modulo">
       <h2>Consulta de Clientes</h2>
-      <p>Formulario de registro</p>
+      <?php include_once 'listClientes.php'; ?>
       </div>
 
       <div id="ModUsuario" class="modulo">
       <h2>Modificar Usuario</h2>
-      <p>Formulario de registro</p>
+      <?php include_once 'listActualizarUsuarios.php'; ?>
       </div>
 
       <div id="ModProducto" class="modulo">
       <h2>Modificar Productos</h2>
-      <p>Formulario de registro</p>
+      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
       </div>
 
       <div id="ModCliente" class="modulo">
       <h2>Modificar Clientes</h2>
-      <p>Formulario de registro</p>
+      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
       </div>
 
       <div id="DelUsuario" class="modulo">
       <h2>Eliminar Usuario</h2>
-      <p>Formulario de registro</p>
+      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
       </div>
 
       <div id="DelProducto" class="modulo">
       <h2>Eliminar Productos</h2>
-      <p>Formulario de registro</p>
+      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
       </div>
 
       <div id="DelCliente" class="modulo">
       <h2>Eliminar Clientes</h2>
-      <p>Formulario de registro</p>
+      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
       </div>
-
-
-  
-
-
-
-
     </div>
     <?php include_once 'modulos/mdl_footer.php'; ?>
   </body>

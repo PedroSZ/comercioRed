@@ -7,10 +7,10 @@ $userSession = new Sesion(); //INICIA EL SESION START
 if(isset($_SESSION['user'])){
     $user = new Tipo_Usuario();//******AUTENTICAR USUARIOS (RF-01) (RF-02) (RF-03)
    	$user->establecerDatos($userSession->getCurrentUser());
-    switch ($user->getTipo()) {
+    switch ($user->getPuesto()) {
     	case 'Administrador': header('location: menuAdmin.php'); break;
     	case 'Usuario': header('location: menUser.php');	break;
-    	case 'Cliente': header('location: menuEstudiante.php');	break;
+    	case 'Cajero': header('location: menuCliente.php');	break;
 
 
 	}
@@ -22,10 +22,10 @@ if(isset($_SESSION['user'])){
         echo "Existe el usuario";
         $userSession->setCurrentUser($userForm);
         $user->establecerDatos($userForm);
-    switch ($user->getTipo()) {
+    switch ($user->getPuesto()) {
     	case 'Administrador': header('location: menuAdmin.php'); break;
-    	case 'Usuario': header('location: menuUser.php');	break;
-    	case 'Cliente': header('location: menuEstudiante.php');	break;
+    	case 'Cajero': header('location: menuUser.php');	break;
+    	case 'Cliente': header('location: menuCliente.php');	break;
       default: echo "Usuario no exie";
 
     	//default:header('location: ../index.php');				break;
@@ -35,6 +35,19 @@ if(isset($_SESSION['user'])){
         $alert = "Nombre de usuario y/o password incorrecto";
     }
 }else{
-    	$alert = "";
+    	$alert = "debe ingresar un usuario y password";
 }
+/*
+echo "<form name='envia' method='POST' action='../menuAdmin.php'>
+		<input name='identificador' readonly = 'readonly' type='hidden' placeholder='' id='identificador' value=$userForm>
+	    </form>
+	    <script language='JavaScript'>
+	    document.envia.submit();
+	    </script>";
+*/
 ?>
+
+
+
+            
+        

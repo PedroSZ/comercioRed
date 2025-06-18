@@ -27,7 +27,7 @@
          <li><a class='dropdown-item' onclick="activarModulo('RegUsuario')">Usuarios</a></li>
         <li><a class='dropdown-item' onclick="activarModulo('RegProducto')">Productos</a></li>
          <li><a class='dropdown-item' onclick="activarModulo('RegCliente')">Clientes</a></li>
-         <li><a class='dropdown-item' onclick="activarModulo('RegVenta')">Ventas</a></li>
+         <li><a class='dropdown-item' title="" href="nuevaVenta.php">Ventas</a></li>
        
       </ul>
     </li>

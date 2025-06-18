@@ -34,7 +34,7 @@ class Producto extends DB {
 	//******************************************************************
 
 	public function listar(){
-		$query = $this->connect()->prepare('SELECT * FROM taller');
+		$query = $this->connect()->prepare('SELECT * FROM productos');
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}

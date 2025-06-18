@@ -4,22 +4,24 @@
     include_once 'clases/sesion.php';
     $userSession = new Sesion();
     //MADAR A INDEX SI NO HAY SESION INICIADA
-   
+    
     if (!isset($_SESSION['user'])){
     header("location: index.php");
     }
-
     if(isset($_SESSION['user'])){
         $user = new Tipo_Usuario();
         $user->establecerDatos($userSession->getCurrentUser());
-        $tipo = $user->getTipo();
+        $tipo = $user->getPuesto();
+        $codigo = $user->getUsuario_id();
+
+
 		//mensaje de que no tiene privilegios
-        if($tipo <> "Usuario") header('location: index.php');
+        if($tipo <> "Cajero") header('location: index.php');
         /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
         if (!isset($_SESSION['tiempo'])) {
             $_SESSION['tiempo']=time();
         }
-        else if (time() - $_SESSION['tiempo'] > 300) {
+        else if (time() - $_SESSION['tiempo'] > 500) {
             session_destroy();
             /* Aquí redireccionas a la url especifica */
             header("location: index.php");
@@ -31,6 +33,7 @@
     }
     else{
         $userSession->closeSession();
+         header("location: index.php");
     }
 
 
@@ -52,5 +55,14 @@
   <body>
      <?php include_once 'modulos/mdl_header.php'; ?>
      <?php include_once 'modulos/mdl_menuUser.php'; ?>
+      <h3>Bienvenido</h3>
+        <p> <?php 
+     // echo $user->getUsuario(); 
+		include_once 'clases/usuario.php';
+		$idUs = $codigo;
+		$user2 = new Usuario();
+		$miUsuario = $user2->consultarId($codigo);
+		echo $miUsuario["Nombre"]. " " . $miUsuario["A_paterno"]. " " . $miUsuario["A_Materno"];
+  ?></p>
   </body>
 </html>

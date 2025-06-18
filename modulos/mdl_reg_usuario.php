@@ -29,19 +29,17 @@
 
 			$tipo_usuario = new Tipo_Usuario();
 			//$tipo_usuario->setCodigo($_POST['usuario_id']);
-			$tipo_usuario->setNombre($_POST['email']);
-			$tipo_usuario->setTipo($_POST['tipo_usuario']);
-			$tipo_usuario->setPsw(md5($_POST['pasword']));
-			
-			
+			$tipo_usuario->setUsuario($_POST['email']);
+			$tipo_usuario->setPuesto($_POST['tipo_usuario']);
+			$tipo_usuario->setPasword(md5($_POST['pasword']));
 			$tipo_usuario->guardar();
-			echo '<script type="text/javascript">
-								alert("USUARIO REGISTRADO CON EXITO");
-								window.location.href="../menuAdmin.php";
-						</script>';
-
-
+				
+				$tipo_u = $tipo_usuario->consultarUltimoCodigo();
+				echo($tipo_u['id']);
+				
+					
 			$usuario = new Usuario();
+			$usuario->setIdtipo($tipo_u['id']);
 			$usuario->setRfc($_POST['rfc']);
             $usuario->setNombre($_POST['nombre']);
             $usuario->setA_paterno($_POST['a_paterno']);
@@ -53,7 +51,11 @@
             $usuario->setDomicilio($_POST['domicilio']);
 			$usuario->guardar();
 
-			
+			echo '<script type="text/javascript">
+								alert("USUARIO REGISTRADO CON EXITO");
+								window.location.href="../menuAdmin.php";
+								activarModulo(RegUsuario);
+						</script>';
 			
 
 			//header("Location:".$_SERVER['HTTP_REFERER']);//regresa al pagina que estaba

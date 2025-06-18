@@ -1,6 +1,54 @@
+
+<?php
+	/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
+    include_once 'clases/tipo_usuario.php';
+    include_once 'clases/sesion.php';
+    $userSession = new Sesion();
+    //MADAR A INDEX SI NO HAY SESION INICIADA
+    
+    if (!isset($_SESSION['user'])){
+    header("location: index.php");
+    }
+
+    if(isset($_SESSION['user'])){
+        $user = new Tipo_Usuario();
+        $user->establecerDatos($userSession->getCurrentUser());
+        $tipo = $user->getPuesto();
+///////////////////AQUI SE OBTIENE EL ID DEL USUARIO ACTUAL///////////////////////////////////
+		$id = $user->getUsuario_id();
+      //  echo $id;
+        
+//////////////////////////////////////////////////////////////////////////////////////////////   
+		//mensaje de que no tiene privilegios
+        if($tipo <> "Administrador") header('location: index.php');
+        /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
+        if (!isset($_SESSION['tiempo'])) {
+            $_SESSION['tiempo']=time();
+        }
+        else if (time() - $_SESSION['tiempo'] > 500) {
+            session_destroy();
+            /* Aquí redireccionas a la url especifica */
+            header("location: index.php");
+            die();
+        }
+        $_SESSION['tiempo']=time(); //Si hay actividad seteamos el valor al tiempo actual
+        /*////////////////////FIN SIERRE POR INACTIVIDAD/////////////////////////*/
+
+    }
+    else{
+        $userSession->closeSession();
+         header("location: index.php");
+    }
+
+
+	/**********************************************************************************************/
+
+	
+?>
+
 <form  style="width: 65vw; height:auto;" id="frm_agregar_producto_a_vender">
     <input name="fecha_venta" type="text" id="fecha_venta" required>
-    <input name="id_vendedor" type="text" id="id_vendedor" required placeholder="id del vendedor">
+    <input name="id_vendedor" type="text" id="id_vendedor" required placeholder="id del vendedor" value="<?php echo $id ?>">
     <input name="no_venta" type="text" id="no_venta" required placeholder="no de venta">
 
     <table border="0" style="font-weight: 600; font-size: 17px;">
@@ -12,9 +60,9 @@
             <td>
                 <p>
                     <select name="Cliente" type="text" id="Cliente" required>
-                        <option value="" disabled selected>Seleccione:</option>
+                        <option value="" disabled>Seleccione:</option>
 
-                        <option value="CLIENTE GENERAL">CLIENTE GENERAL</option>
+                        <option value="CLIENTE GENERAL" selected>CLIENTE GENERAL</option>
 
                         <option value="ALGUNO DE LA DB">ALGUNO DE LA DB</option>
                     </select>
@@ -41,7 +89,6 @@
                         required></p>
             </td>
         </tr>
-
         <tr>
 
             <td COLSPAN=2 style="text-align: right;">
@@ -57,8 +104,8 @@
             <td>
                 <p>
                     <select name="tipo_pago" type="text" id="tipo_pago" required>
-                        <option value="" disabled selected>Seleccione:</option>
-                        <option value="EFECTIVO">EFECTIVO</option>
+                        <option value="" disabled>Seleccione:</option>
+                        <option value="EFECTIVO" selected>EFECTIVO</option>
                         <option value="TARGETA DE CREDITO">TARGETA DE CREDITO</option>
                         <option value="TARGETA DE DEBITO">TARGETA DE DEBITO</option>
                         <option value="CREDITO DE LA TIENDA">CREDITO DE LA TIENDA</option>
@@ -77,8 +124,8 @@
     </table>
 
     <script>
-  document.getElementById('agregar').addEventListener('click', function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe
+        document.getElementById('agregar').addEventListener('click', function(event) {
+    event.preventDefault();
 
     let v_fecha_venta = document.getElementById('fecha_venta').value;
     let v_id_vendedor = document.getElementById('id_vendedor').value;
@@ -92,58 +139,61 @@
     let tabla = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
     let nuevaFila = tabla.insertRow();
 
-    let celda_fecha_venta = nuevaFila.insertCell();
-    celda_fecha_venta.innerHTML = v_fecha_venta;
+    function crearCeldaConInput(valor, nombre) {
+        let celda = nuevaFila.insertCell();
+        celda.innerHTML = `<input type="text" name="${nombre}[]" value="${valor}" readonly>`;
+    }
 
-    let celda_id_vendedor = nuevaFila.insertCell();
-    celda_id_vendedor.innerHTML = v_id_vendedor;  
+    crearCeldaConInput(v_fecha_venta, 'fecha_venta');
+    crearCeldaConInput(v_id_vendedor, 'id_vendedor');
+    crearCeldaConInput(v_no_venta, 'no_venta');
+    crearCeldaConInput(v_Cliente, 'cliente');
+    crearCeldaConInput(v_codigo, 'codigo');
+    crearCeldaConInput(v_cantidad, 'cantidad');
+    crearCeldaConInput(v_precio, 'precio');
+    crearCeldaConInput(v_tipo_pago, 'tipo_pago');
 
-    let celda_no_venta = nuevaFila.insertCell();
-    celda_no_venta.innerHTML = v_no_venta;    
-
-    let celda_Cliente = nuevaFila.insertCell();
-    celda_Cliente.innerHTML = v_Cliente;
-
-    let celda_codigo = nuevaFila.insertCell();
-    celda_codigo.innerHTML = v_codigo;
-
-    let celda_cantidad = nuevaFila.insertCell();    
-    celda_cantidad.innerHTML = v_cantidad;
-   
-    let celda_precio = nuevaFila.insertCell();
-    celda_precio.innerHTML = v_precio;
-
-    let celda_tipo_pago = nuevaFila.insertCell();   
-    celda_tipo_pago.innerHTML = v_tipo_pago;
-
-
-
+    // Limpiar los campos de entrada
     document.getElementById('fecha_venta').value = '';
-    document.getElementById('id_vendedor').value = '';
-    document.getElementById('no_venta').value = '';
-    document.getElementById('Cliente').value = '';     
     document.getElementById('codigo').value = '';
     document.getElementById('cantidad_v').value = '';
     document.getElementById('precio_v').value = '';
-    document.getElementById('tipo_pago').value = '';
+   
 
-    //AQUI RECETEAMOS LA FECHA ACTUAL PARA EL CAMPO FECHA_VENTA
-        var fecha = new Date(); //Fecha actual
-        var mes = fecha.getMonth()+1; //obteniendo mes
-        var dia = fecha.getDate(); //obteniendo dia
-        var ano = fecha.getFullYear(); //obteniendo año
-            if(dia<10)
-                 dia='0'+dia; //agrega cero si el menor de 10
-                if(mes<10)
-                     mes='0'+mes //agrega cero si el menor de 10
-                     document.getElementById('fecha_venta').value = ano+"-"+mes+"-"+dia;//ponemos la fecha actual
-                    });
-</script>
+   
+// Reestablecer la fecha a hoy
+    let fecha = new Date();
+    let dia = fecha.getDate().toString().padStart(2, '0');
+    let mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    let ano = fecha.getFullYear();
+    document.getElementById('fecha_venta').value = `${ano}-${mes}-${dia}`;
+    
+    //resetear la tabla de ventas
+     function limpiarTabla() {
+    let tabla = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
+    tabla.innerHTML = '';  // Elimina todas las filas dentro del tbody
+    
+    }
+
+  // Asocia la función limpiarTabla al botón cancelar
+  document.getElementById('cancelar').addEventListener('click', function() {
+    limpiarTabla();
+   
+   
+  });
+
+
+
+ 
+});
+
+    
+    </script>
 
 </form>
 
 
-<form method="post" style="width: 65vw; height:auto;"  action="modulos/mdl_reg_venta.php" id="Ventas" >
+<form method="post" style="width: 65vw; height:auto;"  action="modulos/mdl_reg_venta.php" id="Ventas" name="Ventas" >
   <!--<table border="0" style=font-weight: 600; font-size: 17px;"> -->  
     <table id="miTabla" class="table">
   <thead>
@@ -164,7 +214,7 @@
 </table>
       
         <input type="submit" value="Registrar Venta">
-        <input type="button" value="Cancelar" onclick="limpiar()">
+        <input type="button" id="cancelar" value="Cancelar">
         <input type="button" onclick="location='menuAdmin.php'" value="Regresar" />
     
   </table>

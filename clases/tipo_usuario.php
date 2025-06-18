@@ -1,20 +1,21 @@
 <?php
 include_once 'connection.php';
 class Tipo_Usuario extends DB{
-    private $codigo;
-    private $psw;
+    private $usuario_id; 
+    private $usuario;
+    private $pasword;
     private $puesto;
-    private $nombre;
+   
     
     //stters and getters ***********************************************
-    public function setCodigo($codigo){ $this->codigo = $codigo; }
-    public function setPsw($psw){ $this->psw = $psw; }
-    public function setTipo($puesto){ $this->puesto = $puesto; }
-    public function setNombre($nombre){ $this->nombre = $nombre; }
-    public function getCodigo(){ return $this->codigo; }
-    public function getPsw(){ return $this->psw; }
-    public function getTipo(){ return $this->puesto; }
-    public function getNombre(){ return $this->nombre; }
+    public function setUsuario_id($usuario_id){ $this->usuario_id = $usuario_id; }
+    public function setUsuario($usuario){ $this->usuario = $usuario; }
+    public function setPasword($pasword){ $this->pasword = $pasword; } 
+    public function setPuesto($puesto){ $this->puesto = $puesto; }
+    public function getUsuario_id(){ return $this->usuario_id; }
+    public function getUsuario(){ return $this->usuario; }
+    public function getPasword(){ return $this->pasword; }
+    public function getPuesto(){ return $this->puesto; }
     //******************************************************************
 
 
@@ -35,6 +36,12 @@ class Tipo_Usuario extends DB{
   		$query->execute(['user' => $codigo]);
   		return $query->fetch(PDO::FETCH_ASSOC);
   	}
+
+     public function consultarUltimoCodigo() {
+    $query = $this->connect()->prepare('SELECT MAX(Usuario_id) AS id FROM tipo_usuario');
+    $query->execute();
+    return $query->fetch(PDO::FETCH_ASSOC);
+}
 //SELECT nombre FROM tipo_usuario INNER JOIN usuario ON tipo_usuario.usuario_id = usuario.Id_Usuario WHERE Usuario_id = 1;
      public function consultarNombre($user){
   		$query = $this->connect()->prepare('SELECT nombre FROM tipo_usuario INNER JOIN usuario ON tipo_usuario.usuario_id = usuario.Id_Usuario WHERE Usuario_id = :user');
@@ -46,8 +53,9 @@ class Tipo_Usuario extends DB{
         $query = $this->connect()->prepare('SELECT * FROM tipo_usuario WHERE Usuario = :user');
         $query->execute(['user' => $user]);
         foreach ($query as $currentUser) {
-            $this->codigo = $currentUser['Usuario'];
-            $this->psw = $currentUser['Pasword'];
+            $this->usuario_id = $currentUser['Usuario_id'];
+            $this->usuario =$currentUser['Usuario'];
+            $this->pasword = $currentUser['Pasword'];
             $this->puesto = $currentUser['Puesto'];
 
         }
@@ -62,18 +70,19 @@ class Tipo_Usuario extends DB{
         $sql = "INSERT INTO tipo_usuario (Usuario, Pasword, Puesto) VALUES(:usuario, :psw, :tipo)";
         $query = $this->connect()->prepare($sql);
         $query->execute([
-            'usuario' => $this->nombre,
-            'psw' => $this->psw,
+            'usuario' => $this->usuario,
+            'psw' => $this->pasword,
             'tipo' => $this->puesto]);
     }
 
 	public function actualizar(){
-		$sql = "UPDATE usuario SET pasword = :psw, tipo = :tipo	WHERE user_name = :codigo";
+		$sql = "UPDATE tipo_usuario SET pasword = :pasworD, puesto = :puestO, usuario = :usuariO	WHERE Usuario_id = :usuario_ID";
 		$query = $this->connect()->prepare($sql);
 		$query->execute([
-			'codigo' => $this->codigo,
-            'psw' => $this->psw,
-            'tipo' => $this->puesto]);
+			'usuario_ID' => $this->usuario_id,
+            'usuariO' => $this->usuario,    
+            'pasworD' => $this->pasword,
+            'puestO' => $this->puesto]);
 	}
 
 }
