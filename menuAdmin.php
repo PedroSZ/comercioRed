@@ -12,7 +12,11 @@
         $user = new Tipo_Usuario();
         $user->establecerDatos($userSession->getCurrentUser());
         $tipo = $user->getPuesto();
+<<<<<<< HEAD
         $codigo = $user->getUsuario_id();
+=======
+      
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
 
 
 		//mensaje de que no tiene privilegios
@@ -60,6 +64,7 @@
      <?php include_once 'modulos/mdl_menuAdmin.php'; ?>
     <div class="container">
       <h3>Bienvenido</h3>
+<<<<<<< HEAD
       <p> <?php 
      // echo $user->getUsuario(); 
 		include_once 'clases/usuario.php';
@@ -73,6 +78,9 @@
 
 
 
+=======
+      <p> <?php echo $user->getUsuario(); ?></p>
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
 
       <div id="RegUsuario" class="modulo">
         <h4>Registrar Usuario</h4>
@@ -112,7 +120,11 @@
 
       <div id="ModUsuario" class="modulo">
       <h2>Modificar Usuario</h2>
+<<<<<<< HEAD
       <?php include_once 'listActualizarUsuarios.php'; ?>
+=======
+      <?php include_once 'actualizarUsuarios.php'; ?>
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
       </div>
 
       <div id="ModProducto" class="modulo">

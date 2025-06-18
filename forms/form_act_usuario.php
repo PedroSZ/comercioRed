@@ -82,11 +82,16 @@ if (!isset($_SESSION['user'])){
     <?php include_once '../modulos/mdl_header.php'; ?>
         <div id="contenedor">
 
+<<<<<<< HEAD
                <form method="post" style="width: auto; height:auto;"  action="../modulos/mdl_ActualizarUsuarios.php" id="frm_Actualizarusuarios" >
+=======
+               <form method="post" style="width: auto; height:auto;"  action="modulos/mdl_ActualizarUsuarios.php" id="frm_Actualizarusuarios" >
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
 
   <table border="0" style="color:#FFFFFF; font-weight: 600; font-size: 17px;">
   <?php
 echo '
+<<<<<<< HEAD
     <tr>
     <td COLSPAN=2 style="text-align: right;"><p  class = "negrita"><label>Id de Usuario:</label></p></td>
     <td><p><input name="idU" type="text" readonly="readonly" id ="idU"   value="'.$miUsuario["Usuario_id"].'"></p></td>
@@ -94,43 +99,77 @@ echo '
     <td><p><input name="id_t_U" type="text" readonly="readonly" id ="id_t_U"   value="'.$miUsuario["Id_Tipo"].'"></p></td>
     
     </tr>  
+=======
+      
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
      
     
   <tr>
     <td COLSPAN=2 style="text-align: right;"><p  class = "negrita"><label>Nombre:</label></p></td>
+<<<<<<< HEAD
     <td><p><input name="nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Nombre" id ="nombre" title="Ingresa al menos un nombre por favor " required value="'.$miUsuario["Nombre"].'"></p></td>
      <td COLSPAN=2  width="50%" style="text-align: right;"><p class = "negrita"><label>Apellido Paterno:</label></p></td>
     <td><p><input name="a_paterno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Paterno" id ="a_paterno" title="Ingresa al menos un apellido por favor " required value="'.$miUsuario["A_paterno"].'"></p></td>
+=======
+    <td><p><input name="nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Nombre" id ="nombre" required pattern="[A-ZÑ ]+" title="Ingresa al menos un nombre por favor " required value="'.$miUsuario["Nombre"].'"></p></td>
+     <td COLSPAN=2  width="50%" style="text-align: right;"><p class = "negrita"><label>Apellido Paterno:</label></p></td>
+    <td><p><input name="a_paterno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Paterno" id ="a_paterno" required pattern="[A-ZÑ ]+" title="Ingresa al menos un apellido por favor " required value="'.$miUsuario["A_paterno"].'"></p></td>
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
   </tr>
  
   <tr>
     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Apellido Materno:</label></p></td>
+<<<<<<< HEAD
     <td><p><input name="a_materno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Materno" id ="a_materno" title="Ingresa al menos un apellido por favor " value="'.$miUsuario["A_Materno"].'"></p></td>
     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Fecha de Nacimiento:</label></p></td>
     <td><p><input name="fecha_nacimiento" type="date" id ="fecha_nacimiento"  value="'.$miUsuario["Fecha_Nacimiento"].'" required></p></td>
+=======
+    <td><p><input name="a_materno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Materno" id ="a_materno" required pattern="[A-ZÑ ]+" title="Ingresa al menos un apellido por favor " value="'.$miUsuario["A_Materno"].'"></p></td>
+    <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Fecha de Nacimiento:</label></p></td>
+    <td><p><input name="fecha_nacimiento" type="date" id ="fecha_nacimiento" required value="'.$miUsuario["Fecha_Nacimiento"].'"></p></td>
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
    
   </tr>
 
   <tr>
       <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>RFC:</label></p></td>
+<<<<<<< HEAD
       <td><p><input name="rfc" type="text"  placeholder="Ingresar RFC" id ="rfc" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" title="Por favor ingresa solo un formato RFC por ejemplo SAJG990112000"  value="'.$miUsuario["Rfc"].'" required></p></td>
       <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Fecha de registro:</label></p></td>
       <td><p><input name="fecha_registro" type="date" id ="fecha_registro"  value="'.$miUsuario["Fecha_Registro"].'" required></p></td>
+=======
+      <td><p><input name="rfc" type="text"  placeholder="Ingresar RFC" id ="rfc" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" required pattern="^[A-ZÑ&]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{3}$" title="Por favor ingresa solo un formato RFC por ejemplo SAJG990112000" required value="'.$miUsuario["Rfc"].'"></p></td>
+      <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Fecha de registro:</label></p></td>
+      <td><p><input name="fecha_registro" type="date" id ="fecha_registro" required value="'.$miUsuario["Fecha_Registro"].'"></p></td>
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
   </tr>
 
    <tr>
     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Telefono:</label></p></td><td>
+<<<<<<< HEAD
     <p><input name="telefono" type="number" placeholder="Ingresar Telefono" id ="telefono" title="Ingresa al menos un numero por favor " value="'.$miUsuario["Telefono"].'"></p></td>
      <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>E-Mail:</label></p></td>
     <td> <p><input name="email"  type="email" placeholder="Ingresar Email" id ="email" title="Por favor ingresa un correo con el formato nombre@sitio.dominio"  value="'.$miUsuario["Email"].'" required></p></td>
+=======
+    <p><input name="telefono" type="number" placeholder="Ingresar Telefono" id ="telefono" required pattern="[0-9]+" title="Ingresa al menos un numero por favor " value="'.$miUsuario["Telefono"].'"></p></td>
+     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>E-Mail:</label></p></td>
+    <td> <p><input name="email"  type="email" placeholder="Ingresar Email" id ="email" required pattern="^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" title="Por favor ingresa un correo con el formato nombre@sitio.dominio" required value="'.$miUsuario["Email"].'"></p></td>
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
   </tr>
 
    <tr>
         <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Tipo de Usuario:</label></p></td>
+<<<<<<< HEAD
             <td><p><select name="puesto" type="text" id ="puesto" required>
             <option value="'.$miUsuario["Puesto"].'" selected>'.$miUsuario["Puesto"].'</option>
             <option value="Administrador">ADMINISTRADOR</option>
             <option value="Cajero">USUARIO</option>
+=======
+            <td><p><select name="tipo_usuario" type="text" id ="tipo_usuario" required>
+            <option value="'.$miUsuario["Puesto"].'" disabled selected>'.$miUsuario["Puesto"].'</option>
+            <option value="Administrador">ADMINISTRADOR</option>
+            <option value="Usuario">USUARIO</option>
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
              </select></p></td>
      <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Domicilio:</label></p></td><td>
       <p><input name="domicilio" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Dirección" id ="domicilio" title="Ingresa al menos una dirección por favor" required value="'.$miUsuario["Domicilio"].'"></p></td>
@@ -140,7 +179,11 @@ echo '
       <p class = "negrita"><label>Contraseña:</label></p>
     </td>
     <td>
+<<<<<<< HEAD
       <p><input name="psw1" type="password" placeholder="Ingresar Contraseña"  id ="pswActu1"  title="Por favor ingresa una contraseña que inicie con una letra y tenga al menos 8 caracteres y un número como mínimo" required ></p>
+=======
+      <p><input name="psw1" type="password" placeholder="Ingresar Contraseña"  id ="psw1"  title="Por favor ingresa una contraseña que inicie con una letra y tenga al menos 8 caracteres y un número como mínimo" required ></p>
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
 
 
     </td>
@@ -148,14 +191,23 @@ echo '
       <p class = "negrita"><label>Confirmar Contraseña:</label></p>
     </td>
     <td>
+<<<<<<< HEAD
       <p><input name="pasword" type="password" placeholder="Vuelve a escribir la Contraseña"  id ="pswActu2" required ></p>
+=======
+      <p><input name="pasword" type="password" placeholder="Vuelve a escribir la Contraseña"  id ="psw2" required ></p>
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
     </td>
   </tr>
   <tr>
     <td COLSPAN=5 style="text-align: center;">
       <BR>
+<<<<<<< HEAD
       <input type="submit" value="Actualizar">
      
+=======
+      <input type="submit" value="Registrar">
+      <input type="button" value="Cancelar" onclick="limpiar()">
+>>>>>>> 1efdc3e56d1fdc9aa858b46e4330cd2541dba0b7
        <input type="button" onclick="location='../menuAdmin.php'" value="Regresar" />
     </td>
   </tr>
