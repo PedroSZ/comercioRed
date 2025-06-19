@@ -44,7 +44,7 @@
 /**********************************************************************************************/
 error_reporting(0);//para que no me muestre errores
 $filtro1 = $_POST['FiltarCodigo']; //para obtener la curp a buscar del fitro
-$filtro2 = $_POST['FiltarNombre'];
+$filtro2 = $_POST['FiltarProducto'];
 $filtro3 = $_POST['FiltarDescripcoin'];
 $filtro4 = $_POST['FiltarFechaR'];
 $filtro5 = $_POST['FiltarFechaC'];
@@ -73,7 +73,7 @@ $filtro6 = $_POST['FiltarPrecio'];
                 <td width="100%" style="text-align: right;">
 
                   <input name="FiltarCodigo" type="text"  placeholder="Buscar por Código" id ="FiltarCodigo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarNombre" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltrarNombre" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarProducto" type="text" title="Busqueda por Producto"  placeholder="Buscar por Producto" id ="FiltrarNombre" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
                   <input name="FiltarDescripcion" type="text" title="Busqueda por Descripción" placeholder="Buscar por descripcion" id ="FiltrarDescripcion" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
 
                   

@@ -74,7 +74,7 @@ $filtro6 = $_POST['FiltarFechaN'];
 
                   <input name="FiltarId" type="text"  placeholder="Buscar por Código" id ="FiltarId" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
                   <input name="FiltarNom" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltarNom" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarPater" type="text" title="Busqueda por Descripción" placeholder="Buscar por descripcion" id ="FiltarPater" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
+                  <input name="FiltarPater" type="text" title="Busqueda por Apellido" placeholder="Buscar por Apellido" id ="FiltarPater" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
 
                   
                       <br>

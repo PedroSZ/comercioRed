@@ -72,9 +72,9 @@ $filtro6 = $_POST['FiltarFechaN'];
               <tr>
                 <td width="100%" style="text-align: right;">
 
-                  <input name="FiltarIdCliente" type="text"  placeholder="Buscar por Código" id ="FiltarIdCliente" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarNomCliente" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltarNomCliente" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarPaterCliente" type="text" title="Busqueda por Descripción" placeholder="Buscar por descripcion" id ="FiltarPaterCliente" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
+                  <input name="FiltarId" type="text"  placeholder="Buscar por Id" id ="FiltarId" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarNom" type="text" title="Busqueda por Nombre"  placeholder="Buscar por Nombre" id ="FiltarNom" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarPater" type="text" title="Busqueda por Apellido" placeholder="Buscar por Apellido" id ="FiltarPater" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
 
                   
                       <br>
@@ -120,7 +120,7 @@ $filtro6 = $_POST['FiltarFechaN'];
       if($filtro1 || $filtro2 || $filtro3 || $filtro4 || $filtro5 || $filtro6){
         foreach ($clientes as $cliente) {
         //  if($filtro1 == $alumno['curp'] || $filtro2 == $alumno['nombre'] || $filtro3 == $alumno['apellidos']){
-          if($filtro1 == $cliente['Id_Usuario'] || $filtro2 == $cliente['Nombre'] || $filtro3 == $cliente['A_paterno'] || $filtro4 == $cliente['A_Materno'] || $filtro5 == $cliente['Fecha_Registro'] || $filtro6 == $cliente['Fecha_Nacimiento']){
+          if($filtro1 == $cliente['Id_Cliente'] || $filtro2 == $cliente['Nombre'] || $filtro3 == $cliente['A_paterno'] || $filtro4 == $cliente['A_Materno'] || $filtro5 == $cliente['Fecha_Registro'] || $filtro6 == $cliente['Fecha_Nacimiento']){
             echo "<tr>
             <td>".$cliente['Id_Cliente']."</td>
             <td>".$cliente['Nombre']."</td>

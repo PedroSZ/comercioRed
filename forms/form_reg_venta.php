@@ -45,11 +45,21 @@
 
 	
 ?>
+ 
+  <?php
+       include_once 'clases/venta.php';
+        $ve = new Ventas();
+        $ventas = $ve->consultarUltimo();
+        $no_venta_maximo = $ventas[0]["MAX(No_venta)"];
+// Imprimir el valor
+//echo "El número de venta más alto es: " . $no_venta_maximo;   
+	?>
 
-<form  style="width: 65vw; height:auto;" id="frm_agregar_producto_a_vender">
+</p>
+<form  action="modulos/mdl_reg_venta.php"  style="width: 65vw; height:auto;" id="frm_agregar_producto_a_vender">
     <input name="fecha_venta" type="text" id="fecha_venta" required>
     <input name="id_vendedor" type="text" id="id_vendedor" required placeholder="id del vendedor" value="<?php echo $id ?>">
-    <input name="no_venta" type="text" id="no_venta" required placeholder="no de venta">
+    <input name="no_venta" type="text" id="no_venta" required placeholder="no de venta" value="<?php echo $no_venta_maximo + 1; ?>">
 
     <table border="0" style="font-weight: 600; font-size: 17px;">
 
@@ -57,25 +67,37 @@
             <td COLSPAN=2 style="text-align: right;">
                 <p><label>Cliente:</label></p>
             </td>
-            <td>
-                <p>
-                    <select name="Cliente" type="text" id="Cliente" required>
-                        <option value="" disabled>Seleccione:</option>
 
-                        <option value="CLIENTE GENERAL" selected>CLIENTE GENERAL</option>
+                         
+            
+    <td>
+       <p><select name="Cliente" type="text" id ="Cliente" required>
 
-                        <option value="ALGUNO DE LA DB">ALGUNO DE LA DB</option>
-                    </select>
-                </p>
+     <?php
+        include_once 'clases/cliente.php';
+        $doc = new Cliente();
+        $clientees = $doc->listar();
+        if($clientees){
+            echo "<option value='1' selected>CLIENTE GENERAL</option>";
+                foreach ($clientees as $cliente) {
+                        echo "<option value='".$cliente['Id_Cliente']."'>".$cliente['Nombre']." ".$cliente['A_paterno']."</option>";
 
-            </td>
+                                                }
+  	        }
+ 	        else{
+   		        echo "<option value='1' disabled selected style='color:red;'>Debe agregar algún cliente antes de poder realizar una venta:</option>";
+  		}
+	?>
+     </p> </td>
+
+
+
 
             <td COLSPAN=2 style="text-align: right;">
                 <p><label>Codigo:</label></p>
             </td>
             <td>
-                <p><input name="codigo" type="text"
-                        onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"
+                <p><input name="codigo" type="text" onKeyUp="document.getElementById(this.id).value"
                         placeholder="Código del producto" id="codigo" title="Campo obligatorio " required></p>
             </td>
 
@@ -122,7 +144,7 @@
             </td>
         </tr>
     </table>
-
+</form>
     <script>
         document.getElementById('agregar').addEventListener('click', function(event) {
     event.preventDefault();
@@ -144,6 +166,18 @@
         celda.innerHTML = `<input type="text" name="${nombre}[]" value="${valor}" readonly>`;
     }
 
+     function crearCeldaConBoton() {
+    let celda = nuevaFila.insertCell();
+    let boton = document.createElement("button");
+    boton.type = "button";
+    boton.textContent = "Quitar";
+    boton.addEventListener("click", function () {
+        // Elimina la fila (row) que contiene este botón
+        this.closest("tr").remove();
+    });
+    celda.appendChild(boton);
+}
+
     crearCeldaConInput(v_fecha_venta, 'fecha_venta');
     crearCeldaConInput(v_id_vendedor, 'id_vendedor');
     crearCeldaConInput(v_no_venta, 'no_venta');
@@ -152,6 +186,7 @@
     crearCeldaConInput(v_cantidad, 'cantidad');
     crearCeldaConInput(v_precio, 'precio');
     crearCeldaConInput(v_tipo_pago, 'tipo_pago');
+    crearCeldaConBoton('Quitar', 'boton');
 
     // Limpiar los campos de entrada
     document.getElementById('fecha_venta').value = '';
@@ -190,12 +225,9 @@
     
     </script>
 
-</form>
-
-
-<form method="post" style="width: 65vw; height:auto;"  action="modulos/mdl_reg_venta.php" id="Ventas" name="Ventas" >
-  <!--<table border="0" style=font-weight: 600; font-size: 17px;"> -->  
-    <table id="miTabla" class="table">
+ <!--<table border="0" style=font-weight: 600; font-size: 17px;"> -->  
+    <form  action="modulos/mdl_reg_venta.php" method="post" style="width: 65vw; height:auto;" id="enviar_ventas">
+ <table id="miTabla" class="table">
   <thead>
     <tr>
       <th scope="col">Fecha</th>

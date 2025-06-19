@@ -1,7 +1,6 @@
 <?php
-//******ALTA TALLER
+//******ALTA PRODUCTO*******
 	include_once '../clases/producto.php';
-	//include_once '../clases/.php';
 	if(!empty($_POST['codigo'])){
 		
 

@@ -82,3 +82,8 @@ INSERT INTO usuario (Id_Tipo, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro,
 VALUES('2','ASISN890518000', 'Usuario', 'PruebaP', 'PruebaM', '2025-06-14', '1989-05-18', '0000000000', 'cajero@company.dominio',
 'Domicilio de prueba No. 49 Col. Prueba C.P. 46600');
 
+INSERT INTO cliente (Id_Cliente, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio, Limite_Credito, Credito_Usado) 
+VALUES('1', 'NO APLICA', 'CLIENTE', 'GENERAL', 'NONE', '2025-06-14', '1989-05-18', '0000000000', 'cliente@company.dominio',
+'Domicilio de prueba No. 49 Col. Prueba C.P. 46600', '0', '0');
+
+
