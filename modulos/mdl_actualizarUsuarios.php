@@ -32,8 +32,7 @@
 
 			echo '<script type="text/javascript">
 								alert("MIDIFICACION EXITOSSA");
-								window.location.href="../menuAdmin.php";
-								activarModulo(RegUsuario);
+								window.location.href="../listActualizarUsuarios.php";
 						</script>';
 			
 

@@ -1,58 +1,53 @@
 <?php
-	
-/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
-/*  include_once '../clases/tipo_usuario.php';
+	/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
+    include_once '../clases/tipo_usuario.php';
     include_once '../clases/sesion.php';
+    $userSession = new Sesion();
+    //MADAR A INDEX SI NO HAY SESION INICIADA
     
-    
-    
-if (!isset($_SESSION['user'])){
-    header("location: index.php");
-    }
-
     if (!isset($_SESSION['user'])){
     header("location: index.php");
     }
-
     if(isset($_SESSION['user'])){
         $user = new Tipo_Usuario();
         $user->establecerDatos($userSession->getCurrentUser());
-        $tipo = $user->getTipo();
-      
+        $tipo = $user->getPuesto();
+        $codigo = $user->getUsuario_id();
 
 
-		
+		//mensaje de que no tiene privilegios
         if($tipo <> "Administrador") header('location: index.php');
-       
+        /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
         if (!isset($_SESSION['tiempo'])) {
             $_SESSION['tiempo']=time();
         }
         else if (time() - $_SESSION['tiempo'] > 500) {
             session_destroy();
-          
-           header("location: index.php");
+            /* Aquí redireccionas a la url especifica */
+            header("location: index.php");
             die();
         }
-        $_SESSION['tiempo']=time();
-      
+        $_SESSION['tiempo']=time(); //Si hay actividad seteamos el valor al tiempo actual
+        /*////////////////////FIN SIERRE POR INACTIVIDAD/////////////////////////*/
 
     }
     else{
         $userSession->closeSession();
          header("location: index.php");
     }
-*/
+
+
 /**********************************************************************************************/
 
-	if(!empty($_POST['micodigo'])){
+	if(!empty($_POST['miIdUsuario'])){
 		include_once '../clases/usuario.php';
 		include_once '../clases/tipo_usuario.php';
-		$codigo = $_POST['micodigo'];
+		$id = $_POST['miIdUsuario'];
 		$user = new Usuario();
     $tipo = new Tipo_Usuario();
-		$tipo->establecerDatos($codigo);
+		$tipo->establecerDatos($id);
 		$tipo_user = $tipo->getPuesto();
-		$miUsuario = $user->consultarId($codigo);
+		$miUsuario = $user->consultarId($id);
 	}
 	else{
 
@@ -80,9 +75,12 @@ if (!isset($_SESSION['user'])){
     </head>
     <body>   
     <?php include_once '../modulos/mdl_header.php'; ?>
-        <div id="contenedor">
+        <div class="container">
+    <h1 class="text-center mt-4">Actualizar Usuario</h1>
+    <p class="text-center">Edite la información de los campos que desee modificar y luego presione el boton actualizar.</p>
 
-               <form method="post" style="width: auto; height:auto;"  action="modulos/mdl_ActualizarUsuarios.php" id="frm_Actualizarusuarios" >
+               <form method="post" style="width: auto; height:auto;"  action="../modulos/mdl_ActualizarUsuarios.php" id="frm_Actualizarusuarios" >
+ <input name="idU"  id="idU" type="hidden" value=" <?php echo $_POST['miIdUsuario'];?>">
 
   <table border="0" style="color:#FFFFFF; font-weight: 600; font-size: 17px;">
   <?php
@@ -148,9 +146,9 @@ echo '
   <tr>
     <td COLSPAN=5 style="text-align: center;">
       <BR>
-      <input type="submit" value="Registrar">
+      <input type="submit" value="Actualizar">
       <input type="button" value="Cancelar" onclick="limpiar()">
-       <input type="button" onclick="location='../menuAdmin.php'" value="Regresar" />
+       <input type="button" onclick="location='../listActualizarUsuarios.php'" value="Regresar" />
     </td>
   </tr>
   </table>

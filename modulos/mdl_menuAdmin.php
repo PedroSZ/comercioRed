@@ -24,9 +24,9 @@
       </a>
       <ul class='dropdown-menu'>
         
-         <li><a class='dropdown-item' onclick="activarModulo('RegUsuario')">Usuarios</a></li>
-        <li><a class='dropdown-item' onclick="activarModulo('RegProducto')">Productos</a></li>
-         <li><a class='dropdown-item' onclick="activarModulo('RegCliente')">Clientes</a></li>
+         <li><a class='dropdown-item'  href="nuevoUsuario.php">Usuarios</a></li>
+        <li><a class='dropdown-item'   href="nuevoProducto.php">Productos</a></li>
+         <li><a class='dropdown-item'  href="nuevoCliente.php">Clientes</a></li>
          <li><a class='dropdown-item' title="" href="nuevaVenta.php">Ventas</a></li>
        
       </ul>
@@ -37,10 +37,10 @@
         Consultar
       </a>
       <ul class='dropdown-menu'>
-         <li><a class='dropdown-item' onclick="activarModulo('ConUsuario')">Usuarios</a></li>
-        <li><a class='dropdown-item' onclick="activarModulo('ConProducto')">Productos</a></li>
-         <li><a class='dropdown-item' onclick="activarModulo('ConCliente')">Clientes</a></li>
-         <li><a class='dropdown-item' onclick="activarModulo('ConVenta')">Ventas</a></li>
+         <li><a class='dropdown-item' href="listUsuarios.php">Usuarios</a></li>
+         <li><a class='dropdown-item' href="listProductos.php">Productos</a></li>
+         <li><a class='dropdown-item' href="listClientes.php">Clientes</a></li>
+         <li><a class='dropdown-item' href="listVentas.php">Ventas</a></li>
        
       </ul>
     </li>
@@ -52,10 +52,10 @@
             Modificar
           </a>
           <ul class='dropdown-menu'>
-             <li><a class='dropdown-item' onclick="activarModulo('ModUsuario')">Usuarios</a></li>
-        <li><a class='dropdown-item' onclick="activarModulo('ModProducto')">Productos</a></li>
-         <li><a class='dropdown-item' onclick="activarModulo('ModCliente')">Clientes</a></li>
-         <li><a class='dropdown-item' onclick="activarModulo('ModVenta')">Ventas</a></li>
+         <li><a class='dropdown-item' href="listActualizarUsuarios.php">Usuarios</a></li>
+         <li><a class='dropdown-item' href="listActualizarProductos.php">Productos</a></li>
+         <li><a class='dropdown-item' >Clientes</a></li>
+         <li><a class='dropdown-item' >Ventas</a></li>
           </ul>
         </li>
 

@@ -32,7 +32,8 @@
   <body>
      <?php include_once 'modulos/mdl_header.php'; ?>
     <div class="container">
-
+    <h1 class="text-center mt-4">Nueva Venta</h1>
+    <p class="text-center">Por favor, complete el formulario a continuación para registrar una nueva venta.</p>
     <?php include_once 'forms/form_reg_venta.php' ?>
     </div>
     

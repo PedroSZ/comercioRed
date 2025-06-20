@@ -43,47 +43,36 @@
 */
 /**********************************************************************************************/
 error_reporting(0);//para que no me muestre errores
-$filtro1 = $_POST['FiltarId_actualizar_usuario']; //para obtener la curp a buscar del fitro
-$filtro2 = $_POST['FiltarNom_actualizar_usuario'];
-$filtro3 = $_POST['FiltarPater_actualizar_usuario'];
+$filtro1 = $_POST['FiltarId']; //para obtener la curp a buscar del fitro
+$filtro2 = $_POST['FiltarNom'];
+$filtro3 = $_POST['FiltarPater'];
 $filtro4 = $_POST['FiltarMater'];
 $filtro5 = $_POST['FiltarFechaR'];
 $filtro6 = $_POST['FiltarFechaN'];
 ?>
-</!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
 
-        	<script language='javascript'>
-		          function consultar(codigo) {
-                 document.lista_actualizar_usuario.micodigo.value = codigo;
-			           // alert(codigo);
-                   document.lista_actualizar_usuario.submit();
-	      	  }
-		        function regresar(){
-		      	location.href='index.php'
-		        }
-        </script>
+ <style>
+  .tabla-usuarios th {
+    font-size: 14px;
+    text-align: center;
+    
+  }
+  .tabla-usuarios td {
+    font-size: 11px;
+  }
+</style>
 
-    </head>
-    <body>
         
-     
-        
-        <!-- Encabezado de la pagina-->
-            <?php include_once 'modulos/mdl_header.php'; ?>
-        <!-- fin Encabezado de la pagina-->
-
-              <form method="post" action="actualizarUsuarios.php" name="form_filtro_actualizar_usuario" id="form_filtro_actualizar_usuario" style="align-items: center; background:rgba(0,0,0,0.0);">
+      
+              <form method="post" action="listUsuarios.php" name="form_filtro_usuarios" id="form_filtro_usuarios" style="align-items: center; background:rgba(0,0,0,0.0);">
                 <table class="table-primary"  border="1">
 
               <tr>
                 <td width="100%" style="text-align: right;">
 
-                  <input name="FiltarId_actualizar_usuario" type="text"  placeholder="Buscar por Código" id ="FiltarId_actualizar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarNom_actualizar_usuario" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltarNom_actualizar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarPater_actualizar_usuario" type="text" title="Busqueda por Descripción" placeholder="Buscar por descripcion" id ="FiltarPater_actualizar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
+                  <input name="FiltarId" type="text"  placeholder="Buscar por Código" id ="FiltarId" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarNom" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltarNom" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarPater" type="text" title="Busqueda por Apellido" placeholder="Buscar por Apellido" id ="FiltarPater" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
 
                   
                       <br>
@@ -102,16 +91,16 @@ $filtro6 = $_POST['FiltarFechaN'];
            
 
                 <!-- <div class="datagrid">-->
-                 <form method="post" action="forms/form_act_usuario.php" name="lista_actualizar_usuario" id="lista_actualizar_usuario" style="width: auto; height: auto;">
-                    <input type="text" id="micodigo" name="micodigo">
+                 <form method="post" action="" name="frm_listUsuarios" id="frm_listUsuarios" style="width: auto; height: auto;">
+					
                      <?php
   include_once 'clases/usuario.php';
   $user2 = new Usuario();
   $usuarios = $user2->listar();
   if($usuarios){
     echo "
-    
-      <table class='table table-bordered border-primary table-hover'><thead>
+     <div style='width: 100%; overflow-x: auto;'>
+      <table class='table table-bordered border-primary table-hover tabla-usuarios'><thead>
       <tr>
         <th style='text-align:center'>Id</th>
         <th style='text-align:center'>Nombre</th>
@@ -123,11 +112,10 @@ $filtro6 = $_POST['FiltarFechaN'];
         <th style='text-align:center'>Domicilio</th>
         <th style='text-align:center'>Ingreso</th>
         <th style='text-align:center'>Tipo cuenta</th>
-        <th style='text-align:center'>Modificar</th>
       </tr></thead>";
       if($filtro1 || $filtro2 || $filtro3 || $filtro4 || $filtro5 || $filtro6){
         foreach ($usuarios as $user2) {
-        
+        //  if($filtro1 == $alumno['curp'] || $filtro2 == $alumno['nombre'] || $filtro3 == $alumno['apellidos']){
           if($filtro1 == $user2['Id_Usuario'] || $filtro2 == $user2['Nombre'] || $filtro3 == $user2['A_paterno'] || $filtro4 == $user2['A_Materno'] || $filtro5 == $user2['Fecha_Registro'] || $filtro6 == $user2['Fecha_Nacimiento']){
             echo "<tr>
             <td>".$user2['Id_Usuario']."</td>
@@ -136,11 +124,11 @@ $filtro6 = $_POST['FiltarFechaN'];
             <td>".$user2['A_Materno']."</td>
             <td>".$user2['Fecha_Nacimiento']."</td>
             <td>".$user2['Telefono']."</td>
-            <td>".$user2['Email']."</td>
+             <td>".$user2['Email']."</td>
             <td>".$user2['Domicilio']."</td> 
             <td>".$user2['Fecha_Registro']."</td>
             <td>".$user2['Puesto']."</td>
-           <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
+           
             </tr>";
           }
 
@@ -156,32 +144,28 @@ $filtro6 = $_POST['FiltarFechaN'];
             <td>".$user2['A_Materno']."</td>
             <td>".$user2['Fecha_Nacimiento']."</td>
             <td>".$user2['Telefono']."</td>
-            <td>".$user2['Email']."</td>
+             <td>".$user2['Email']."</td>
             <td>".$user2['Domicilio']."</td> 
             <td>".$user2['Fecha_Registro']."</td>
             <td>".$user2['Puesto']."</td>
-             <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
+            
             </tr>";
         }
       }
 
-    echo "</table>";
+    echo "</table> </div>";
   }
   else{
-    echo " <p>No hay Productos registrados en la base de datos</p>";
+    echo " <p>No hay Usuarios registrados en la base de datos</p>";
   }
 ?>
 
-
+<!--<td style='text-align:center'><img width='30' height='30' src='imgs/delete.png' onClick='borrar(\"".$alumno['curp']."\");'></td> -->
+         
            </form>
       
 
          
  <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
-        <!-- Pie de pagina-->
-            <?php include_once 'modulos/mdl_footer.php'; ?>
-
  
-    </body> 
-   
-</html>
+  

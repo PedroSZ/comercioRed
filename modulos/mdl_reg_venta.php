@@ -26,7 +26,7 @@ for ($i = 0; $i < count($codigos); $i++) {
     $venta->guardar();
 
     // Actualizar stock del producto
-    /*$producto = new Producto();
+  /*  $producto = new Producto();
     $producto->setCodigo($codigos[$i]);
     $producto->setStock($cantidades[$i]);
     $producto->actualizarStock();*/

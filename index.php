@@ -4,7 +4,7 @@
 	<head>
 	 	<title>LA PICONERIA</title>
 		<!--<meta name="viewport" content="width=device-width, initialscale=1" /> -->
-		<link rel="shortcut icon" href="imgs/icono2.ico" />
+		<link rel="shortcut icon" href="img/icono.ico" />
 
 	 	<style type="text/css">
 			html, body, div, iframe {

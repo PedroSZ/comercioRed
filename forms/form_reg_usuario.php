@@ -1,3 +1,17 @@
+<script>
+    window.onload = function() {
+        //AQUI RECETEAMOS LA FECHA ACTUAL PARA EL CAMPO FECHA_VENTA
+        var fecha = new Date(); //Fecha actual
+        var mes = fecha.getMonth()+1; //obteniendo mes
+        var dia = fecha.getDate(); //obteniendo dia
+        var ano = fecha.getFullYear(); //obteniendo año
+            if(dia<10)
+                 dia='0'+dia; //agrega cero si el menor de 10
+                if(mes<10)
+                     mes='0'+mes //agrega cero si el menor de 10
+                     document.getElementById('fecha_registro').value = ano+"-"+mes+"-"+dia;//ponemos la fecha actual
+    };
+  </script>
 
 <form method="post" style="width: 65vw; height:auto;"  action="modulos/mdl_reg_usuario.php" id="frm_reg_Usuarios" >
   <table border="0" style=font-weight: 600; font-size: 17px;">

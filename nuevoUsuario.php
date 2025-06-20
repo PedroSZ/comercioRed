@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/navbarYmenu.css">
     <link rel="stylesheet" href="css/modulos.css">
-    <link rel="stylesheet" href="css/formularios.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
     <script src="js/modulos.js" type="text/javascript"></script>
 
@@ -32,11 +31,11 @@
   </head>
   <body>
      <?php include_once 'modulos/mdl_header.php'; ?>
-   
-    <h1 class="text-center mt-4">Lista de Usuarios</h1>
-    
-    <?php include_once 'forms/form_list_productos.php' ?>
-   
+    <div class="container">
+    <h1 class="text-center mt-4">Nuevo Usuario</h1>
+    <p class="text-center">Por favor, complete el formulario a continuación para registrar un nuevo usuario.</p>
+    <?php include_once 'forms/form_reg_usuario.php' ?>
+    </div>
     
    
 

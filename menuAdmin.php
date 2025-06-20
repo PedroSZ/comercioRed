@@ -66,77 +66,10 @@
 		$idUs = $codigo;
 		$user2 = new Usuario();
 		$miUsuario = $user2->consultarId($codigo);
-		echo $miUsuario["Nombre"]. " " . $miUsuario["A_paterno"]. " " . $miUsuario["A_Materno"];
-  ?></p>
+		echo $miUsuario["Nombre"]. " " . $miUsuario["A_paterno"]. " " . $miUsuario["A_Materno"];?></p>
 
 
-      
-
-      <div id="RegUsuario" class="modulo">
-        <h4>Registrar Usuario</h4>
-        <?php include_once 'forms/form_reg_usuario.php'; ?> 
-      </div>
-      
     
-      <div id="RegProducto" class="modulo">
-        <h4>Registrar Producto</h4>
-       <?php include_once 'forms/form_reg_producto.php'; ?> 
-      </div>
-
-      <div id="RegCliente" class="modulo">
-      <h2>Registrar Clientes</h2>
-       <?php include_once 'forms/form_reg_cliente.php'; ?> 
-      </div>
-
-      <div id="RegVenta" class="modulo">
-      <h2>Nueva Venta</h2>
-       <?php include_once 'forms/form_reg_venta.php'; ?> 
-      </div>
-
-      <div id="ConUsuario" class="modulo">
-      <h2>Consulta de Usuario</h2>
-       <?php include_once 'listUsuarios.php'; ?> 
-      </div>
-
-      <div id="ConProducto" class="modulo">
-      <h2>Consulta de Productos</h2>
-      <?php include_once 'listProductos.php'; ?> 
-      </div>
-
-      <div id="ConCliente" class="modulo">
-      <h2>Consulta de Clientes</h2>
-      <?php include_once 'listClientes.php'; ?>
-      </div>
-
-      <div id="ModUsuario" class="modulo">
-      <h2>Modificar Usuario</h2>
-      <?php include_once 'actualizarUsuarios.php'; ?>
-      </div>
-
-      <div id="ModProducto" class="modulo">
-      <h2>Modificar Productos</h2>
-      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
-      </div>
-
-      <div id="ModCliente" class="modulo">
-      <h2>Modificar Clientes</h2>
-      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
-      </div>
-
-      <div id="DelUsuario" class="modulo">
-      <h2>Eliminar Usuario</h2>
-      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
-      </div>
-
-      <div id="DelProducto" class="modulo">
-      <h2>Eliminar Productos</h2>
-      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
-      </div>
-
-      <div id="DelCliente" class="modulo">
-      <h2>Eliminar Clientes</h2>
-      <H1 style="color: red;">MODULO EN CONSTRUCCIÓN</H1>
-      </div>
     </div>
     <?php include_once 'modulos/mdl_footer.php'; ?>
   </body>
