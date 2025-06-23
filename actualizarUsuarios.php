@@ -1,65 +1,63 @@
 <?php
-	/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
+/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
     include_once 'clases/tipo_usuario.php';
-    include_once 'clases/sesion.php';
-    $userSession = new Sesion();
+    //include_once 'clases/sesion.php';
+    
     //MADAR A INDEX SI NO HAY SESION INICIADA
     
+    /*if (!isset($_SESSION['user'])){
+    header("location: index.php");
+    }
+
     if (!isset($_SESSION['user'])){
     header("location: index.php");
     }
+
     if(isset($_SESSION['user'])){
         $user = new Tipo_Usuario();
         $user->establecerDatos($userSession->getCurrentUser());
-        $tipo = $user->getPuesto();
-        $codigo = $user->getUsuario_id();
-
+        $tipo = $user->getTipo();
+      
+*/
 
 		//mensaje de que no tiene privilegios
-        if($tipo <> "Administrador") header('location: index.php');
+      //  if($tipo <> "Administrador") header('location: index.php');
         /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
-        if (!isset($_SESSION['tiempo'])) {
+      /*  if (!isset($_SESSION['tiempo'])) {
             $_SESSION['tiempo']=time();
         }
         else if (time() - $_SESSION['tiempo'] > 500) {
             session_destroy();
             /* Aquí redireccionas a la url especifica */
-            header("location: index.php");
+     /*       header("location: index.php");
             die();
-        }
+        }/*
         $_SESSION['tiempo']=time(); //Si hay actividad seteamos el valor al tiempo actual
         /*////////////////////FIN SIERRE POR INACTIVIDAD/////////////////////////*/
-
+/*
     }
     else{
         $userSession->closeSession();
          header("location: index.php");
     }
-
-
+*/
 /**********************************************************************************************/
 error_reporting(0);//para que no me muestre errores
 $filtro1 = $_POST['FiltarId_actualizar_usuario']; //para obtener la curp a buscar del fitro
 $filtro2 = $_POST['FiltarNom_actualizar_usuario'];
 $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
+$filtro4 = $_POST['FiltarMater'];
+$filtro5 = $_POST['FiltarFechaR'];
+$filtro6 = $_POST['FiltarFechaN'];
 ?>
 </!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/navbarYmenu.css">
-    <link rel="stylesheet" href="css/modulos.css">
-    <link rel="stylesheet" href="css/formularios.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/contenedores.css">
-
 
         	<script language='javascript'>
-		          function consultar(Id_Usuario) {
-                 document.lista_actualizar_usuario.miIdUsuario.value = Id_Usuario;
+		          function consultar(codigo) {
+                 document.lista_actualizar_usuario.micodigo.value = codigo;
 			           // alert(codigo);
                    document.lista_actualizar_usuario.submit();
 	      	  }
@@ -76,13 +74,8 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
         <!-- Encabezado de la pagina-->
             <?php include_once 'modulos/mdl_header.php'; ?>
         <!-- fin Encabezado de la pagina-->
-   <div class="superponer">
-    <h1 class="text-center mt-4">Modificaciones</h1>
-    <p class="text-center">Elija de la lista al usuario que desea actualizar haciendo clic en el icono. <img src="img/Actualizar.png" width="30" height="30" alt="Actualizar" title="Actualizar producto"></p>
- </div>
-           
- <div id="filtro">
-<form method="post" action="listActualizarUsuarios.php" name="form_filtro_actualizar_usuario" id="form_filtro_actualizar_usuario">
+
+              <form method="post" action="actualizarUsuarios.php" name="form_filtro_actualizar_usuario" id="form_filtro_actualizar_usuario" style="align-items: center; background:rgba(0,0,0,0.0);">
                 <table class="table-primary"  border="1">
 
               <tr>
@@ -100,13 +93,17 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
               </tr>
             </table>
           </form>
-        </div>
             <!--/*********************************FIN FORMULARIO PARA EL FILTRO*****************************************************/ -->
 
 
-<div id="listado">
-                 <form method="post" action="forms/form_act_usuario.php" name="lista_actualizar_usuario" id="lista_actualizar_usuario" class="form-list">
-                    <input type="hidden" id="miIdUsuario" name="miIdUsuario">
+
+        <!-- contenido principal -->
+       
+           
+
+                <!-- <div class="datagrid">-->
+                 <form method="post" action="forms/form_act_usuario.php" name="lista_actualizar_usuario" id="lista_actualizar_usuario" style="width: auto; height: auto;">
+                    <input type="text" id="micodigo" name="micodigo">
                      <?php
   include_once 'clases/usuario.php';
   $user2 = new Usuario();
@@ -114,7 +111,7 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
   if($usuarios){
     echo "
     
-      <table class='table table-bordered border-primary table-hover tabla-datos'><thead>
+      <table class='table table-bordered border-primary table-hover'><thead>
       <tr>
         <th style='text-align:center'>Id</th>
         <th style='text-align:center'>Nombre</th>
@@ -128,10 +125,10 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
         <th style='text-align:center'>Tipo cuenta</th>
         <th style='text-align:center'>Modificar</th>
       </tr></thead>";
-      if($filtro1 || $filtro2 || $filtro3){
+      if($filtro1 || $filtro2 || $filtro3 || $filtro4 || $filtro5 || $filtro6){
         foreach ($usuarios as $user2) {
         
-          if($filtro1 == $user2['Id_Usuario'] || $filtro2 == $user2['Nombre'] || $filtro3 == $user2['A_paterno']){
+          if($filtro1 == $user2['Id_Usuario'] || $filtro2 == $user2['Nombre'] || $filtro3 == $user2['A_paterno'] || $filtro4 == $user2['A_Materno'] || $filtro5 == $user2['Fecha_Registro'] || $filtro6 == $user2['Fecha_Nacimiento']){
             echo "<tr>
             <td>".$user2['Id_Usuario']."</td>
             <td>".$user2['Nombre']."</td>
@@ -176,19 +173,15 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
 ?>
 
 
-           </form></div>
-     
+           </form>
+      
 
          
- 
+ <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
         <!-- Pie de pagina-->
-          
+            <?php include_once 'modulos/mdl_footer.php'; ?>
 
-<div id="boton-centrado">
-   <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
-</div>
-
-
+ 
     </body> 
    
 </html>

@@ -70,19 +70,19 @@ CREATE TABLE `Ventas` (
   FOREIGN KEY (Cliente_Id) REFERENCES Cliente(Id_Cliente)
 ) ENGINE=InnoDB;
 
-INSERT INTO tipo_usuario (Usuario, Pasword, Puesto) VALUES('admin', MD5('123'), 'Administrador');
-INSERT INTO tipo_usuario (Usuario, Pasword, Puesto) VALUES('Cajero', MD5('123'), 'Cajero');
+INSERT INTO Tipo_Usuario (Usuario, Pasword, Puesto) VALUES('admin', MD5('123'), 'Administrador');
+INSERT INTO Tipo_Usuario (Usuario, Pasword, Puesto) VALUES('Cajero', MD5('123'), 'Cajero');
 
 
-INSERT INTO usuario (Id_Tipo, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio) 
+INSERT INTO Usuario (Id_Tipo, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio) 
 VALUES('1','ZLPE770216000', 'Administrador', 'PruebaP', 'PruebaM', '2025-06-14', '1977-02-16', '0000000000', 'admin@company.dominio',
 'Domicilio de prueba No. 50 Col. Prueba C.P. 46600');
 
-INSERT INTO usuario (Id_Tipo, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio) 
+INSERT INTO Usuario (Id_Tipo, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio) 
 VALUES('2','ASISN890518000', 'Usuario', 'PruebaP', 'PruebaM', '2025-06-14', '1989-05-18', '0000000000', 'cajero@company.dominio',
 'Domicilio de prueba No. 49 Col. Prueba C.P. 46600');
 
-INSERT INTO cliente (Id_Cliente, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio, Limite_Credito, Credito_Usado) 
+INSERT INTO Cliente (Id_Cliente, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio, Limite_Credito, Credito_Usado) 
 VALUES('1', 'NO APLICA', 'CLIENTE', 'GENERAL', 'NONE', '2025-06-14', '1989-05-18', '0000000000', 'cliente@company.dominio',
 'Domicilio de prueba No. 49 Col. Prueba C.P. 46600', '0', '0');
 

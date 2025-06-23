@@ -55,7 +55,7 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
     <link rel="stylesheet" href="css/modulos.css">
      <link rel="stylesheet" href="css/formularios.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    <script src="js/modulos.js" type="text/javascript"></script>
+     <link rel="stylesheet" href="css/contenedores.css">
  
         	<script language='javascript'>
 		          function consultar(codigo) {
@@ -76,10 +76,12 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
         <!-- Encabezado de la pagina-->
             <?php include_once 'modulos/mdl_header.php'; ?>
         <!-- fin Encabezado de la pagina-->
- <div class="container">
+ <div class="superponer"> 
     <h1 class="text-center mt-4">Modificaciones</h1>
     <p class="text-center">Elija de la lista el producto que desea actualizar haciendo clic en el icono. <img src="img/Actualizar.png" width="30" height="30" alt="Actualizar" title="Actualizar producto"></p>
-              <form method="post" action="listActualizarProductos.php" name="form_filtro_actualizar_producto" id="form_filtro_actualizar_producto" style="align-items: center; background:rgba(0,0,0,0.0);">
+          </div>   
+           <div id="filtro">   
+    <form method="post" action="listActualizarProductos.php" name="form_filtro_actualizar_producto" id="form_filtro_actualizar_producto" style="align-items: center; background:rgba(0,0,0,0.0);">
                 <table class="table-primary"  border="1">
 
               <tr>
@@ -97,15 +99,11 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
               </tr>
             </table>
           </form>
+        </div>
             <!--/*********************************FIN FORMULARIO PARA EL FILTRO*****************************************************/ -->
 
 
-
-        <!-- contenido principal -->
-       
-           
-
-                <!-- <div class="datagrid">-->
+                <div id="listado">
                  <form method="post" action="forms/form_act_producto.php" name="lista_actualizar_producto" id="lista_actualizar_producto" style="width: auto; height: auto;">
                     <input type="hidden" id="micodigo" name="micodigo">
                      <?php
@@ -115,7 +113,7 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
   if($productos){
     echo "
     
-      <table class='table table-bordered border-primary table-hover tabla-clientes'><thead>
+      <table class='table table-bordered border-primary table-hover tabla-datos'><thead>
       <tr>
         <th style='text-align:center'>Codigo</th>
         <th style='text-align:center'>Producto</th>
@@ -171,14 +169,15 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
 ?>
 
 
-           </form>
+           </form></div>
       
 
-         
+         <div id="boton-centrado">
  <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
+ </div>
         <!-- Pie de pagina--> 
-</div>
-            <?php include_once 'modulos/mdl_footer.php'; ?>
+
+           
 
  
     </body> 

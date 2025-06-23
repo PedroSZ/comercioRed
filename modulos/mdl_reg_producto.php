@@ -37,7 +37,7 @@
 		echo '<script type="text/javascript">
 							alert("Producto registrado con éxito");
 							window.location.href="../menuAdmin.php";
-								activarModulo("RegUsuario");
+								
 					</script>';
 		//header("Location:".$_SERVER['HTTP_REFERER']);//regresa al pagina que estaba
 	}

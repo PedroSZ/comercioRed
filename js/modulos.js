@@ -13,13 +13,7 @@ function activarModulo(moduloId) {
   document.getElementById('fecha_registro_p').value = ano+"-"+mes+"-"+dia;//ponemos la fecha actual
   document.getElementById('fecha_venta').value = ano+"-"+mes+"-"+dia;//ponemos la fecha actual
 
-  //DE AUI EN DELANTE ACTIVA EL MODULO SELECCIONADO
-  const modulos = document.querySelectorAll('.modulo');
-  modulos.forEach(modulo => {
-    modulo.classList.remove('activo');
-  });
-  const modulo = document.getElementById(moduloId);
-  modulo.classList.add('activo');
+ 
 }
 
 

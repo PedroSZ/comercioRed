@@ -2,11 +2,11 @@
  color: black;
 }
 
- .tabla-clientes th {
+ .tabla-datos th {
     font-size: 14px;
     text-align: center;
     color: red;
   }
-  .tabla-clientes td {
+  .tabla-datos td {
     font-size: 12px;
   }

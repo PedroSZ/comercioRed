@@ -42,21 +42,6 @@ class Producto extends DB {
 	}
 
 
-//consulta el ultimo registro en el taller
-	public function ultimoRegistro(){
-		$query = $this->connect()->prepare('SELECT MAX(id) as registro from taller');
-		$query->execute();
-		return $query->fetch();
-
-	}
-
-//obtener taller por instructo
-	public function obtenerMiTaller($codigo){
-		$query = $this->connect()->prepare('SELECT id from taller WHERE instructor = :user');
-		$query->execute(['user' => $codigo]);
-		return $query->fetch();
-
-	}
 
 
 	public function consulta($sql){
@@ -71,40 +56,13 @@ class Producto extends DB {
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}
 
-	public function consultarTaller($codigo){
-		$sql='SELECT * FROM taller WHERE instructor = "'.$codigo.'"';
-		//echo $sql;
-		$query = $this->connect()->prepare($sql);
-		$query->execute();
-		return $query->fetch(PDO::FETCH_ASSOC);
-	}
-
-	public function consultarSupervisorPorInstructor($instructor){
-		$query = $this->connect()->prepare('SELECT supervisor from taller
-INNER JOIN estudiante_por_taller on taller.id = estudiante_por_taller.taller where estudiante = :user');
-		$query->execute(['user' => $instructor]);
-		return $query->fetch(PDO::FETCH_ASSOC);
-	}
-
-	public function consultarTallerActual($codigo){
-		$query = $this->connect()->prepare('SELECT instructor.clave as claveInst, instructor.nombre as nombreInst, instructor.apellidos as apellidosInst, docente_supervisor.rfc as rfcSup, docente_supervisor.nombre as nombreSup, docente_supervisor.apellidos as apellidosSup  from taller INNER join instructor on instructor.clave = taller.instructor
-INNER JOIN docente_supervisor on docente_supervisor.rfc = taller.supervisor
-where id = :user');
-		$query->execute(['user' => $codigo]);
-		return $query->fetch(PDO::FETCH_ASSOC);
-	}
-
+	
 //elimina taller por id del taller
 	public function eliminar($codigo){
 		$query = $this->connect()->prepare('DELETE FROM taller WHERE id = :user');
 		$query->execute(['user' => $codigo]);
 	}
 
-//elimina taller por instructor
-	public function eliminarPorInstructor($instructor){
-		$query = $this->connect()->prepare('DELETE FROM taller WHERE instructor = :user');
-		$query->execute(['user' => $instructor]);
-	}
 
 	public function actualizar(){
 		$sql = "UPDATE productos SET 
@@ -147,18 +105,34 @@ where id = :user');
 		   'precio' => $this->precio]);
 	}
 
-	public function guardarSolicitado() {
-		$sql = "INSERT INTO taller (id, nombre, area, horario, instructor, estado) VALUES(:codigo, :nombre, :area :horario, :instructor, :estado)";
-		//echo $sql;
-		$query = $this->connect()->prepare($sql);
-		$query->execute([
-				'codigo' => $this->codigo,
-			'nombre' => $this->nombre,
-			'area' => $this->area,
-			'horario' => $this->horario,
-			'instructor' => $this->instructor,
-			 'estado' => $this->estado]);
-	}
+
+	public function actualizarStock() {
+    // Consultar el stock actual
+    $query = $this->connect()->prepare('SELECT Stock FROM productos WHERE Codigo = :codigo');
+    $query->execute(['codigo' => $this->codigo]);
+    $resultado = $query->fetch(PDO::FETCH_ASSOC);
+
+    if ($resultado) {
+        $stockActual = $resultado['Stock'];
+
+        // Validación: No permitir vender más de lo disponible
+        if ($this->stock > $stockActual) {
+            return false; // Venta inválida, no hay suficiente stock
+        }
+
+        $nuevoStock = $stockActual - $this->stock;
+
+        // Actualizar el stock
+        $update = $this->connect()->prepare('UPDATE productos SET Stock = :stock WHERE Codigo = :codigo');
+        $update->execute(['stock' => $nuevoStock, 'codigo' => $this->codigo]);
+
+        return true; // Actualización exitosa
+    }
+
+    return false; // Producto no encontrado
+}
+
+	
 }
 
 ?>

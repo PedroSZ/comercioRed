@@ -60,10 +60,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/navbarYmenu.css">
-    <link rel="stylesheet" href="../css/modulos.css">
+   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
     <script src="../js/modulos.js" type="text/javascript"></script>  
     <link rel="stylesheet" href="../css/formularios.css">
+   
         <script language='javascript'>
 		function regresar(){
 			location.href='actualizarUsuarios.php'
@@ -82,7 +83,7 @@
                <form method="post" style="width: auto; height:auto;"  action="../modulos/mdl_ActualizarUsuarios.php" id="frm_Actualizarusuarios" >
  <input name="idU"  id="idU" type="hidden" value=" <?php echo $_POST['miIdUsuario'];?>">
 
-  <table border="0" style="color:#FFFFFF; font-weight: 600; font-size: 17px;">
+  <table  class="table table-bordered border-primary table-hover tabla-datos">
   <?php
 echo '
       

@@ -50,16 +50,7 @@ $filtro3 = $_POST['FiltarPater1'];
 ?>
 
     
-      <style>
-  .tabla-clientes th {
-    font-size: 14px;
-    text-align: center;
-    
-  }
-  .tabla-clientes td {
-    font-size: 11px;
-  }
-</style>
+   
     
     
               <form method="post" action="listClientes.php" name="form_filtro_clientes" id="form_filtro_clientes" style="align-items: center; background:rgba(0,0,0,0.0);">
@@ -98,7 +89,7 @@ $filtro3 = $_POST['FiltarPater1'];
   if($clientes){
     echo "
     <div style='width: 100%; overflow-x: auto;'>
-      <table class='table table-bordered border-primary table-hover tabla-clientes'><thead>
+      <table class='table table-bordered border-primary table-hover tabla-datos'><thead>
       <tr>
         <th style='text-align:center'>Id</th>
         <th style='text-align:center'>Nombre</th>

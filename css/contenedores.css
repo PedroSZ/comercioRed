@@ -1,0 +1,28 @@
+
+
+#listado{
+     height: 70vh;
+   overflow-y: scroll; 
+}
+
+#filtro{ 
+    padding-top: 10px;
+     display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#boton-centrado{
+     display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.superponer{
+     position: absolute;
+  top: 0.5px;
+  left: 30%;
+  width: 100px;
+  height: 100px;
+ 
+  z-index: 1; 
+}

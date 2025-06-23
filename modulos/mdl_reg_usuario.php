@@ -54,7 +54,7 @@
 			echo '<script type="text/javascript">
 								alert("USUARIO REGISTRADO CON EXITO");
 								window.location.href="../menuAdmin.php";
-								activarModulo(RegUsuario);
+								
 						</script>';
 			
 
