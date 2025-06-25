@@ -1,62 +1,53 @@
 
 <?php
-	/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
-    include_once 'clases/tipo_usuario.php';
-    include_once 'clases/sesion.php';
-    $userSession = new Sesion();
-    //MADAR A INDEX SI NO HAY SESION INICIADA
-    
-    if (!isset($_SESSION['user'])){
+/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
+include_once 'clases/tipo_usuario.php';
+include_once 'clases/sesion.php';
+$userSession = new Sesion();
+
+if (!isset($_SESSION['user'])) {
     header("location: index.php");
+}
+
+if (isset($_SESSION['user'])) {
+    $user = new Tipo_Usuario();
+    $user->establecerDatos($userSession->getCurrentUser());
+    $tipo = $user->getPuesto();
+    $id = $user->getUsuario_id();
+
+    if ($tipo != "Administrador" && $tipo != "Cajero") {
+        header('location: index.php');
+        exit;
     }
 
-    if(isset($_SESSION['user'])){
-        $user = new Tipo_Usuario();
-        $user->establecerDatos($userSession->getCurrentUser());
-        $tipo = $user->getPuesto();
-///////////////////AQUI SE OBTIENE EL ID DEL USUARIO ACTUAL///////////////////////////////////
-		$id = $user->getUsuario_id();
-      //  echo $id;
-        
-//////////////////////////////////////////////////////////////////////////////////////////////   
-		//mensaje de que no tiene privilegios
-        if($tipo <> "Administrador") header('location: index.php');
-        /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
-        if (!isset($_SESSION['tiempo'])) {
-            $_SESSION['tiempo']=time();
-        }
-        else if (time() - $_SESSION['tiempo'] > 500) {
-            session_destroy();
-            /* Aquí redireccionas a la url especifica */
-            header("location: index.php");
-            die();
-        }
-        $_SESSION['tiempo']=time(); //Si hay actividad seteamos el valor al tiempo actual
-        /*////////////////////FIN SIERRE POR INACTIVIDAD/////////////////////////*/
-
+    if (!isset($_SESSION['tiempo'])) {
+        $_SESSION['tiempo'] = time();
+    } else if (time() - $_SESSION['tiempo'] > 500) {
+        session_destroy();
+        header("location: index.php");
+        die();
     }
-    else{
-        $userSession->closeSession();
-         header("location: index.php");
-    }
+    $_SESSION['tiempo'] = time();
+} else {
+    $userSession->closeSession();
+    header("location: index.php");
+}
 
+error_reporting(0);
+$item = $_POST['Stock'];
 
-	/**********************************************************************************************/
-error_reporting(0);//para que no me muestre errores
-$item = $_POST['Stock']; //para obtener la curp a buscar del fitro
-	
+if (!empty($_POST['codigoPro'])) {
+    include_once './clases/producto.php';
+    $codigo = $_POST['codigoPro'];
+    $produ = new Producto();
+    $item = $produ->consultarCodigo($codigo);
+}
 
-      	if(!empty($_POST['codigoPro'])){
-		include_once './clases/producto.php';
-		$codigo = $_POST['codigoPro'];
-		$produ = new Producto();
-		$item = $produ->consultarCodigo($codigo);
-        //echo $item["Stock"];
-	}
-	else{
-
-	} 
-	?>
+include_once 'clases/venta.php';
+$ve = new Ventas();
+$ventas = $ve->consultarUltimo();
+$no_venta_maximo = $ventas[0]["MAX(No_venta)"];
+?>
 
     <style>
     /* Oculta las columnas deseadas */
@@ -66,8 +57,16 @@ $item = $_POST['Stock']; //para obtener la curp a buscar del fitro
 </style>
 
 	   <script>
+let existenciasOriginal = 0;
+
 function consultar(codigo) {
-    if (codigo === '') return;
+    if (codigo === '') {
+        document.getElementById('existencias').innerText = '0';
+        document.getElementById('precio_v').value = '';
+        document.getElementById('codigoOculto').value = '';
+        existenciasOriginal = 0;
+        return;
+    }
 
     fetch('modulos/consultar_producto.php', {
         method: 'POST',
@@ -79,18 +78,213 @@ function consultar(codigo) {
         if (data) {
             document.getElementById('precio_v').value = data.Precio;
             document.getElementById('codigoOculto').value = data.Codigo;
-            // Aquí puedes mostrar las existencias si quieres
-            // document.getElementById('existencias').innerText = data.Stock;
+            document.getElementById('existencias').innerText = data.Stock;
+            existenciasOriginal = parseInt(data.Stock);
         } else {
             alert('Producto no encontrado');
+            document.getElementById('existencias').innerText = '0';
+            document.getElementById('precio_v').value = '';
+            document.getElementById('codigoOculto').value = '';
+            existenciasOriginal = 0;
         }
     })
     .catch(error => {
         console.error('Error:', error);
     });
-  
+}
+
+function previsualizarStock() {
+    let cantidadIngresada = parseInt(document.getElementById('cantidad_v').value);
+
+    if (isNaN(cantidadIngresada) || cantidadIngresada <= 0) {
+        document.getElementById('existencias').innerText = existenciasOriginal;
+        return;
+    }
+
+    if (cantidadIngresada > existenciasOriginal) {
+        alert('La cantidad ingresada supera el stock disponible.');
+        document.getElementById('cantidad_v').value = '';
+        document.getElementById('existencias').innerText = existenciasOriginal;
+        return;
+    }
+
+    let stockRestante = existenciasOriginal - cantidadIngresada;
+    document.getElementById('existencias').innerText = stockRestante;
+}
+
+window.onload = function () {
+    var fecha = new Date();
+    var mes = fecha.getMonth() + 1;
+    var dia = fecha.getDate();
+    var ano = fecha.getFullYear();
+    if (dia < 10) dia = '0' + dia;
+    if (mes < 10) mes = '0' + mes;
+    document.getElementById('fecha_venta').value = ano + "-" + mes + "-" + dia;
+
+    let campo = document.getElementById('codigo');
+    campo.focus();
+    campo.select();
+
+    campo.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('cantidad_v').focus();
+            document.getElementById('cantidad_v').select();
+        }
+    });
+
+    document.getElementById('cantidad_v').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('tipo_pago').focus();
+        }
+    });
+
+    document.getElementById('cantidad_v').addEventListener('input', function () {
+        previsualizarStock();
+    });
+
+    document.getElementById('tipo_pago').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            document.getElementById('agregar').click();
+        }
+    });
+
+    document.getElementById('agregar').addEventListener('click', function (event) {
+        agregarProductoYResetear();
+    });
+
+    document.getElementById('cancelar').addEventListener('click', function () {
+        if (confirm('¿Estás seguro de que deseas cancelar la venta?')) {
+            cancelarVenta();
+        }
+    });
+
+    document.getElementById('regresar').addEventListener('click', function () {
+        location.href = 'menuAdmin.php';
+    });
+};
+
+function limpiarCampos() {
+    document.getElementById('codigo').value = '';
+    document.getElementById('codigoOculto').value = '';
+    document.getElementById('cantidad_v').value = '';
+    document.getElementById('precio_v').value = '';
+    document.getElementById('existencias').innerText = existenciasOriginal;
+    document.getElementById('codigo').focus();
+    document.getElementById('codigo').select();
+}
+
+function cancelarVenta() {
+    let tabla = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
+    tabla.innerHTML = '';
+    document.getElementById('total_general').innerText = '0.00';
+    limpiarCampos();
+}
+
+function calcularTotalGeneral() {
+    let tabla = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
+    let filas = tabla.getElementsByTagName('tr');
+    let total = 0;
+
+    for (let i = 0; i < filas.length; i++) {
+        let subtotal = parseFloat(filas[i].cells[8].getElementsByTagName('input')[0].value);
+        total += subtotal;
+    }
+
+    document.getElementById('total_general').innerText = total.toFixed(2);
+}
+
+function agregarProductoYResetear() {
+    let v_fecha_venta = document.getElementById('fecha_venta').value;
+    let v_id_vendedor = document.getElementById('id_vendedor').value;
+    let v_no_venta = document.getElementById('no_venta').value;
+    let v_Cliente = document.getElementById('Cliente').value;
+    let v_codigo = document.getElementById('codigoOculto').value;
+    let v_cantidad = parseInt(document.getElementById('cantidad_v').value);
+    let v_precio = parseFloat(document.getElementById('precio_v').value);
+    let v_tipo_pago = document.getElementById('tipo_pago').value;
+    let v_existencias = parseInt(document.getElementById('existencias').innerText);
+
+    if (v_existencias === 0) {
+        alert('El producto se ha agotado.');
+        limpiarCampos();
+        return;
+    }
+
+    if (v_cantidad > existenciasOriginal) {
+        alert('La cantidad ingresada supera las existencias disponibles.');
+        return;
+    }
+
+    let tabla = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
+    let filas = tabla.getElementsByTagName('tr');
+    let productoExiste = false;
+
+    for (let i = 0; i < filas.length; i++) {
+        let codigoEnTabla = filas[i].cells[4].getElementsByTagName('input')[0].value;
+
+        if (codigoEnTabla === v_codigo) {
+            let cantidadActual = parseInt(filas[i].cells[5].getElementsByTagName('input')[0].value);
+            let precioActual = parseFloat(filas[i].cells[6].getElementsByTagName('input')[0].value);
+            let nuevaCantidad = cantidadActual + v_cantidad;
+
+            if (precioActual !== v_precio) {
+                let precioPromedio = ((precioActual * cantidadActual) + (v_precio * v_cantidad)) / nuevaCantidad;
+                precioPromedio = precioPromedio.toFixed(2);
+                filas[i].cells[6].getElementsByTagName('input')[0].value = precioPromedio;
+            }
+
+            filas[i].cells[5].getElementsByTagName('input')[0].value = nuevaCantidad;
+            let precioFinal = parseFloat(filas[i].cells[6].getElementsByTagName('input')[0].value);
+            let subtotal = (precioFinal * nuevaCantidad).toFixed(2);
+            filas[i].cells[8].getElementsByTagName('input')[0].value = subtotal;
+            productoExiste = true;
+            break;
+        }
+    }
+
+    if (!productoExiste) {
+        let nuevaFila = tabla.insertRow();
+
+        function crearCeldaConInput(valor, nombre, ocultar) {
+            let celda = nuevaFila.insertCell();
+            if (ocultar) {
+                celda.classList.add('ocultar');
+            }
+            celda.innerHTML = `<input type="text" name="${nombre}[]" value="${valor}" readonly>`;
+        }
+
+        function crearCeldaConBoton() {
+            let celda = nuevaFila.insertCell();
+            let boton = document.createElement("button");
+            boton.type = "button";
+            boton.textContent = "Quitar";
+            boton.addEventListener("click", function () {
+                this.closest("tr").remove();
+                calcularTotalGeneral();
+            });
+            celda.appendChild(boton);
+        }
+
+        crearCeldaConInput(v_fecha_venta, 'fecha_venta', true);
+        crearCeldaConInput(v_id_vendedor, 'id_vendedor', true);
+        crearCeldaConInput(v_no_venta, 'no_venta', true);
+        crearCeldaConInput(v_Cliente, 'cliente', true);
+        crearCeldaConInput(v_codigo, 'codigoOculto', false);
+        crearCeldaConInput(v_cantidad, 'cantidad', false);
+        crearCeldaConInput(v_precio, 'precio', false);
+        crearCeldaConInput(v_tipo_pago, 'tipo_pago', true);
+        crearCeldaConInput((v_precio * v_cantidad).toFixed(2), 'subtotal');
+        crearCeldaConBoton();
+    }
+
+    calcularTotalGeneral();
+    limpiarCampos();
 }
 </script>
+
  
  
  <?php
@@ -162,7 +356,7 @@ function consultar(codigo) {
                 <p><label>Existencias:</label></p>
             </td>
             <td>
-                <p>
+                <p id="existencias">
                     <?= $item["Stock"]; ?>
                 </p>
             </td>
@@ -229,153 +423,10 @@ function consultar(codigo) {
       
         <input type="submit" value="Registrar Venta">
         <input type="button" id="cancelar" value="Cancelar">
-        <input type="button" onclick="location='menuAdmin.php'" value="Regresar" />
+       <input type="button" id="regresar" value="Regresar" />
+
     
   </table>
-<script>
-    window.onload = function () {
-    var fecha = new Date();
-    var mes = fecha.getMonth() + 1;
-    var dia = fecha.getDate();
-    var ano = fecha.getFullYear();
-    if (dia < 10) dia = '0' + dia;
-    if (mes < 10) mes = '0' + mes;
-    document.getElementById('fecha_venta').value = ano + "-" + mes + "-" + dia;
 
-    let campo = document.getElementById('codigo');
-    campo.focus();
-    campo.select();
-
-    campo.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('cantidad_v').focus();
-            document.getElementById('cantidad_v').select();
-        }
-    });
-
-    document.getElementById('cantidad_v').addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('tipo_pago').focus();
-        }
-    });
-
-    document.getElementById('tipo_pago').addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('agregar').click();
-        }
-    });
-
-    document.getElementById('agregar').addEventListener('click', function (event) {
-        agregarProductoYResetear();
-    });
-
-    function agregarProductoYResetear() {
-        let v_fecha_venta = document.getElementById('fecha_venta').value;
-        let v_id_vendedor = document.getElementById('id_vendedor').value;
-        let v_no_venta = document.getElementById('no_venta').value;
-        let v_Cliente = document.getElementById('Cliente').value;
-        let v_codigo = document.getElementById('codigoOculto').value;
-        let v_cantidad = parseInt(document.getElementById('cantidad_v').value);
-        let v_precio = parseFloat(document.getElementById('precio_v').value);
-        let v_tipo_pago = document.getElementById('tipo_pago').value;
-
-        let tabla = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
-        let filas = tabla.getElementsByTagName('tr');
-        let productoExiste = false;
-
-        for (let i = 0; i < filas.length; i++) {
-            let codigoEnTabla = filas[i].cells[4].getElementsByTagName('input')[0].value;
-
-            if (codigoEnTabla === v_codigo) {
-                let cantidadActual = parseInt(filas[i].cells[5].getElementsByTagName('input')[0].value);
-                let precioActual = parseFloat(filas[i].cells[6].getElementsByTagName('input')[0].value);
-
-                let nuevaCantidad = cantidadActual + v_cantidad;
-
-                if (precioActual !== v_precio) {
-                    let precioPromedio = ((precioActual * cantidadActual) + (v_precio * v_cantidad)) / nuevaCantidad;
-                    precioPromedio = precioPromedio.toFixed(2);
-                    filas[i].cells[6].getElementsByTagName('input')[0].value = precioPromedio;
-                }
-
-                filas[i].cells[5].getElementsByTagName('input')[0].value = nuevaCantidad;
-
-                // Actualizar subtotal
-                let precioFinal = parseFloat(filas[i].cells[6].getElementsByTagName('input')[0].value);
-                let subtotal = (precioFinal * nuevaCantidad).toFixed(2);
-                filas[i].cells[8].getElementsByTagName('input')[0].value = subtotal;
-
-                productoExiste = true;
-                break;
-            }
-        }
-
-        if (!productoExiste) {
-            let nuevaFila = tabla.insertRow();
-
-          function crearCeldaConInput(valor, nombre, ocultar) {
-    let celda = nuevaFila.insertCell();
-    if (ocultar) {
-        celda.classList.add('ocultar'); // Aplica la clase solo si debe estar oculta
-    }
-    celda.innerHTML = `<input type="text" name="${nombre}[]" value="${valor}" readonly>`;
-}
-
-
-            function crearCeldaConBoton() {
-                let celda = nuevaFila.insertCell();
-                let boton = document.createElement("button");
-                boton.type = "button";
-                boton.textContent = "Quitar";
-                boton.addEventListener("click", function () {
-                    this.closest("tr").remove();
-                    calcularTotalGeneral();
-                });
-                celda.appendChild(boton);
-            }
-
-           crearCeldaConInput(v_fecha_venta, 'fecha_venta', true);
-crearCeldaConInput(v_id_vendedor, 'id_vendedor', true);
-crearCeldaConInput(v_no_venta, 'no_venta', true);
-crearCeldaConInput(v_Cliente, 'cliente', true);
-crearCeldaConInput(v_codigo, 'codigoOculto', false);
-crearCeldaConInput(v_cantidad, 'cantidad', false);
-crearCeldaConInput(v_precio, 'precio', false);
-crearCeldaConInput(v_tipo_pago, 'tipo_pago', true);
-//crearCeldaSubtotal(subtotal);
- crearCeldaConInput((v_precio * v_cantidad).toFixed(2), 'subtotal'); // Subtotal
-crearCeldaConBoton();
-        }
-
-        calcularTotalGeneral();
-
-        document.getElementById('codigo').value = '';
-        document.getElementById('codigoOculto').value = '';
-        document.getElementById('cantidad_v').value = '';
-        document.getElementById('precio_v').value = '';
-       // document.getElementById('tipo_pago').selectedIndex = 0;
-
-        document.getElementById('codigo').focus();
-        document.getElementById('codigo').select();
-    }
-
-    function calcularTotalGeneral() {
-        let tabla = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
-        let filas = tabla.getElementsByTagName('tr');
-        let total = 0;
-
-        for (let i = 0; i < filas.length; i++) {
-            let subtotal = parseFloat(filas[i].cells[8].getElementsByTagName('input')[0].value);
-            total += subtotal;
-        }
-
-        document.getElementById('total_general').innerText = total.toFixed(2);
-    }
-};
-
-</script>
 
 </form>

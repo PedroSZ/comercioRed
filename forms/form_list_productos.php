@@ -45,10 +45,7 @@
 error_reporting(0);//para que no me muestre errores
 $filtro1 = $_POST['FiltarCodigo']; //para obtener la curp a buscar del fitro
 $filtro2 = $_POST['FiltarProducto'];
-$filtro3 = $_POST['FiltarDescripcoin'];
-$filtro4 = $_POST['FiltarFechaR'];
-$filtro5 = $_POST['FiltarFechaC'];
-$filtro6 = $_POST['FiltarPrecio'];
+
 ?>
 
     <style>
@@ -61,7 +58,7 @@ $filtro6 = $_POST['FiltarPrecio'];
     font-size: 11px;
   }
 </style> 
-     
+      <div id="filtro"> 
        
               <form method="post" action="listProductos.php" name="form_filtro" id="form_filtro" style="align-items: center; background:rgba(0,0,0,0.0);">
                 <table class="table-primary"  border="1">
@@ -71,16 +68,17 @@ $filtro6 = $_POST['FiltarPrecio'];
 
                   <input name="FiltarCodigo" type="text"  placeholder="Buscar por Código" id ="FiltarCodigo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
                   <input name="FiltarProducto" type="text" title="Busqueda por Producto"  placeholder="Buscar por Producto" id ="FiltrarNombre" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarDescripcion" type="text" title="Busqueda por Descripción" placeholder="Buscar por descripcion" id ="FiltrarDescripcion" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
-
+                
                   
                       <br>
-                      <input type="submit" value="Buscar">
+                      <div id="boton-centrado">
+          <input type="submit" value="Buscar">
+          </div>
 
                 </td>
               </tr>
             </table>
-          </form>
+          </form> </div>
             <!--/*********************************FIN FORMULARIO PARA EL FILTRO*****************************************************/ -->
 
 
@@ -88,7 +86,7 @@ $filtro6 = $_POST['FiltarPrecio'];
         <!-- contenido principal -->
       
 
-                
+                 <div id="listado">
                  <form method="post" action="" name="frm_listProductos" id="frm_listProductos" style="width: auto; height: auto;">
 					
                      <?php
@@ -109,10 +107,10 @@ $filtro6 = $_POST['FiltarPrecio'];
         <th style='text-align:center'>Costo producción</th>
         <th style='text-align:center'>Precio al Público</th>
       </tr></thead>";
-      if($filtro1 || $filtro2 || $filtro3 || $filtro4 || $filtro5 || $filtro6){
+      if($filtro1 || $filtro2){
         foreach ($productos as $producto) {
         //  if($filtro1 == $alumno['curp'] || $filtro2 == $alumno['nombre'] || $filtro3 == $alumno['apellidos']){
-          if($filtro1 == $producto['Codigo'] || $filtro2 == $producto['Nombre'] || $filtro3 == $producto['Descripcion'] || $filtro4 == $producto['Fecha_Caducidad'] || $filtro5 == $producto['Fecha_Registro'] || $filtro6 == $producto['Precio']){
+          if($filtro1 == $producto['Codigo'] || $filtro2 == $producto['Nombre']){
             echo "<tr>
             <td>".$producto['Codigo']."</td>
             <td>".$producto['Nombre']."</td>
@@ -151,9 +149,11 @@ $filtro6 = $_POST['FiltarPrecio'];
 ?>
 
 
-           </form>
-      
-
+           </form></div>
+        <div id="boton-centrado">
           <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
+          </div>
+
+         
 
      

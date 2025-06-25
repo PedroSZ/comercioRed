@@ -22,7 +22,7 @@
                  dia='0'+dia; //agrega cero si el menor de 10
                 if(mes<10)
                      mes='0'+mes //agrega cero si el menor de 10
-                     document.getElementById('fecha_venta').value = ano+"-"+mes+"-"+dia;//ponemos la fecha actual
+                     document.getElementById('fecha_registro_p').value = ano+"-"+mes+"-"+dia;//ponemos la fecha actual
     };
   </script>
 

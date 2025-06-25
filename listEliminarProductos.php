@@ -39,9 +39,9 @@
 
 /**********************************************************************************************/
 error_reporting(0);//para que no me muestre errores
-$filtro1 = $_POST['FiltarId_actualizar_producto']; //para obtener la curp a buscar del fitro
-$filtro2 = $_POST['FiltarNom_actualizar_producto'];
-$filtro3 = $_POST['FiltarPater_actualizar_producto'];
+$filtro1 = $_POST['FiltarId_eliminar_producto']; //para obtener la curp a buscar del fitro
+$filtro2 = $_POST['FiltarNom_eliminar_producto'];
+$filtro3 = $_POST['FiltarPater_eliminar_producto'];
 
 ?>
 </!DOCTYPE html>
@@ -59,9 +59,9 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
  
         	<script language='javascript'>
 		          function consultar(codigo) {
-                 document.lista_actualizar_producto.micodigo.value = codigo;
+                 document.lista_eliminar_producto.micodigo.value = codigo;
 			           // alert(codigo);
-                   document.lista_actualizar_producto.submit();
+                   document.lista_eliminar_producto.submit();
 	      	  }
 		        function regresar(){
 		      	location.href='index.php'
@@ -77,19 +77,19 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
             <?php include_once 'modulos/mdl_header.php'; ?>
         <!-- fin Encabezado de la pagina-->
  <div class="superponer"> 
-    <h1 class="text-center mt-4">Modificaciones</h1>
-    <p class="text-center">Elija de la lista el producto que desea actualizar haciendo clic en el icono. <img src="img/Actualizar.png" width="30" height="30" alt="Actualizar" title="Actualizar producto"></p>
+    <h1 class="text-center mt-4">Bajas</h1>
+    <p class="text-center">Elija de la lista el producto que desea eliminar haciendo clic en el icono. <img src="img/delete.png" width="30" height="30" alt="eliminar" title="eliminar producto"></p>
           </div>   
            <div id="filtro">   
-    <form method="post" action="listActualizarProductos.php" name="form_filtro_actualizar_producto" id="form_filtro_actualizar_producto" style="align-items: center; background:rgba(0,0,0,0.0);">
+    <form method="post" action="listeliminarProductos.php" name="form_filtro_eliminar_producto" id="form_filtro_eliminar_producto" style="align-items: center; background:rgba(0,0,0,0.0);">
                 <table class="table-primary"  border="1">
 
               <tr>
                 <td width="100%" style="text-align: right;">
 
-                  <input name="FiltarId_actualizar_producto" type="text"  placeholder="Buscar por Código" id ="FiltarId_actualizar_producto" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarNom_actualizar_producto" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltarNom_actualizar_producto" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarPater_actualizar_producto" type="text" title="Busqueda por Descripción" placeholder="Buscar por descripcion" id ="FiltarPater_actualizar_producto" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
+                  <input name="FiltarId_eliminar_producto" type="text"  placeholder="Buscar por Código" id ="FiltarId_eliminar_producto" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarNom_eliminar_producto" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltarNom_eliminar_producto" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarPater_eliminar_producto" type="text" title="Busqueda por Descripción" placeholder="Buscar por descripcion" id ="FiltarPater_eliminar_producto" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
 
                   
                       <br>
@@ -104,7 +104,7 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
 
 
                 <div id="listado">
-                 <form method="post" action="forms/form_act_producto.php" name="lista_actualizar_producto" id="lista_actualizar_producto" style="width: auto; height: auto;">
+                 <form method="post" action="modulos/mdl_del_producto.php" name="lista_eliminar_producto" id="lista_eliminar_producto" style="width: auto; height: auto;">
                     <input type="hidden" id="micodigo" name="micodigo">
                      <?php
   include_once 'clases/producto.php';
@@ -138,7 +138,7 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
             <td>".$produ['Fecha_Registro']."</td>
             <td>".$produ['Costo']."</td>
             <td>".$produ['Precio']."</td> 
-           <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$produ['Codigo']."\");'></td>
+           <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='consultar(\"".$produ['Codigo']."\");'></td>
             </tr>";
           }
 
@@ -156,7 +156,7 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
             <td>".$produ['Fecha_Registro']."</td>
             <td>".$produ['Costo']."</td>
             <td>".$produ['Precio']."</td> 
-           <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$produ['Codigo']."\");'></td>
+           <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='consultar(\"".$produ['Codigo']."\");'></td>
             </tr>";
         }
       }

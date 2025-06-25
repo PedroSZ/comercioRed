@@ -84,7 +84,7 @@ if (!isset($_SESSION['user'])){
                <form method="post" style="width: auto; height:auto;"  action="../modulos/mdl_ActualizarProducto.php" id="frm_ActualizarProducto" >
             <input name="fecha_registro_p" type="hidden" id ="fecha_registro_p" required >
 
-  <table border="0" style="color:#FFFFFF; font-weight: 600; font-size: 17px;">
+  <table  class="table">
   <?php
 echo '
       
@@ -97,7 +97,7 @@ echo '
       <p  class = "negrita"><label>Codigo:</label></p>
     </td>
     <td>
-      <p><input name="codigo" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Código del producto" id ="codigoid"  title="Campo obligatorio " required value="'.$item["Codigo"].'"></p>
+      <p><input name="codigo" readonly type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Código del producto" id ="codigoid"  title="Campo obligatorio " required value="'.$item["Codigo"].'"></p>
     </td>
 
      <td COLSPAN=2 width="50%" style="text-align: right;">
@@ -150,7 +150,7 @@ echo '
     </tr>  
   '?>
   <tr>
-    <td COLSPAN=5 style="text-align: center;">
+    <td COLSPAN=6 style="text-align: center;">
       <BR>
       <input type="submit" value="Actualizar">
       <input type="button" value="Cancelar" onclick="limpiar()">

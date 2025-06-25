@@ -52,7 +52,7 @@ $filtro3 = $_POST['FiltarPater1'];
     
    
     
-    
+     <div id="filtro"> 
               <form method="post" action="listClientes.php" name="form_filtro_clientes" id="form_filtro_clientes" style="align-items: center; background:rgba(0,0,0,0.0);">
                 <table class="table-primary"  border="1">
 
@@ -65,21 +65,20 @@ $filtro3 = $_POST['FiltarPater1'];
 
                   
                       <br>
-                      <input type="submit" value="Buscar">
+                       <div id="boton-centrado">
+         
+          
+          <input type="submit" value="Buscar">
+          </div>
+                      
 
                 </td>
               </tr>
             </table>
-          </form>
+          </form></div>
             <!--/*********************************FIN FORMULARIO PARA EL FILTRO*****************************************************/ -->
 
-
-
-        <!-- contenido principal -->
-       
-           
-
-                <!-- <div class="datagrid">-->
+                  <div id="listado">
                  <form method="post" action="" name="frm_listCliente" id="frm_listCliente" style="width: auto; height: auto;">
 					
                      <?php
@@ -154,11 +153,11 @@ $filtro3 = $_POST['FiltarPater1'];
     echo " <p>No hay Clientes registrados en la base de datos</p>";
   }
 ?>      
-           </form>
-      
+           </form></div>
+         <div id="boton-centrado">
+          <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
+          </div>
 
-         
- <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
-     
+       
 
 </html>

@@ -41,7 +41,10 @@ class Producto extends DB {
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-
+	public function eliminar($codigo){
+		$query = $this->connect()->prepare('DELETE FROM productos WHERE Codigo = :user');
+		$query->execute(['user' => $codigo]);
+	}
 
 
 	public function consulta($sql){
@@ -56,40 +59,31 @@ class Producto extends DB {
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}
 
-	
-//elimina taller por id del taller
-	public function eliminar($codigo){
-		$query = $this->connect()->prepare('DELETE FROM taller WHERE id = :user');
-		$query->execute(['user' => $codigo]);
-	}
 
 
-	public function actualizar(){
-		$sql = "UPDATE productos SET 
-			Codigo = :codigo_nuevo, 
-			Nombre = :nombre, 
-			Descripcion = :descripcion, 
-			Stock = :stock, 
-			Fecha_Caducidad = :fecha_caducidad, 
-			Fecha_Registro = :fecha_registro, 
-			Costo = :costo, 
-			Precio = :precio	
-			WHERE Codigo = :codigo_actual";
-		
-		$query = $this->connect()->prepare($sql);
-		$query->execute([
-			'codigo_nuevo' => $this->codigo,
-			'nombre' => $this->nombre,
-			'descripcion' => $this->descripcion,
-			'stock' => $this->stock,
-			'fecha_caducidad' => $this->fecha_caducidad,
-			'fecha_registro' => $this->fecha_registro,
-			'costo' => $this->costo,
-			'precio' => $this->precio,
-			'codigo_actual' => $this->codigo_actual,
-		]);
-	}
-	
+	public function actualizar() {
+    $sql = "UPDATE productos SET 
+        Nombre = :nombre, 
+        Descripcion = :descripcion, 
+        Stock = :stock, 
+        Fecha_Caducidad = :fecha_caducidad, 
+        Fecha_Registro = :fecha_registro, 
+        Costo = :costo, 
+        Precio = :precio	
+        WHERE Codigo = :codigo";
+
+    $query = $this->connect()->prepare($sql);
+    $query->execute([
+        'nombre' => $this->nombre,
+        'descripcion' => $this->descripcion,
+        'stock' => $this->stock,
+        'fecha_caducidad' => $this->fecha_caducidad,
+        'fecha_registro' => $this->fecha_registro,
+        'costo' => $this->costo,
+        'precio' => $this->precio,
+        'codigo' => $this->codigo,
+    ]);
+}
 
 	public function guardar() {
 		$sql = "INSERT INTO productos (Codigo, Nombre, Descripcion, Stock, Fecha_Caducidad, Fecha_Registro, Costo, Precio) VALUES(:codigo, :nombre, :descripcion, :stock, :fecha_caducidad , :fecha_registro_p, :costo, :precio)";
@@ -130,6 +124,16 @@ class Producto extends DB {
     }
 
     return false; // Producto no encontrado
+}
+
+
+public function actualizarStockDirecto() {
+    // Actualiza directamente el stock del producto
+    $update = $this->connect()->prepare('UPDATE productos SET Stock = :stock WHERE Codigo = :codigo');
+    $update->execute([
+        'stock' => $this->stock,
+        'codigo' => $this->codigo
+    ]);
 }
 
 	

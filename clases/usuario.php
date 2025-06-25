@@ -88,14 +88,13 @@ class Usuario extends DB {
 	}
 
 	public function actualizar(){
-		$sql = "UPDATE usuario SET Id_Usuario = :nuevo_id, Id_Tipo = :id_tipo, Rfc = :rfc, 
+		$sql = "UPDATE usuario SET Id_Tipo = :id_tipo, Rfc = :rfc, 
 			Nombre = :nombre, A_paterno = :a_paterno, A_Materno = :a_materno, 
 			Fecha_Registro = :fecha_registro, Fecha_Nacimiento = :fecha_nacimiento, 
 			Telefono = :telefono, Email = :email, Domicilio = :domicilio WHERE Id_Usuario = :id_actual";
 		$query = $this->connect()->prepare($sql);
 		$query->execute([
-    'nuevo_id' => $this->id_usuario,  // nuevo valor (si cambia)
-    'id_actual' => $this->id_usuario, // identificador original
+    'id_actual' => $this->id_usuario, 
     'id_tipo' => $this->id_tipo,
     'rfc' => $this->rfc,
     'nombre' => $this->nombre,
@@ -140,17 +139,10 @@ public function guardar() {
 }
 	}
 
-	/*public function guardar() {
-		$sql = "INSERT INTO estudiante (curp, nombre, apellidos, carrera, grado, grupo) VALUES(:codigo, :nombre, :apellidos, :carrera, :grado, :grupo)";
-		$query = $this->connect()->prepare($sql);
-		$query->execute([
-			'codigo' => $this->codigo,
-			'nombre' => $this->nombre,
-			'apellidos' => $this->apellidos,
-			'carrera' => $this->carrera,
-			'grado' => $this->grado,
-			'grupo' => $this->grupo]);
-	}*/
+	 public function eliminarUsuarioPorIdTipo($id_tipo){
+        $query = $this->connect()->prepare('DELETE FROM usuario WHERE Id_Tipo = :user');
+        $query->execute(['user' => $id_tipo]);
+    }
 }
 
 ?>

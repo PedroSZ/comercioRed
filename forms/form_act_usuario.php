@@ -83,7 +83,7 @@
                <form method="post" style="width: auto; height:auto;"  action="../modulos/mdl_ActualizarUsuarios.php" id="frm_Actualizarusuarios" >
  <input name="idU"  id="idU" type="hidden" value=" <?php echo $_POST['miIdUsuario'];?>">
 
-  <table  class="table table-bordered border-primary table-hover tabla-datos">
+  <table  class="table">
   <?php
 echo '
       
@@ -91,22 +91,23 @@ echo '
     
   <tr>
     <td COLSPAN=2 style="text-align: right;"><p  class = "negrita"><label>Nombre:</label></p></td>
-    <td><p><input name="nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Nombre" id ="nombre" required pattern="[A-ZÑ ]+" title="Ingresa al menos un nombre por favor " required value="'.$miUsuario["Nombre"].'"></p></td>
+    <td><p><input name="nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Nombre" id ="nombre"  title="Ingresa al menos un nombre por favor " required value="'.$miUsuario["Nombre"].'"></p></td>
      <td COLSPAN=2  width="50%" style="text-align: right;"><p class = "negrita"><label>Apellido Paterno:</label></p></td>
-    <td><p><input name="a_paterno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Paterno" id ="a_paterno" required pattern="[A-ZÑ ]+" title="Ingresa al menos un apellido por favor " required value="'.$miUsuario["A_paterno"].'"></p></td>
+    <td><p><input name="a_paterno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Paterno" id ="a_paterno" title="Ingresa al menos un apellido por favor " required value="'.$miUsuario["A_paterno"].'"></p></td>
   </tr>
  
   <tr>
     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Apellido Materno:</label></p></td>
-    <td><p><input name="a_materno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Materno" id ="a_materno" required pattern="[A-ZÑ ]+" title="Ingresa al menos un apellido por favor " value="'.$miUsuario["A_Materno"].'"></p></td>
+    <td><p><input name="a_materno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Materno" id ="a_materno" title="Ingresa al menos un apellido por favor " value="'.$miUsuario["A_Materno"].'"></p></td>
     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Fecha de Nacimiento:</label></p></td>
-    <td><p><input name="fecha_nacimiento" type="date" id ="fecha_nacimiento" required value="'.$miUsuario["Fecha_Nacimiento"].'"></p></td>
+    <td><p><input name="fecha_nacimiento" type="date" id ="fecha_nacimiento"  value="'.$miUsuario["Fecha_Nacimiento"].'"></p></td>
    
   </tr>
 
   <tr>
       <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>RFC:</label></p></td>
-      <td><p><input name="rfc" type="text"  placeholder="Ingresar RFC" id ="rfc" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" required pattern="^[A-ZÑ&]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{3}$" title="Por favor ingresa solo un formato RFC por ejemplo SAJG990112000" required value="'.$miUsuario["Rfc"].'"></p></td>
+      <!-- <td><p><input name="rfc" type="text"  placeholder="Ingresar RFC" id ="rfc" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"  pattern="^[A-ZÑ&]{3,4}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[A-Z0-9]{3}$" title="Por favor ingresa solo un formato RFC por ejemplo SAJG990112000"  value=""></p></td> -->
+       <td><p><input name="rfc" type="text"  placeholder="Ingresar RFC" id ="rfc" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()"  value="'.$miUsuario["Rfc"].'"></p></td>
       <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Fecha de registro:</label></p></td>
       <td><p><input name="fecha_registro" type="date" id ="fecha_registro" required value="'.$miUsuario["Fecha_Registro"].'"></p></td>
   </tr>
@@ -114,8 +115,8 @@ echo '
    <tr>
     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Telefono:</label></p></td><td>
     <p><input name="telefono" type="number" placeholder="Ingresar Telefono" id ="telefono" required pattern="[0-9]+" title="Ingresa al menos un numero por favor " value="'.$miUsuario["Telefono"].'"></p></td>
-     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>E-Mail:</label></p></td>
-    <td> <p><input name="email"  type="email" placeholder="Ingresar Email" id ="email" required pattern="^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" title="Por favor ingresa un correo con el formato nombre@sitio.dominio" required value="'.$miUsuario["Email"].'"></p></td>
+     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Nombre de Usuario:</label></p></td>
+    <td> <p><input name="email"  type="text" placeholder="Ingresar Email" id ="email" title="Por favor ingresa un nomre de usuario que servira para acceder al sistema posteriormente" required value="'.$miUsuario["Email"].'"></p></td>
   </tr>
 
    <tr>
@@ -145,7 +146,7 @@ echo '
     </td>
   </tr>
   <tr>
-    <td COLSPAN=5 style="text-align: center;">
+    <td COLSPAN=6 style="text-align: center;">
       <BR>
       <input type="submit" value="Actualizar">
       <input type="button" value="Cancelar" onclick="limpiar()">

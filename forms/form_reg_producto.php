@@ -16,7 +16,7 @@
       <p><label>Nomre del producto:</label></p>
     </td>
     <td>
-      <p><input name="producto_nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar nombre del producto" id ="producto_nombre" required pattern="[A-ZÑ ]+" title="Ingresa nombre del producto " required ></p>
+      <p><input name="producto_nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar nombre del producto" id ="producto_nombre" title="Ingresa nombre del producto " required ></p>
     </td>
   </tr>
  
@@ -25,7 +25,7 @@
       <p><label>Descripción:</label></p>
     </td>
     <td>
-      <p><input name="descripcion" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar descripción del producto" id ="descripcion" required pattern="[A-ZÑ ]+" title="Agrega una breve descripción por favor " ></p>
+      <p><input name="descripcion" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar descripción del producto" id ="descripcion" title="Agrega una breve descripción por favor " ></p>
     </td>
       <td COLSPAN=2 style="text-align: right;">
       <p><label>Cantidad:</label></p>
@@ -40,7 +40,7 @@
       <p><label>Fecha de Caducidad:</label></p>
     </td>
     <td>
-      <p><input name="fecha_caducidad" type="date" id ="fecha_caducidad" required ></p>
+      <p><input name="fecha_caducidad" type="date" id ="fecha_caducidad" ></p>
     </td>
 
      
@@ -51,7 +51,7 @@
       <p>Costo:</p>
     </td>
     <td>
-      <p><input name="costo" type="text"  placeholder="Ingresar costo" id ="costo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" title="Por favor especifica costo de producción" required></p>
+      <p><input name="costo" type="text"  placeholder="Ingresar costo" id ="costo" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" title="Por favor especifica costo de producción" ></p>
     </td>
     <td COLSPAN=2 style="text-align: right;">
       <p><label>Precio:</label></p>

@@ -62,7 +62,7 @@ $filtro6 = $_POST['FiltarFechaN'];
   }
 </style>
 
-        
+     <div id="filtro">     
       
               <form method="post" action="listUsuarios.php" name="form_filtro_usuarios" id="form_filtro_usuarios" style="align-items: center; background:rgba(0,0,0,0.0);">
                 <table class="table-primary"  border="1">
@@ -71,17 +71,21 @@ $filtro6 = $_POST['FiltarFechaN'];
                 <td width="100%" style="text-align: right;">
 
                   <input name="FiltarId" type="text"  placeholder="Buscar por Código" id ="FiltarId" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarNom" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltarNom" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarPater" type="text" title="Busqueda por Apellido" placeholder="Buscar por Apellido" id ="FiltarPater" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
+                  <input name="FiltarNom" type="text" title="Busqueda por Nombre"  placeholder="Buscar por Nombre" id ="FiltarNom" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarPater" type="text" title="Busqueda por Apellido Paterno" placeholder="Buscar por Apellido Paterno" id ="FiltarPater" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
 
                   
                       <br>
-                      <input type="submit" value="Buscar">
+                     <div id="boton-centrado">
+        
+          
+          <input type="submit" value="Buscar">
+          </div>
 
                 </td>
               </tr>
             </table>
-          </form>
+          </form></div>
             <!--/*********************************FIN FORMULARIO PARA EL FILTRO*****************************************************/ -->
 
 
@@ -91,6 +95,7 @@ $filtro6 = $_POST['FiltarFechaN'];
            
 
                 <!-- <div class="datagrid">-->
+                  <div id="listado">
                  <form method="post" action="" name="frm_listUsuarios" id="frm_listUsuarios" style="width: auto; height: auto;">
 					
                      <?php
@@ -107,6 +112,7 @@ $filtro6 = $_POST['FiltarFechaN'];
         <th style='text-align:center'>Apellido Paterno</th>
         <th style='text-align:center'>Apellido Materno</th>
         <th style='text-align:center'>Fecha Nacimiento</th>
+        <th style='text-align:center'>RFC</th>
         <th style='text-align:center'>Telefono</th>
         <th style='text-align:center'>Email</th>
         <th style='text-align:center'>Domicilio</th>
@@ -123,6 +129,7 @@ $filtro6 = $_POST['FiltarFechaN'];
             <td>".$user2['A_paterno']."</td> 
             <td>".$user2['A_Materno']."</td>
             <td>".$user2['Fecha_Nacimiento']."</td>
+             <td>".$user2['Rfc']."</td>
             <td>".$user2['Telefono']."</td>
              <td>".$user2['Email']."</td>
             <td>".$user2['Domicilio']."</td> 
@@ -143,6 +150,7 @@ $filtro6 = $_POST['FiltarFechaN'];
             <td>".$user2['A_paterno']."</td> 
             <td>".$user2['A_Materno']."</td>
             <td>".$user2['Fecha_Nacimiento']."</td>
+             <td>".$user2['Rfc']."</td>
             <td>".$user2['Telefono']."</td>
              <td>".$user2['Email']."</td>
             <td>".$user2['Domicilio']."</td> 
@@ -162,10 +170,13 @@ $filtro6 = $_POST['FiltarFechaN'];
 
 <!--<td style='text-align:center'><img width='30' height='30' src='imgs/delete.png' onClick='borrar(\"".$alumno['curp']."\");'></td> -->
          
-           </form>
+           </form></div>
+           <div id="boton-centrado">
+   <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
+</div>
       
 
          
- <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
+
  
   

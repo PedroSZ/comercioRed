@@ -9,8 +9,8 @@ if(isset($_SESSION['user'])){
    	$user->establecerDatos($userSession->getCurrentUser());
     switch ($user->getPuesto()) {
     	case 'Administrador': header('location: menuAdmin.php'); break;
-    	case 'Usuario': header('location: menUser.php');	break;
-    	case 'Cajero': header('location: menuCliente.php');	break;
+    	case 'Cajero': header('location: menuUser.php'); break;
+    	case 'Cliente': header('location: menuCliente.php');	break;
 
 
 	}
@@ -24,7 +24,7 @@ if(isset($_SESSION['user'])){
         $user->establecerDatos($userForm);
     switch ($user->getPuesto()) {
     	case 'Administrador': header('location: menuAdmin.php'); break;
-    	case 'Cajero': header('location: menuUser.php');	break;
+    	case 'Cajero': header('location: menuUser.php'); break;
     	case 'Cliente': header('location: menuCliente.php');	break;
       default: echo "Usuario no exie";
 
@@ -37,14 +37,7 @@ if(isset($_SESSION['user'])){
 }else{
     	$alert = "debe ingresar un usuario y password";
 }
-/*
-echo "<form name='envia' method='POST' action='../menuAdmin.php'>
-		<input name='identificador' readonly = 'readonly' type='hidden' placeholder='' id='identificador' value=$userForm>
-	    </form>
-	    <script language='JavaScript'>
-	    document.envia.submit();
-	    </script>";
-*/
+
 ?>
 
 

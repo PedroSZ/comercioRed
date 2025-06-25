@@ -39,9 +39,9 @@
 
 /**********************************************************************************************/
 error_reporting(0);//para que no me muestre errores
-$filtro1 = $_POST['FiltarId_actualizar_usuario']; //para obtener la curp a buscar del fitro
-$filtro2 = $_POST['FiltarNom_actualizar_usuario'];
-$filtro3 = $_POST['FiltarPater_actualizar_usuario'];
+$filtro1 = $_POST['FiltarId_eliminar_usuario']; //para obtener la curp a buscar del fitro
+$filtro2 = $_POST['FiltarNom_eliminar_usuario'];
+$filtro3 = $_POST['FiltarPater_eliminar_usuario'];
 ?>
 </!DOCTYPE html>
 <html>
@@ -59,9 +59,9 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
 
         	<script language='javascript'>
 		          function consultar(Id_Usuario) {
-                 document.lista_actualizar_usuario.miIdUsuario.value = Id_Usuario;
+                 document.lista_eliminar_usuario.miIdUsuario.value = Id_Usuario;
 			           // alert(codigo);
-                   document.lista_actualizar_usuario.submit();
+                   document.lista_eliminar_usuario.submit();
 	      	  }
 		        function regresar(){
 		      	location.href='index.php'
@@ -77,20 +77,20 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
             <?php include_once 'modulos/mdl_header.php'; ?>
         <!-- fin Encabezado de la pagina-->
    <div class="superponer">
-    <h1 class="text-center mt-4">Modificaciones</h1>
-    <p class="text-center">Elija de la lista al usuario que desea actualizar haciendo clic en el icono. <img src="img/Actualizar.png" width="30" height="30" alt="Actualizar" title="Actualizar producto"></p>
+    <h1 class="text-center mt-4">Bajas</h1>
+    <p class="text-center">Elija de la lista al usuario que desea eliminar haciendo clic en el icono. <img src="img/delete.png" width="30" height="30" alt="eliminar" title="eliminar producto"></p>
  </div>
            
  <div id="filtro">
-<form method="post" action="listActualizarUsuarios.php" name="form_filtro_actualizar_usuario" id="form_filtro_actualizar_usuario">
+<form method="post" action="listEliminarUsuarios.php" name="form_filtro_eliminar_usuario" id="form_filtro_eliminar_usuario">
                 <table class="table-primary"  border="1">
 
               <tr>
                 <td width="100%" style="text-align: right;">
 
-                  <input name="FiltarId_actualizar_usuario" type="text"  placeholder="Buscar por Código" id ="FiltarId_actualizar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarNom_actualizar_usuario" type="text" title="Busqueda por Nombre"  placeholder="Buscar por Nombre" id ="FiltarNom_actualizar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarPater_actualizar_usuario" type="text" title="Busqueda por Apellido Paterno" placeholder="Buscar por Apellido Paterno" id ="FiltarPater_actualizar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
+                  <input name="FiltarId_eliminar_usuario" type="text"  placeholder="Buscar por Código" id ="FiltarId_eliminar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarNom_eliminar_usuario" type="text" title="Busqueda por Nombre"  placeholder="Buscar por Nombre" id ="FiltarNom_eliminar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarPater_eliminar_usuario" type="text" title="Busqueda por Apellido Paterno" placeholder="Buscar por Apellido Paterno" id ="FiltarPater_eliminar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
 
                   
                       <br>
@@ -105,7 +105,7 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
 
 
 <div id="listado">
-                 <form method="post" action="forms/form_act_usuario.php" name="lista_actualizar_usuario" id="lista_actualizar_usuario" class="form-list">
+                 <form method="post" action="modulos/mdl_del_usuario.php" name="lista_eliminar_usuario" id="lista_eliminar_usuario" class="form-list">
                     <input type="hidden" id="miIdUsuario" name="miIdUsuario">
                      <?php
   include_once 'clases/usuario.php';
@@ -145,7 +145,7 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
             <td>".$user2['Domicilio']."</td> 
             <td>".$user2['Fecha_Registro']."</td>
             <td>".$user2['Puesto']."</td>
-           <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
+           <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
             </tr>";
           }
 
@@ -166,7 +166,7 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
             <td>".$user2['Domicilio']."</td> 
             <td>".$user2['Fecha_Registro']."</td>
             <td>".$user2['Puesto']."</td>
-             <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
+             <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
             </tr>";
         }
       }

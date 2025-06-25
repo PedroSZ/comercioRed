@@ -54,7 +54,7 @@
           <ul class='dropdown-menu'>
          <li><a class='dropdown-item' href="listActualizarUsuarios.php">Usuarios</a></li>
          <li><a class='dropdown-item' href="listActualizarProductos.php">Productos</a></li>
-         <li><a class='dropdown-item' >Clientes</a></li>
+         <li><a class='dropdown-item'  href="listActualizarClientes.php">Clientes</a></li>
          <li><a class='dropdown-item' >Ventas</a></li>
           </ul>
         </li>
@@ -65,10 +65,10 @@
           Eliminar
         </a>
         <ul class='dropdown-menu'>
-          <li><a class='dropdown-item' onclick="activarModulo('DelUsuario')">Usuarios</a></li>
-        <li><a class='dropdown-item' onclick="activarModulo('DelProducto')">Productos</a></li>
-         <li><a class='dropdown-item' onclick="activarModulo('DelCliente')">Clientes</a></li>
-         <li><a class='dropdown-item' onclick="activarModulo('DelVenta')">Ventas</a></li>
+          <li><a class='dropdown-item' href="listEliminarUsuarios.php">Usuarios</a></li>
+        <li><a class='dropdown-item' href="listEliminarproductos.php">Productos</a></li>
+         <li><a class='dropdown-item' href="listEliminarClientes.php">Clientes</a></li>
+         <li><a class='dropdown-item' onclick="#">Ventas</a></li>
         </ul>
       </li>
 

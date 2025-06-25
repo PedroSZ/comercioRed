@@ -45,36 +45,14 @@ class Cliente extends DB {
 	public function getCredito_usado(){ return $this->credito_usado; }
 	//******************************************************************
 
+
+
 	public function listar(){
 		$query = $this->connect()->prepare('SELECT * FROM cliente');
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	public function listarConsultaCompleta(){
-		$query = $this->connect()->prepare('SELECT estudiante.curp,
-			estudiante.nombre as nomest,
-			estudiante.apellidos,
-			estudiante.carrera,
-			estudiante.grado,
-			estudiante.grupo,
-			taller.nombre as tallnom,
-			taller.area,
-			taller.horario
-			FROM estudiante
-			LEFT join estudiante_por_taller on estudiante.curp = estudiante_por_taller.estudiante
-			left join taller on estudiante_por_taller.taller = taller.id');
-					$query->execute();
-					return $query->fetchAll(PDO::FETCH_ASSOC);
-				}
-
-
-
-	public function consultarCodigo($codigo){
-		$query = $this->connect()->prepare('SELECT * FROM estudiante WHERE curp = :user');
-		$query->execute(['user' => $codigo]);
-		return $query->fetch(PDO::FETCH_ASSOC);
-	}
 
 	public function consultarEmail($email){
 		$query = $this->connect()->prepare('SELECT * FROM cliente WHERE Email = :user');
@@ -82,28 +60,11 @@ class Cliente extends DB {
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}
 
-	public function eliminar($codigo){
-		$query = $this->connect()->prepare('DELETE FROM estudiante WHERE curp = :user');
-		$query->execute(['user' => $codigo]);
+	public function consultarId($id_cliente){
+		$query = $this->connect()->prepare('SELECT * FROM cliente WHERE Id_Cliente = :user');
+		$query->execute(['user' => $id_cliente]);
+		return $query->fetch(PDO::FETCH_ASSOC);
 	}
-
-	public function actualizar(){
-		$sql = "UPDATE estudiante SET nombre = :nombre, apellidos = :apellidos, carrera = :carrera, grado = :grado, grupo = :grupo	WHERE curp = :codigo";
-		$query = $this->connect()->prepare($sql);
-		$query->execute([
-			'codigo' => $this->codigo,
-			'nombre' => $this->nombre,
-			'apellidos' => $this->apellidos,
-			'carrera' => $this->carrera,
-			'grado' => $this->grado,
-			'grupo' => $this->grupo]);
-	}
-
-
-
-
-
-
 
 public function guardar() {
 	echo "aqui entramos a la funcion guardar";
@@ -131,17 +92,37 @@ public function guardar() {
 }
 	}
 
-	/*public function guardar() {
-		$sql = "INSERT INTO estudiante (curp, nombre, apellidos, carrera, grado, grupo) VALUES(:codigo, :nombre, :apellidos, :carrera, :grado, :grupo)";
+public function actualizar(){
+		$sql = "UPDATE cliente SET  Rfc = :rfc, 
+			Nombre = :nombre, A_paterno = :a_paterno, A_Materno = :a_materno, 
+			Fecha_Registro = :fecha_registro, Fecha_Nacimiento = :fecha_nacimiento, 
+			Telefono = :telefono, Email = :email, 
+			Domicilio = :domicilio, Credito_Usado = :credito_usado,
+			Limite_Credito = :limite_credito WHERE Id_Cliente = :id_actual";
 		$query = $this->connect()->prepare($sql);
 		$query->execute([
-			'codigo' => $this->codigo,
-			'nombre' => $this->nombre,
-			'apellidos' => $this->apellidos,
-			'carrera' => $this->carrera,
-			'grado' => $this->grado,
-			'grupo' => $this->grupo]);
-	}*/
+    'id_actual' => $this->id_cliente, 
+    'rfc' => $this->rfc,
+    'nombre' => $this->nombre,
+    'a_paterno' => $this->a_paterno,
+    'a_materno' => $this->a_materno,
+    'fecha_registro' => $this->fecha_registro,
+    'fecha_nacimiento' => $this->fecha_nacimiento,
+    'telefono' => $this->telefono,
+    'email' => $this->email,
+    'domicilio' => $this->domicilio,
+	'limite_credito' => $this->limite_credito,
+	'credito_usado' => $this->credito_usado
+  		  ]);	
+  	}
+
+
+public function eliminar($id_cliente){
+		$query = $this->connect()->prepare('DELETE FROM cliente WHERE Id_Cliente = :user');
+		$query->execute(['user' => $id_cliente]);
+	}
+
+
 }
 
 ?>

@@ -1,7 +1,7 @@
 
 
 #listado{
-     height: 70vh;
+     height: 63vh;
    overflow-y: scroll; 
 }
 
@@ -16,6 +16,7 @@
      display: flex;
   justify-content: center;
   align-items: center;
+   
 }
 .superponer{
      position: absolute;
@@ -26,3 +27,4 @@
  
   z-index: 1; 
 }
+

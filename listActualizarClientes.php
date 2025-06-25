@@ -39,9 +39,9 @@
 
 /**********************************************************************************************/
 error_reporting(0);//para que no me muestre errores
-$filtro1 = $_POST['FiltarId_actualizar_usuario']; //para obtener la curp a buscar del fitro
-$filtro2 = $_POST['FiltarNom_actualizar_usuario'];
-$filtro3 = $_POST['FiltarPater_actualizar_usuario'];
+$filtro1 = $_POST['FiltarId_actualizar_cliente']; //para obtener la curp a buscar del fitro
+$filtro2 = $_POST['FiltarNom_actualizar_cliente'];
+$filtro3 = $_POST['FiltarPater_actualizar_cliente'];
 ?>
 </!DOCTYPE html>
 <html>
@@ -58,10 +58,10 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
 
 
         	<script language='javascript'>
-		          function consultar(Id_Usuario) {
-                 document.lista_actualizar_usuario.miIdUsuario.value = Id_Usuario;
-			           // alert(codigo);
-                   document.lista_actualizar_usuario.submit();
+		          function consultar(Id_Cliente) {
+                 document.lista_actualizar_cliente.miIdCliente.value = Id_Cliente;
+			           //alert(Id_Cliente);
+                   document.lista_actualizar_cliente.submit();
 	      	  }
 		        function regresar(){
 		      	location.href='index.php'
@@ -78,19 +78,19 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
         <!-- fin Encabezado de la pagina-->
    <div class="superponer">
     <h1 class="text-center mt-4">Modificaciones</h1>
-    <p class="text-center">Elija de la lista al usuario que desea actualizar haciendo clic en el icono. <img src="img/Actualizar.png" width="30" height="30" alt="Actualizar" title="Actualizar producto"></p>
+    <p class="text-center">Elija de la lista al Cliente que desea actualizar haciendo clic en el icono. <img src="img/Actualizar.png" width="30" height="30" alt="Actualizar" title="Actualizar cliente"></p>
  </div>
            
  <div id="filtro">
-<form method="post" action="listActualizarUsuarios.php" name="form_filtro_actualizar_usuario" id="form_filtro_actualizar_usuario">
+<form method="post" action="listActualizarClientes.php" name="form_filtro_actualizar_cliente" id="form_filtro_actualizar_cliente">
                 <table class="table-primary"  border="1">
 
               <tr>
                 <td width="100%" style="text-align: right;">
 
-                  <input name="FiltarId_actualizar_usuario" type="text"  placeholder="Buscar por Código" id ="FiltarId_actualizar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarNom_actualizar_usuario" type="text" title="Busqueda por Nombre"  placeholder="Buscar por Nombre" id ="FiltarNom_actualizar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarPater_actualizar_usuario" type="text" title="Busqueda por Apellido Paterno" placeholder="Buscar por Apellido Paterno" id ="FiltarPater_actualizar_usuario" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
+                  <input name="FiltarId_actualizar_cliente" type="text"  placeholder="Buscar por Código" id ="FiltarId_actualizar_cliente" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarNom_actualizar_cliente" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltarNom_actualizar_cliente" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
+                  <input name="FiltarPater_actualizar_cliente" type="text" title="Busqueda por Descripción" placeholder="Buscar por descripcion" id ="FiltarPater_actualizar_cliente" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
 
                   
                       <br>
@@ -105,13 +105,13 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
 
 
 <div id="listado">
-                 <form method="post" action="forms/form_act_usuario.php" name="lista_actualizar_usuario" id="lista_actualizar_usuario" class="form-list">
-                    <input type="hidden" id="miIdUsuario" name="miIdUsuario">
+                 <form method="post" action="forms/form_act_cliente.php" name="lista_actualizar_cliente" id="lista_actualizar_cliente" class="form-list">
+                    <input type="hidden" id="miIdCliente" name="miIdCliente">
                      <?php
-  include_once 'clases/usuario.php';
-  $user2 = new Usuario();
-  $usuarios = $user2->listar();
-  if($usuarios){
+  include_once 'clases/cliente.php';
+  $cliente = new Cliente();
+  $clientes = $cliente->listar();
+  if($clientes){
     echo "
     
       <table class='table table-bordered border-primary table-hover tabla-datos'><thead>
@@ -121,31 +121,31 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
         <th style='text-align:center'>Apellido Paterno</th>
         <th style='text-align:center'>Apellido Materno</th>
         <th style='text-align:center'>Fecha Nacimiento</th>
-        <th style='text-align:center'>RFC</th>
         <th style='text-align:center'>Telefono</th>
         <th style='text-align:center'>Email</th>
         <th style='text-align:center'>Domicilio</th>
         <th style='text-align:center'>Ingreso</th>
-        <th style='text-align:center'>Tipo cuenta</th>
+        <th style='text-align:center'>Linea de crédito</th>
+         <th style='text-align:center'>Disponible</th>
         <th style='text-align:center'>Modificar</th>
       </tr></thead>";
       if($filtro1 || $filtro2 || $filtro3){
-        foreach ($usuarios as $user2) {
+        foreach ($clientes as $cliente) {
         
-          if($filtro1 == $user2['Id_Usuario'] || $filtro2 == $user2['Nombre'] || $filtro3 == $user2['A_paterno']){
+          if($filtro1 == $cliente['Id_Cliente'] || $filtro2 == $cliente['Nombre'] || $filtro3 == $cliente['A_paterno']){
             echo "<tr>
-            <td>".$user2['Id_Usuario']."</td>
-            <td>".$user2['Nombre']."</td>
-            <td>".$user2['A_paterno']."</td> 
-            <td>".$user2['A_Materno']."</td>
-            <td>".$user2['Fecha_Nacimiento']."</td>
-            <td>".$user2['Rfc']."</td>
-            <td>".$user2['Telefono']."</td>
-            <td>".$user2['Email']."</td>
-            <td>".$user2['Domicilio']."</td> 
-            <td>".$user2['Fecha_Registro']."</td>
-            <td>".$user2['Puesto']."</td>
-           <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
+            <td>".$cliente['Id_Cliente']."</td>
+            <td>".$cliente['Nombre']."</td>
+            <td>".$cliente['A_paterno']."</td> 
+            <td>".$cliente['A_Materno']."</td>
+            <td>".$cliente['Fecha_Nacimiento']."</td>
+            <td>".$cliente['Telefono']."</td>
+            <td>".$cliente['Email']."</td>
+            <td>".$cliente['Domicilio']."</td> 
+            <td>".$cliente['Fecha_Registro']."</td>
+            <td>".$cliente['Limite_Credito']."</td>
+             <td>".$cliente['Credito_Usado']."</td>
+           <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$cliente['Id_Cliente']."\");'></td>
             </tr>";
           }
 
@@ -153,20 +153,20 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
 
 
       }else{
-          foreach ($usuarios as $user2) {
+          foreach ($clientes as $cliente) {
            echo "<tr>
-            <td>".$user2['Id_Usuario']."</td>
-            <td>".$user2['Nombre']."</td>
-            <td>".$user2['A_paterno']."</td> 
-            <td>".$user2['A_Materno']."</td>
-            <td>".$user2['Fecha_Nacimiento']."</td>
-            <td>".$user2['Rfc']."</td>
-            <td>".$user2['Telefono']."</td>
-            <td>".$user2['Email']."</td>
-            <td>".$user2['Domicilio']."</td> 
-            <td>".$user2['Fecha_Registro']."</td>
-            <td>".$user2['Puesto']."</td>
-             <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
+            <td>".$cliente['Id_Cliente']."</td>
+            <td>".$cliente['Nombre']."</td>
+            <td>".$cliente['A_paterno']."</td> 
+            <td>".$cliente['A_Materno']."</td>
+            <td>".$cliente['Fecha_Nacimiento']."</td>
+            <td>".$cliente['Telefono']."</td>
+            <td>".$cliente['Email']."</td>
+            <td>".$cliente['Domicilio']."</td> 
+            <td>".$cliente['Fecha_Registro']."</td>
+            <td>".$cliente['Limite_Credito']."</td>
+             <td>".$cliente['Credito_Usado']."</td>
+             <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$cliente['Id_Cliente']."\");'></td>
             </tr>";
         }
       }
@@ -190,8 +190,8 @@ $filtro3 = $_POST['FiltarPater_actualizar_usuario'];
 <div id="boton-centrado">
    <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
 </div>
-
  <?php include_once 'modulos/mdl_footer.php'; ?>
+
     </body> 
    
 </html>

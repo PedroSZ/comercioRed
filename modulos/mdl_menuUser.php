@@ -19,22 +19,22 @@
 -->
 
     <li class='dropdown-item'>
-      <a class='dropdown-item' onclick="activarModulo('')">Nueva Venta</a>
+     <li><a class='dropdown-item' title="" href="nuevaVenta.php">Ventas</a></li>
     </li>
 
      <li class='dropdown-item'>
-      <a class='dropdown-item' onclick="activarModulo('')">Consultar</a>
+      <a class='dropdown-item' onclick="#">Consultar</a>
     </li>
 
 
 
       <li class='nav-item dropdown'>
-         <a class='dropdown-item' onclick="activarModulo('')">Modificar</a>
+         <a class='dropdown-item' onclick="#">Modificar</a>
         </li>
 
 
         <li class='nav-item dropdown'>
-         <a class='dropdown-item' onclick="activarModulo('')">Eliminar</a>
+         <a class='dropdown-item' onclick="#">Eliminar</a>
         </li>
 
           <li class='nav-item dropdown'>

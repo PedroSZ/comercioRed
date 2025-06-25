@@ -32,7 +32,7 @@
             $cliente->setNombre($_POST['cliente_nombre']);
             $cliente->setA_paterno($_POST['cliente_a_paterno']);
             $cliente->setA_materno($_POST['cliente_a_materno']);
-            $cliente->setFecha_registro($_POST['cliente_fecha_registro']);
+            $cliente->setFecha_registro($_POST['fecha_registro_c']);
             $cliente->setFecha_nacimiento($_POST['cliente_fecha_nacimiento']);
             $cliente->setTelefono($_POST['cliente_telefono']);
             $cliente->setEmail($_POST['cliente_email']);
@@ -43,7 +43,7 @@
 		
 			echo '<script type="text/javascript">
 								alert("CLIENTE REGISTRADO CON EXITO");
-								window.location.href="../menuAdmin.php";
+								window.location.href="../nuevoCliente.php";
 						</script>';
 
 

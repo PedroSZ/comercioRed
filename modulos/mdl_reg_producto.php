@@ -36,7 +36,7 @@
 		$producto->guardar();
 		echo '<script type="text/javascript">
 							alert("Producto registrado con éxito");
-							window.location.href="../menuAdmin.php";
+							window.location.href="../nuevoProducto.php";
 								
 					</script>';
 		//header("Location:".$_SERVER['HTTP_REFERER']);//regresa al pagina que estaba

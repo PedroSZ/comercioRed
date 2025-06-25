@@ -61,9 +61,9 @@ class Tipo_Usuario extends DB{
         }
     }
 
-    public function eliminar($codigo){
-        $query = $this->connect()->prepare('DELETE FROM usuario WHERE user_name = :user');
-        $query->execute(['user' => $codigo]);
+    public function eliminarTipoUsuario($usuario_id){
+        $query = $this->connect()->prepare('DELETE FROM tipo_usuario WHERE Usuario_id = :user');
+        $query->execute(['user' => $usuario_id]);
     }
 
     public function guardar(){
