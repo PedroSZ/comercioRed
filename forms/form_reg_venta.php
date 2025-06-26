@@ -112,6 +112,43 @@ function previsualizarStock() {
     document.getElementById('existencias').innerText = stockRestante;
 }
 
+function consultarYEnfocar(codigo) {
+    fetch('modulos/consultar_producto.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'codigoPro=' + encodeURIComponent(codigo)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data) {
+            document.getElementById('precio_v').value = data.Precio;
+            document.getElementById('codigoOculto').value = data.Codigo;
+            document.getElementById('existencias').innerText = data.Stock;
+            existenciasOriginal = parseInt(data.Stock);
+
+            // ✅ Mover el foco al campo de cantidad
+            document.getElementById('cantidad_v').focus();
+            document.getElementById('cantidad_v').select();
+        } else {
+            alert('Producto no encontrado');
+
+            // Limpiar campos
+            document.getElementById('precio_v').value = '';
+            document.getElementById('codigoOculto').value = '';
+            document.getElementById('existencias').innerText = '0';
+            existenciasOriginal = 0;
+
+            // ✅ Regresar el foco al campo código
+            document.getElementById('codigo').focus();
+            document.getElementById('codigo').select();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
 window.onload = function () {
     var fecha = new Date();
     var mes = fecha.getMonth() + 1;
@@ -125,13 +162,17 @@ window.onload = function () {
     campo.focus();
     campo.select();
 
-    campo.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            document.getElementById('cantidad_v').focus();
-            document.getElementById('cantidad_v').select();
+   campo.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Evita que el formulario se envíe
+        let codigo = this.value.trim();
+        if (codigo !== '') {
+            consultarYEnfocar(codigo);
         }
-    });
+    }
+});
+
+    
 
     document.getElementById('cantidad_v').addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
@@ -338,8 +379,7 @@ function agregarProductoYResetear() {
                 <p><label>Codigo:</label></p>
             </td>
             <td>
-                <p><input name="codigo" type="text" onKeyUp="consultar(this.value)"
-                        placeholder="Código del producto" id="codigo" title="Campo obligatorio " required></p>
+                <p><input name="codigo" type="text" placeholder="Código del producto" id="codigo" title="Campo obligatorio " required></p>
                         
             </td>
 
@@ -399,7 +439,8 @@ function agregarProductoYResetear() {
 
  <!--<table border="0" style=font-weight: 600; font-size: 17px;"> -->  
     <form  action="modulos/mdl_reg_venta.php" method="post" style="width: 65vw; height:auto;" id="enviar_ventas">
- <table id="miTabla" class="table">
+ <div id="listaVentas">
+    <table id="miTabla" class="table">
   <thead>
     <tr>
         <th class="ocultar">Fecha</th>
@@ -414,9 +455,12 @@ function agregarProductoYResetear() {
       <th>Acciones</th>
     </tr>
   </thead>
+  
   <tbody>
+
   </tbody>
-</table>
+  
+</table></div>
 
 <!-- Mostramos el total general -->
 <h2>Total: $<span id="total_general">0.00</span></h2>
@@ -426,7 +470,7 @@ function agregarProductoYResetear() {
        <input type="button" id="regresar" value="Regresar" />
 
     
-  </table>
+  
 
 
 </form>

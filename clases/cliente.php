@@ -14,6 +14,7 @@ class Cliente extends DB {
     private $domicilio;
 	private $limite_credito;
 	private $credito_usado;
+	private $estatus_c; // Para actualizar el cliente
 
 
 	//stters and getters ***********************************************
@@ -29,6 +30,7 @@ class Cliente extends DB {
     public function setDomicilio($domicilio){ $this->domicilio = $domicilio; }
 	public function setLimite_credito($limite_credito){ $this->limite_credito = $limite_credito; }
 	public function setCredito_usado($credito_usado){ $this->credito_usado = $credito_usado; }
+	public function setEstatus_c($estatus_c){ $this->estatus_c = $estatus_c; }
 
 
 	public function getCliente(){ return $this->id_cliente; }
@@ -43,6 +45,7 @@ class Cliente extends DB {
     public function getDomicilio(){ return $this->domicilio; }
 	public function getLimite_credito(){ return $this->limite_credito; }
 	public function getCredito_usado(){ return $this->credito_usado; }
+	public function getEstatus_c(){ return $this->estatus_c; }
 	//******************************************************************
 
 
@@ -70,7 +73,7 @@ public function guardar() {
 	echo "aqui entramos a la funcion guardar";
 		try{
 			
-		$sql = "INSERT INTO cliente (Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento, Telefono, Email, Domicilio, Limite_Credito, Credito_Usado) VALUES(:rfc, :nombre, :a_paterno, :a_materno, :fecha_registro, :fecha_nacimiento, :telefono, :email, :domicilio, :limite_credito, :credito_usado)";
+		$sql = "INSERT INTO cliente (Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento, Telefono, Email, Domicilio, Limite_Credito, Credito_Usado, Estatus_c) VALUES(:rfc, :nombre, :a_paterno, :a_materno, :fecha_registro, :fecha_nacimiento, :telefono, :email, :domicilio, :limite_credito, :credito_usado, 1)";
 		$query = $this->connect()->prepare($sql);
 		$query->execute([
 			'rfc' => $this->rfc,

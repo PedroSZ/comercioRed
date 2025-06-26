@@ -10,6 +10,7 @@ class Producto extends DB {
 	private $fecha_registro;
 	private $costo;
 	private $precio;
+	private $estatus_p;
 	private $codigo_actual; // Para actualizar el producto
 
 
@@ -22,6 +23,7 @@ class Producto extends DB {
 	public function setFecha_Registro($fecha_registro){ $this->fecha_registro = $fecha_registro; }
 	public function setCosto($costo){ $this->costo = $costo; }
 	public function setPrecio($precio){ $this->precio = $precio; }
+	public function setEstatus_p($estatus_p){ $this->estatus_p = $estatus_p; }
 	public function setCodigoActual($codigo_actual){ $this->codigo_actual = $codigo_actual; }
 
 	public function getCodigo(){return $this->codigo; }
@@ -32,6 +34,7 @@ class Producto extends DB {
 	public function getFecha_Registro(){return $this->fecha_registro; }
 	public function getCosto(){return $this->costo; }
 	public function getPrecio(){return $this->precio; }
+	public function getEstatus_p(){return $this->estatus_p; }
 
 	//******************************************************************
 
@@ -86,7 +89,7 @@ class Producto extends DB {
 }
 
 	public function guardar() {
-		$sql = "INSERT INTO productos (Codigo, Nombre, Descripcion, Stock, Fecha_Caducidad, Fecha_Registro, Costo, Precio) VALUES(:codigo, :nombre, :descripcion, :stock, :fecha_caducidad , :fecha_registro_p, :costo, :precio)";
+		$sql = "INSERT INTO productos (Codigo, Nombre, Descripcion, Stock, Fecha_Caducidad, Fecha_Registro, Costo, Precio, Estatus_p) VALUES(:codigo, :nombre, :descripcion, :stock, :fecha_caducidad , :fecha_registro_p, :costo, :precio, 1)";
 		$query = $this->connect()->prepare($sql);
 		$query->execute([
 			'codigo' => $this->codigo,

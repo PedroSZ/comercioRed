@@ -1,163 +1,173 @@
 <?php
 /********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
-    include_once 'clases/tipo_usuario.php';
-    //include_once 'clases/sesion.php';
-    
-    //MADAR A INDEX SI NO HAY SESION INICIADA
-    
-    /*if (!isset($_SESSION['user'])){
+include_once 'clases/tipo_usuario.php';
+include_once 'clases/sesion.php';
+$userSession = new Sesion();
+
+if (!isset($_SESSION['user'])) {
     header("location: index.php");
-    }
+}
 
-    if (!isset($_SESSION['user'])){
+if (isset($_SESSION['user'])) {
+    $user = new Tipo_Usuario();
+    $user->establecerDatos($userSession->getCurrentUser());
+    $tipo = $user->getPuesto();
+    $codigo = $user->getUsuario_id();
+
+    if ($tipo <> "Administrador") header('location: index.php');
+
+    if (!isset($_SESSION['tiempo'])) {
+        $_SESSION['tiempo'] = time();
+    } else if (time() - $_SESSION['tiempo'] > 500) {
+        session_destroy();
+        header("location: index.php");
+        die();
+    }
+    $_SESSION['tiempo'] = time();
+} else {
+    $userSession->closeSession();
     header("location: index.php");
-    }
+}
 
-    if(isset($_SESSION['user'])){
-        $user = new Tipo_Usuario();
-        $user->establecerDatos($userSession->getCurrentUser());
-        $tipo = $user->getTipo();
-      
-*/
-
-		//mensaje de que no tiene privilegios
-      //  if($tipo <> "Administrador") header('location: index.php');
-        /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
-      /*  if (!isset($_SESSION['tiempo'])) {
-            $_SESSION['tiempo']=time();
-        }
-        else if (time() - $_SESSION['tiempo'] > 500) {
-            session_destroy();
-            /* Aquí redireccionas a la url especifica */
-     /*       header("location: index.php");
-            die();
-        }/*
-        $_SESSION['tiempo']=time(); //Si hay actividad seteamos el valor al tiempo actual
-        /*////////////////////FIN SIERRE POR INACTIVIDAD/////////////////////////*/
-/*
-    }
-    else{
-        $userSession->closeSession();
-         header("location: index.php");
-    }
-*/
-/**********************************************************************************************/
-error_reporting(0);//para que no me muestre errores
-$filtro1 = $_POST['FiltarId1']; //para obtener la curp a buscar del fitro
-$filtro2 = $_POST['FiltarNom1'];
-$filtro3 = $_POST['FiltarPater1'];
-
+/********************** CAPTURA DE FILTROS ****************/
+error_reporting(0);
+$filtro1 = isset($_POST['FiltarId_actualizar_cliente']) ? trim($_POST['FiltarId_actualizar_cliente']) : '';
+$filtro2 = isset($_POST['FiltarNom_actualizar_cliente']) ? trim($_POST['FiltarNom_actualizar_cliente']) : '';
+$filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : '';
 ?>
 
-    
    
-    
-     <div id="filtro"> 
-              <form method="post" action="listClientes.php" name="form_filtro_clientes" id="form_filtro_clientes" style="align-items: center; background:rgba(0,0,0,0.0);">
-                <table class="table-primary"  border="1">
+   <script language='javascript'>
+      
+        function regresar() {
+            location.href = 'index.php';
+        }
+        function limpiarFiltros() {
+            document.getElementById('FiltarId_actualizar_cliente').value = '';
+            document.getElementById('FiltarNom_actualizar_cliente').value = '';
+            document.getElementById('Filtrar_Status').selectedIndex = 0;
+            document.getElementById('form_filtro_listar_clientes').submit();
+        }
+        function filtrarPorSelect() {
+            document.getElementById('form_filtro_listar_clientes').submit();
+        }
+    </script>
 
-              <tr>
-                <td width="100%" style="text-align: right;">
+  
 
-                  <input name="FiltarId1" type="text"  placeholder="Buscar por Id" id ="FiltarId1" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarNom1" type="text" title="Busqueda por Nombre"  placeholder="Buscar por Nombre" id ="FiltarNom1" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarPater1" type="text" title="Busqueda por Apellido" placeholder="Buscar por Apellido" id ="FiltarPater1" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
+   
 
-                  
-                      <br>
-                       <div id="boton-centrado">
-         
-          
-          <input type="submit" value="Buscar">
-          </div>
-                      
-
-                </td>
-              </tr>
+    <div id="filtro">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" name="form_filtro_listar_clientes" id="form_filtro_listar_clientes">
+            <table class="table-primary" border="1">
+                <tr>
+                    <td width="100%" style="text-align: right;">
+                        <input name="FiltarId_actualizar_cliente" type="text" placeholder="Buscar por Código" id="FiltarId_actualizar_cliente" onkeyup="this.value = this.value.toUpperCase()" value="<?php echo htmlspecialchars($filtro1); ?>">
+                        <input name="FiltarNom_actualizar_cliente" type="text" title="Busqueda por Nombre" placeholder="Buscar por Nombre" id="FiltarNom_actualizar_cliente" onkeyup="this.value = this.value.toUpperCase()" value="<?php echo htmlspecialchars($filtro2); ?>">
+                        <select name="Filtrar_Status" id="Filtrar_Status" onchange="filtrarPorSelect()">
+                            <option value="" disabled <?php echo ($filtro3 === '') ? 'selected' : ''; ?>>Buscar por estatus</option>
+                            <option value="1" <?php echo ($filtro3 === '1') ? 'selected' : ''; ?>>Activo</option>
+                            <option value="0" <?php echo ($filtro3 === '0') ? 'selected' : ''; ?>>Inactivo</option>
+                        </select>
+                        <br>
+                        <input type="submit" value="Buscar">
+                        <input type="button" value="Limpiar" onclick="limpiarFiltros()">
+                    </td>
+                </tr>
             </table>
-          </form></div>
-            <!--/*********************************FIN FORMULARIO PARA EL FILTRO*****************************************************/ -->
+        </form>
+    </div>
 
-                  <div id="listado">
-                 <form method="post" action="" name="frm_listCliente" id="frm_listCliente" style="width: auto; height: auto;">
-					
-                     <?php
-  include_once 'clases/cliente.php';
-  $varC = new Cliente();
-  $clientes = $varC->listar();
-  if($clientes){
-    echo "
-    <div style='width: 100%; overflow-x: auto;'>
-      <table class='table table-bordered border-primary table-hover tabla-datos'><thead>
-      <tr>
-        <th style='text-align:center'>Id</th>
-        <th style='text-align:center'>Nombre</th>
-        <th style='text-align:center'>Apellido Paterno</th>
-        <th style='text-align:center'>Apellido Materno</th>
-        <th style='text-align:center'>Fecha Nacimiento</th>
-        <th style='text-align:center'>RFC</th>
-        <th style='text-align:center'>Telefono</th>
-        <th style='text-align:center'>Email</th>
-        <th style='text-align:center'>Domicilio</th>
-        <th style='text-align:center'>Cliente desde</th>
-        <th style='text-align:center'>limite de credito</th>
-        <th style='text-align:center'>Credito Utilizado</th>
-      </tr></thead>";
-      if($filtro1 || $filtro2 || $filtro3){
-        foreach ($clientes as $cliente) {
-        //  if($filtro1 == $alumno['curp'] || $filtro2 == $alumno['nombre'] || $filtro3 == $alumno['apellidos']){
-          if($filtro1 == $cliente['Id_Cliente'] || $filtro2 == $cliente['Nombre'] || $filtro3 == $cliente['A_paterno'] ){
-            echo "<tr>
-            <td>".$cliente['Id_Cliente']."</td>
-            <td>".$cliente['Nombre']."</td>
-            <td>".$cliente['A_paterno']."</td> 
-            <td>".$cliente['A_Materno']."</td>
-            <td>".$cliente['Fecha_Nacimiento']."</td>
-            <td>".$cliente['Rfc']."</td>
-            <td>".$cliente['Telefono']."</td>
-            <td>".$cliente['Email']."</td>
-            <td>".$cliente['Domicilio']."</td> 
-            <td>".$cliente['Fecha_Registro']."</td>
-            <td>".$cliente['Limite_Credito']."</td>
-             <td>".$cliente['Credito_Usado']."</td>
-           
-            </tr>";
-          }
+    <div id="listado">
+        <form method="post" action="" name="listar_clientes" id="listar_clientes" class="form-list">
+          
+            <?php
+            include_once 'clases/cliente.php';
+            $cliente = new Cliente();
+            $clientes = $cliente->listar();
+            $encontroResultados = false;
 
-        }
+            if ($clientes) {
+                echo "<table class='table table-bordered border-primary table-hover tabla-datos'><thead>
+                        <tr>
+                           <th style='text-align:center'>Id</th>
+                            <th style='text-align:center'>Nombre</th>
+                            <th style='text-align:center'>Apellido Paterno</th>
+                            <th style='text-align:center'>Apellido Materno</th>
+                            <th style='text-align:center'>Fecha Nacimiento</th>
+                            <th style='text-align:center'>RFC</th>
+                            <th style='text-align:center'>Telefono</th>
+                            <th style='text-align:center'>Email</th>
+                            <th style='text-align:center'>Domicilio</th>
+                            <th style='text-align:center'>Cliente desde</th>
+                            <th style='text-align:center'>limite de credito</th>
+                            <th style='text-align:center'>Credito Utilizado</th>
+                            <th style='text-align:center'>Estatus</th>
+                          
+                        </tr></thead>";
+
+                if ($filtro1 !== '' || $filtro2 !== '' || $filtro3 !== '') {
+                    foreach ($clientes as $cliente) {
+                        $coincideId = ($filtro1 === '' || $filtro1 == $cliente['Id_Cliente']);
+                        $coincideNombre = ($filtro2 === '' || strtoupper($filtro2) == strtoupper($cliente['Nombre']));
+                        $coincideEstatus = ($filtro3 === '' || intval($filtro3) === intval($cliente['Estatus_c']));
+
+                        if ($coincideId && $coincideNombre && $coincideEstatus) {
+                            $encontroResultados = true;
+                            echo "<tr>
+                                <td>{$cliente['Id_Cliente']}</td>
+                                <td>{$cliente['Nombre']}</td>
+                                <td>{$cliente['A_paterno']}</td>
+                                <td>{$cliente['A_Materno']}</td>
+                                <td>{$cliente['Fecha_Nacimiento']}</td>
+                                <td>{$cliente['Rfc']}</td>
+                                <td>{$cliente['Telefono']}</td>
+                                <td>{$cliente['Email']}</td>
+                                <td>{$cliente['Domicilio']}</td>
+                                <td>{$cliente['Fecha_Registro']}</td>
+                                <td>{$cliente['Limite_credito']}</td>
+                                <td>{$cliente['Credito_Usado']}</td>
+                                <td>" . ($cliente['Estatus_c'] == 1 ? 'Activo' : 'Inactivo') . "</td>
+                                   
+                                </tr>";
+                        }
+                    }
+                    if (!$encontroResultados) {
+                        echo "<tr><td colspan='13' style='text-align:center'>No se encontraron resultados</td></tr>";
+                    }
+                } else {
+                    foreach ($clientes as $cliente) {
+                        echo "<tr>
+                                <td>{$cliente['Id_Cliente']}</td>
+                                <td>{$cliente['Nombre']}</td>
+                                <td>{$cliente['A_paterno']}</td>
+                                <td>{$cliente['A_Materno']}</td>
+                                <td>{$cliente['Fecha_Nacimiento']}</td>
+                                <td>{$cliente['Rfc']}</td>
+                                <td>{$cliente['Telefono']}</td>
+                                <td>{$cliente['Email']}</td>
+                                <td>{$cliente['Domicilio']}</td>
+                                <td>{$cliente['Fecha_Registro']}</td>
+                                <td>{$cliente['Limite_credito']}</td>
+                                <td>{$cliente['Credito_Usado']}</td>
+                                <td>" . ($cliente['Estatus_c'] == 1 ? 'Activo' : 'Inactivo') . "</td>
+                                
+                            </tr>";
+                    }
+                }
+
+                echo "</table>";
+            } else {
+                echo "<p>No hay Clientes registrados en la base de datos</p>";
+            }
+            ?>
+        </form>
+    </div>
+
+    <div id="boton-centrado">
+        <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
+    </div>
+
+    
 
 
-      }else{
-          foreach ($clientes as $cliente) {
-           echo "<tr>
-            <td>".$cliente['Id_Cliente']."</td>
-            <td>".$cliente['Nombre']."</td>
-            <td>".$cliente['A_paterno']."</td> 
-            <td>".$cliente['A_Materno']."</td>
-            <td>".$cliente['Fecha_Nacimiento']."</td>
-            <td>".$cliente['Rfc']."</td>
-            <td>".$cliente['Telefono']."</td>
-            <td>".$cliente['Email']."</td>
-            <td>".$cliente['Domicilio']."</td> 
-            <td>".$cliente['Fecha_Registro']."</td>
-            <td>".$cliente['Limite_Credito']."</td>
-             <td>".$cliente['Credito_Usado']."</td>
-            
-            </tr>";
-        }
-      }
-
-    echo "</table> </div>";
-  }
-  else{
-    echo " <p>No hay Clientes registrados en la base de datos</p>";
-  }
-?>      
-           </form></div>
-         <div id="boton-centrado">
-          <input type="button" onClick="location='menuAdmin.php'" value="Regresar" />
-          </div>
-
-       
-
-</html>

@@ -84,12 +84,23 @@
  <input name="idU"  id="idU" type="hidden" value=" <?php echo $_POST['miIdUsuario'];?>">
 
   <table  class="table">
+
   <?php
+  // Evaluamos el estatus para mostrar el texto correspondiente
+$estatusTexto = ($miUsuario["Estatus_u"] == 1) ? 'Activo' : 'Inactivo';
 echo '
-      
+      <tr>
+       <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Inhabilitar:</label></p></td>
+            <td><p><select name="estatus_u" type="text" id ="estatus_u" required>
+            <option value="'.$miUsuario["Estatus_u"].'"  selected>'.$estatusTexto.'</option>
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+             </select></p></td>
+      </tr>
      
     
   <tr>
+
     <td COLSPAN=2 style="text-align: right;"><p  class = "negrita"><label>Nombre:</label></p></td>
     <td><p><input name="nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Nombre" id ="nombre"  title="Ingresa al menos un nombre por favor " required value="'.$miUsuario["Nombre"].'"></p></td>
      <td COLSPAN=2  width="50%" style="text-align: right;"><p class = "negrita"><label>Apellido Paterno:</label></p></td>
@@ -122,7 +133,7 @@ echo '
    <tr>
         <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Tipo de Usuario:</label></p></td>
             <td><p><select name="tipo_usuario" type="text" id ="tipo_usuario" required>
-            <option value="'.$miUsuario["Puesto"].'" disabled selected>'.$miUsuario["Puesto"].'</option>
+            <option value="'.$miUsuario["Puesto"].'" selected>'.$miUsuario["Puesto"].'</option>
             <option value="Administrador">ADMINISTRADOR</option>
             <option value="Usuario">USUARIO</option>
              </select></p></td>

@@ -12,7 +12,24 @@
 			$tipo_usuario->setUsuario($_POST['email']);
 			$tipo_usuario->setPuesto($_POST['tipo_usuario']);
 			$tipo_usuario->setPasword(md5($_POST['pasword']));
-			$tipo_usuario->actualizar();
+			$tipo_usuario->setEstatus_u($_POST['estatus_u']);
+				
+				// Verificar si el usuario ya existe
+				if($tipo_usuario->consultarCodigo($codigo)){
+					echo '<script type="text/javascript">
+								alert("EL USUARIO YA EXISTE");
+								window.location.href="../listActualizarUsuarios.php";
+						</script>';
+					exit();
+				}
+				
+				// Actualizar tipo de usuario
+				$tipo_usuario->setUsuario_id($_POST['idU']);
+				$tipo_usuario->setUsuario($_POST['email']);
+				$tipo_usuario->setPuesto($_POST['tipo_usuario']);
+				$tipo_usuario->setPasword(md5($_POST['pasword']));
+				$tipo_usuario->setEstatus_u($_POST['estatus_u']);
+				$tipo_usuario->actualizar();
 				
 			
 					

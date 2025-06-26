@@ -5,6 +5,7 @@ class Tipo_Usuario extends DB{
     private $usuario;
     private $pasword;
     private $puesto;
+    private $estatus_u;
    
     
     //stters and getters ***********************************************
@@ -12,10 +13,13 @@ class Tipo_Usuario extends DB{
     public function setUsuario($usuario){ $this->usuario = $usuario; }
     public function setPasword($pasword){ $this->pasword = $pasword; } 
     public function setPuesto($puesto){ $this->puesto = $puesto; }
+    public function setEstatus_u($estatus_u){ $this->estatus_u = $estatus_u; }
+    //******************************************************************    
     public function getUsuario_id(){ return $this->usuario_id; }
     public function getUsuario(){ return $this->usuario; }
     public function getPasword(){ return $this->pasword; }
     public function getPuesto(){ return $this->puesto; }
+    public function getEstatus_u(){ return $this->estatus_u; }
     //******************************************************************
 
 
@@ -57,6 +61,7 @@ class Tipo_Usuario extends DB{
             $this->usuario =$currentUser['Usuario'];
             $this->pasword = $currentUser['Pasword'];
             $this->puesto = $currentUser['Puesto'];
+            $this->estatus_u = $currentUser['Estatus_u'];
 
         }
     }
@@ -67,7 +72,7 @@ class Tipo_Usuario extends DB{
     }
 
     public function guardar(){
-        $sql = "INSERT INTO tipo_usuario (Usuario, Pasword, Puesto) VALUES(:usuario, :psw, :tipo)";
+        $sql = "INSERT INTO tipo_usuario (Usuario, Pasword, Puesto, Estatus_u) VALUES(:usuario, :psw, :tipo, 1)";
         $query = $this->connect()->prepare($sql);
         $query->execute([
             'usuario' => $this->usuario,
@@ -76,13 +81,15 @@ class Tipo_Usuario extends DB{
     }
 
 	public function actualizar(){
-		$sql = "UPDATE tipo_usuario SET pasword = :pasworD, puesto = :puestO, usuario = :usuariO	WHERE Usuario_id = :usuario_ID";
+		$sql = "UPDATE tipo_usuario SET pasword = :pasworD, puesto = :puestO, usuario = :usuariO, Estatus_u = :estatus_u WHERE Usuario_id = :usuario_ID";
 		$query = $this->connect()->prepare($sql);
 		$query->execute([
 			'usuario_ID' => $this->usuario_id,
             'usuariO' => $this->usuario,    
             'pasworD' => $this->pasword,
-            'puestO' => $this->puesto]);
+            'puestO' => $this->puesto,
+            'estatus_u' => $this->estatus_u
+        ]);
 	}
 
 }
