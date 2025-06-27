@@ -1,3 +1,5 @@
+
+
 <?php
 //******ALTA VENTA*******
 include_once '../clases/venta.php';

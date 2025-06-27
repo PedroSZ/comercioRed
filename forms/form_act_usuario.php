@@ -145,7 +145,7 @@ echo '
       <p class = "negrita"><label>Contraseña:</label></p>
     </td>
     <td>
-      <p><input name="psw1" type="password" placeholder="Ingresar Contraseña"  id ="psw1"  title="Por favor ingresa una contraseña que inicie con una letra y tenga al menos 8 caracteres y un número como mínimo" required ></p>
+      <p><input name="psw1" type="password" placeholder="Ingresar Contraseña"  id ="psw1"  title="Por favor ingresa una contraseña que inicie con una letra y tenga al menos 8 caracteres y un número como mínimo"  ></p>
 
 
     </td>
@@ -153,7 +153,7 @@ echo '
       <p class = "negrita"><label>Confirmar Contraseña:</label></p>
     </td>
     <td>
-      <p><input name="pasword" type="password" placeholder="Vuelve a escribir la Contraseña"  id ="psw2" required ></p>
+      <p><input name="pasword" type="password" placeholder="Vuelve a escribir la Contraseña"  id ="psw2"  ></p>
     </td>
   </tr>
   <tr>

@@ -101,7 +101,7 @@ public function actualizar(){
 			Fecha_Registro = :fecha_registro, Fecha_Nacimiento = :fecha_nacimiento, 
 			Telefono = :telefono, Email = :email, 
 			Domicilio = :domicilio, Credito_Usado = :credito_usado,
-			Limite_Credito = :limite_credito WHERE Id_Cliente = :id_actual";
+			Limite_Credito = :limite_credito, Estatus_c = :estatus_c WHERE Id_Cliente = :id_actual";
 		$query = $this->connect()->prepare($sql);
 		$query->execute([
     'id_actual' => $this->id_cliente, 
@@ -115,8 +115,8 @@ public function actualizar(){
     'email' => $this->email,
     'domicilio' => $this->domicilio,
 	'limite_credito' => $this->limite_credito,
-	'credito_usado' => $this->credito_usado
-  		  ]);	
+	'credito_usado' => $this->credito_usado,
+	'estatus_c' => $this->estatus_c]);	
   	}
 
 

@@ -74,7 +74,7 @@
     <body>   
     <?php include_once '../modulos/mdl_header.php'; ?>
         <div class="container">
-    <h1 class="text-center mt-4">Actualizar Usuario</h1>
+    <h1 class="text-center mt-4">Actualizar Cliente</h1>
     <p class="text-center">Edite la información de los campos que desee modificar y luego presione el boton actualizar.</p>
 
                <form method="post" style="width: auto; height:auto;"  action="../modulos/mdl_ActualizarCliente.php" id="frm_Actualizarusuarios" >
@@ -82,20 +82,29 @@
 
   <table  class="table">
   <?php
+$estatusTexto = ($cli["Estatus_c"] == 1) ? 'Activo' : 'Inactivo';
 echo '
+      <tr>
+       <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Inhabilitar:</label></p></td>
+            <td><p><select name="estatus_c" type="text" id ="estatus_c" required>
+            <option value="'.$cli["Estatus_c"].'"  selected>'.$estatusTexto.'</option>
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+             </select></p></td>
+      </tr>
       
      
     
   <tr>
     <td COLSPAN=2 style="text-align: right;"><p  class = "negrita"><label>Nombre:</label></p></td>
-    <td><p><input name="nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Nombre" id ="nombre" required pattern="[A-ZÑ ]+" title="Ingresa al menos un nombre por favor " required value="'.$cli["Nombre"].'"></p></td>
+    <td><p><input name="nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Nombre" id ="nombre" title="Ingresa al menos un nombre por favor " required value="'.$cli["Nombre"].'"></p></td>
      <td COLSPAN=2  width="50%" style="text-align: right;"><p class = "negrita"><label>Apellido Paterno:</label></p></td>
-    <td><p><input name="a_paterno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Paterno" id ="a_paterno" required pattern="[A-ZÑ ]+" title="Ingresa al menos un apellido por favor " required value="'.$cli["A_paterno"].'"></p></td>
+    <td><p><input name="a_paterno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Paterno" id ="a_paterno" title="Ingresa al menos un apellido por favor " required value="'.$cli["A_paterno"].'"></p></td>
   </tr>
  
   <tr>
     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Apellido Materno:</label></p></td>
-    <td><p><input name="a_materno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Materno" id ="a_materno" required pattern="[A-ZÑ ]+" title="Ingresa al menos un apellido por favor " value="'.$cli["A_Materno"].'"></p></td>
+    <td><p><input name="a_materno" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Apellido Materno" id ="a_materno" title="Ingresa al menos un apellido por favor " value="'.$cli["A_Materno"].'"></p></td>
     <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Fecha de Nacimiento:</label></p></td>
     <td><p><input name="fecha_nacimiento" type="date" id ="fecha_nacimiento" required value="'.$cli["Fecha_Nacimiento"].'"></p></td>
    

@@ -112,15 +112,15 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                             $encontroResultados = true;
                             echo "<tr>
                                      <td>".$producto['Codigo']."</td>
-            <td>".$producto['Nombre']."</td>
-            <td>".$producto['Descripcion']."</td>
-            <td>".$producto['Stock']."</td> 
-            <td>".$producto['Fecha_Registro']."</td>
-            <td>".$producto['Fecha_Caducidad']."</td>
-            <td>".$producto['Costo']."</td>
-            <td>".$producto['Precio']."</td>
-            <td>".($producto['Estatus'] == 1 ? 'Activo' : 'Inactivo')."</td>
-            <td>" . ($producto['Estatus_p'] == 1 ? 'Activo' : 'Inactivo') . "</td>
+                                        <td>".$producto['Nombre']."</td>
+                                        <td>".$producto['Descripcion']."</td>
+                                        <td>".$producto['Stock']."</td> 
+                                        <td>".$producto['Fecha_Registro']."</td>
+                                        <td>".$producto['Fecha_Caducidad']."</td>
+                                        <td>".$producto['Costo']."</td>
+                                        <td>".$producto['Precio']."</td>
+                                        <td>".($producto['Estatus_p'] == 1 ? 'Activo' : 'Inactivo')."</td>
+                                       
                                    
                                 </tr>";
                         }

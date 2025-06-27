@@ -18,6 +18,7 @@
 		$cliente->setDomicilio($_POST['domicilio_c']);
 		$cliente->setLimite_credito($_POST['limite']);
 		$cliente->setCredito_usado($_POST['credito']);
+		$cliente->setEstatus_c($_POST['estatus_c']);
 
 		$cliente->actualizar();
 

@@ -38,11 +38,10 @@
 
 
 /**********************************************************************************************/
-error_reporting(0);//para que no me muestre errores
-$filtro1 = $_POST['FiltarId_actualizar_producto']; //para obtener la curp a buscar del fitro
-$filtro2 = $_POST['FiltarNom_actualizar_producto'];
-$filtro3 = $_POST['FiltarPater_actualizar_producto'];
-
+error_reporting(0);
+$filtro1 = isset($_POST['FiltrarCodigo_actualizarProducto']) ? trim($_POST['FiltrarCodigo_actualizarProducto']) : '';
+$filtro2 = isset($_POST['FiltarNom_actualizar_producto']) ? trim($_POST['FiltarNom_actualizar_producto']) : '';
+$filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : '';
 ?>
 </!DOCTYPE html>
 <html>
@@ -57,17 +56,24 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
      <link rel="stylesheet" href="css/contenedores.css">
  
-        	<script language='javascript'>
-		          function consultar(codigo) {
-                 document.lista_actualizar_producto.micodigo.value = codigo;
-			           // alert(codigo);
-                   document.lista_actualizar_producto.submit();
-	      	  }
-		        function regresar(){
-		      	location.href='index.php'
-		        }
-        </script>
-
+        <script language='javascript'>
+        function consultar(Codigo) {
+            document.lista_actualizar_producto.micodigo.value = Codigo;
+            document.lista_actualizar_producto.submit();
+        }
+        function regresar() {
+            location.href = 'index.php';
+        }
+        function limpiarFiltros() {
+            document.getElementById('FiltrarCodigo_actualizarProducto').value = '';
+            document.getElementById('FiltarNom_actualizar_producto').value = '';
+            document.getElementById('Filtrar_Status').selectedIndex = 0;
+            document.getElementById('form_filtro_listar_productos').submit();
+        }
+        function filtrarPorSelect() {
+            document.getElementById('form_filtro_listar_productos').submit();
+        }
+    </script>
     </head>
     <body>
         
@@ -77,29 +83,29 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
             <?php include_once 'modulos/mdl_header.php'; ?>
         <!-- fin Encabezado de la pagina-->
  <div class="superponer"> 
-    <h1 class="text-center mt-4">Modificaciones</h1>
+    <h1 class="text-center mt-4">Modificacion de Productos</h1>
     <p class="text-center">Elija de la lista el producto que desea actualizar haciendo clic en el icono. <img src="img/Actualizar.png" width="30" height="30" alt="Actualizar" title="Actualizar producto"></p>
           </div>   
-           <div id="filtro">   
-    <form method="post" action="listActualizarProductos.php" name="form_filtro_actualizar_producto" id="form_filtro_actualizar_producto" style="align-items: center; background:rgba(0,0,0,0.0);">
-                <table class="table-primary"  border="1">
-
-              <tr>
-                <td width="100%" style="text-align: right;">
-
-                  <input name="FiltarId_actualizar_producto" type="text"  placeholder="Buscar por Código" id ="FiltarId_actualizar_producto" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarNom_actualizar_producto" type="text" title="Busqueda por nombre"  placeholder="Buscar por Nombre" id ="FiltarNom_actualizar_producto" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" >
-                  <input name="FiltarPater_actualizar_producto" type="text" title="Busqueda por Descripción" placeholder="Buscar por descripcion" id ="FiltarPater_actualizar_producto" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()">
-
-                  
-                      <br>
-                      <input type="submit" value="Buscar">
-
-                </td>
-              </tr>
+           <div id="filtro">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" name="form_filtro_listar_productos" id="form_filtro_listar_productos">
+            <table class="table-primary" border="1">
+                <tr>
+                    <td width="100%" style="text-align: right;">
+                        <input name="FiltrarCodigo_actualizarProducto" type="text" placeholder="Buscar por Código" id="FiltrarCodigo_actualizarProducto" onkeyup="this.value = this.value.toUpperCase()" value="<?php echo htmlspecialchars($filtro1); ?>">
+                        <input name="FiltarNom_actualizar_producto" type="text" title="Busqueda por Nombre" placeholder="Buscar por Nombre" id="FiltarNom_actualizar_producto" onkeyup="this.value = this.value.toUpperCase()" value="<?php echo htmlspecialchars($filtro2); ?>">
+                        <select name="Filtrar_Status" id="Filtrar_Status" onchange="filtrarPorSelect()">
+                            <option value="" disabled <?php echo ($filtro3 === '') ? 'selected' : ''; ?>>Buscar por estatus</option>
+                            <option value="1" <?php echo ($filtro3 === '1') ? 'selected' : ''; ?>>Activo</option>
+                            <option value="0" <?php echo ($filtro3 === '0') ? 'selected' : ''; ?>>Inactivo</option>
+                        </select>
+                        <br>
+                        <input type="submit" value="Buscar">
+                        <input type="button" value="Limpiar" onclick="limpiarFiltros()">
+                    </td>
+                </tr>
             </table>
-          </form>
-        </div>
+        </form>
+    </div>
             <!--/*********************************FIN FORMULARIO PARA EL FILTRO*****************************************************/ -->
 
 
@@ -108,8 +114,8 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
                     <input type="hidden" id="micodigo" name="micodigo">
                      <?php
   include_once 'clases/producto.php';
-  $produ = new Producto();
-  $productos = $produ->listar();
+  $producto = new Producto();
+  $productos = $producto->listar();
   if($productos){
     echo "
     
@@ -119,53 +125,60 @@ $filtro3 = $_POST['FiltarPater_actualizar_producto'];
         <th style='text-align:center'>Producto</th>
         <th style='text-align:center'>Descripcion</th>
         <th style='text-align:center'>Existencias</th>
-        <th style='text-align:center'>Feca de caducidad</th>
+        <th style='text-align:center'>Fecha de caducidad</th>
         <th style='text-align:center'>Registrado desde</th>
         <th style='text-align:center'>Costo producccion</th>
         <th style='text-align:center'>Precio al Púlico</th>
+        <th style='text-align:center'>Estatus</th>
         <th style='text-align:center'>Modificar</th>
       </tr></thead>";
-      if($filtro1 || $filtro2 || $filtro3){
-        foreach ($productos as $produ) {
-        
-          if($filtro1 == $produ['Codigo'] || $filtro2 == $user2['Nombre'] || $filtro3 == $user2['Fecha_Registro'] ){
-            echo "<tr>
-            <td>".$produ['Codigo']."</td>
-            <td>".$produ['Nombre']."</td>
-            <td>".$produ['Descripcion']."</td> 
-            <td>".$produ['Stock']."</td>
-            <td>".$produ['Fecha_Caducidad']."</td>
-            <td>".$produ['Fecha_Registro']."</td>
-            <td>".$produ['Costo']."</td>
-            <td>".$produ['Precio']."</td> 
-           <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$produ['Codigo']."\");'></td>
+       if ($filtro1 !== '' || $filtro2 !== '' || $filtro3 !== '') {
+                    foreach ($productos as $producto) {
+                        $coincideCdg = ($filtro1 === '' || $filtro1 == $producto['Codigo']);
+                        $coincideNombre = ($filtro2 === '' || strtoupper($filtro2) == strtoupper($producto['Nombre']));
+                        $coincideEstatus = ($filtro3 === '' || intval($filtro3) === intval($producto['Estatus_p']));
+
+                        if ($coincideCdg && $coincideNombre && $coincideEstatus) {
+                            $encontroResultados = true;
+                            echo "<tr>
+                                     <td>".$producto['Codigo']."</td>
+                                        <td>".$producto['Nombre']."</td>
+                                        <td>".$producto['Descripcion']."</td>
+                                        <td>".$producto['Stock']."</td> 
+                                        <td>".$producto['Fecha_Registro']."</td>
+                                        <td>".$producto['Fecha_Caducidad']."</td>
+                                        <td>".$producto['Costo']."</td>
+                                        <td>".$producto['Precio']."</td>
+                                        <td>".($producto['Estatus_p'] == 1 ? 'Activo' : 'Inactivo')."</td>
+           <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$producto['Codigo']."\");'></td>
             </tr>";
           }
 
         }
+  if (!$encontroResultados) {
+                        echo "<tr><td colspan='13' style='text-align:center'>No se encontraron resultados</td></tr>";
+                    }
+                } else {
+                    foreach ($productos as $producto) {
+                        echo "<tr>
+                               <td>".$producto['Codigo']."</td>
+            <td>".$producto['Nombre']."</td>
+            <td>".$producto['Descripcion']."</td>
+            <td>".$producto['Stock']."</td> 
+            <td>".$producto['Fecha_Registro']."</td>
+            <td>".$producto['Fecha_Caducidad']."</td>
+            <td>".$producto['Costo']."</td>
+            <td>".$producto['Precio']."</td>
+            <td>".($producto['Estatus_p'] == 1 ? 'Activo' : 'Inactivo')."</td>
+               <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$producto['Codigo']."\");'></td>                  
+                            </tr>";
+                    }
+                }
 
-
-      }else{
-          foreach ($productos as $produ) {
-           echo "<tr>
-            <td>".$produ['Codigo']."</td>
-            <td>".$produ['Nombre']."</td>
-            <td>".$produ['Descripcion']."</td> 
-            <td>".$produ['Stock']."</td>
-            <td>".$produ['Fecha_Caducidad']."</td>
-            <td>".$produ['Fecha_Registro']."</td>
-            <td>".$produ['Costo']."</td>
-            <td>".$produ['Precio']."</td> 
-           <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$produ['Codigo']."\");'></td>
-            </tr>";
-        }
-      }
-
-    echo "</table>";
-  }
-  else{
-    echo " <p>No hay Productos registrados en la base de datos</p>";
-  }
+                echo "</table>";
+            } else {
+                echo "<p>No hay productos registrados en la base de datos</p>";
+            }
 ?>
 
 

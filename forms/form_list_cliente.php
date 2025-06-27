@@ -77,8 +77,8 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
             </table>
         </form>
     </div>
-
-    <div id="listado">
+ 
+   <div id="listado">
         <form method="post" action="" name="listar_clientes" id="listar_clientes" class="form-list">
           
             <?php

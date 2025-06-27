@@ -16,6 +16,7 @@
 		$producto->setFecha_Registro($_POST['fecha_registro_p']);
 		$producto->setCosto($_POST['costo']);
 		$producto->setPrecio($_POST['precio']);
+		$producto->setEstatus_p($_POST['estatus_p']);
 		$producto->actualizar();
 		echo '<script type="text/javascript">
 							alert("Actualización exitosa");

@@ -68,7 +68,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
     <?php include_once 'modulos/mdl_header.php'; ?>
 
     <div class="superponer">
-        <h1 class="text-center mt-4">Modificaciones</h1>
+        <h1 class="text-center mt-4">Modificaciones de Usuarios</h1>
         <p class="text-center">Elija de la lista al usuario que desea actualizar haciendo clic en el icono. <img src="img/Actualizar.png" width="30" height="30" alt="Actualizar" title="Actualizar producto"></p>
     </div>
 

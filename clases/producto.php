@@ -72,7 +72,8 @@ class Producto extends DB {
         Fecha_Caducidad = :fecha_caducidad, 
         Fecha_Registro = :fecha_registro, 
         Costo = :costo, 
-        Precio = :precio	
+        Precio = :precio,
+		Estatus_p = :estatus_p	
         WHERE Codigo = :codigo";
 
     $query = $this->connect()->prepare($sql);
@@ -85,7 +86,7 @@ class Producto extends DB {
         'costo' => $this->costo,
         'precio' => $this->precio,
         'codigo' => $this->codigo,
-    ]);
+		'estatus_p' => $this->estatus_p]);
 }
 
 	public function guardar() {

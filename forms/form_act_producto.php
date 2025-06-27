@@ -1,58 +1,53 @@
 <?php
-	
-/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
-/*  include_once '../clases/tipo_usuario.php';
+	/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
+    include_once '../clases/tipo_usuario.php';
     include_once '../clases/sesion.php';
+    $userSession = new Sesion();
+    //MADAR A INDEX SI NO HAY SESION INICIADA
     
-    
-    
-if (!isset($_SESSION['user'])){
-    header("location: index.php");
-    }
-
     if (!isset($_SESSION['user'])){
     header("location: index.php");
     }
-
     if(isset($_SESSION['user'])){
         $user = new Tipo_Usuario();
         $user->establecerDatos($userSession->getCurrentUser());
-        $tipo = $user->getTipo();
-      
+        $tipo = $user->getPuesto();
+        $codigo = $user->getUsuario_id();
 
 
-		
+		//mensaje de que no tiene privilegios
         if($tipo <> "Administrador") header('location: index.php');
-       
+        /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
         if (!isset($_SESSION['tiempo'])) {
             $_SESSION['tiempo']=time();
         }
         else if (time() - $_SESSION['tiempo'] > 500) {
             session_destroy();
-          
-           header("location: index.php");
+            /* Aquí redireccionas a la url especifica */
+            header("location: index.php");
             die();
         }
-        $_SESSION['tiempo']=time();
-      
+        $_SESSION['tiempo']=time(); //Si hay actividad seteamos el valor al tiempo actual
+        /*////////////////////FIN SIERRE POR INACTIVIDAD/////////////////////////*/
 
     }
     else{
         $userSession->closeSession();
          header("location: index.php");
     }
-*/
+
+
 /**********************************************************************************************/
 
-
 	if(!empty($_POST['micodigo'])){
+   
 		include_once '../clases/producto.php';
 		$codigo = $_POST['micodigo'];
 		$produ = new Producto();
 		$item = $produ->consultarCodigo($codigo);
 	}
 	else{
-
+ echo "POST BACIO";
 	}
 ?>
 </!DOCTYPE html>
@@ -86,9 +81,17 @@ if (!isset($_SESSION['user'])){
 
   <table  class="table">
   <?php
+  $estatusTexto = ($item["Estatus_p"] == 1) ? 'Activo' : 'Inactivo';
 echo '
       
-     
+      <tr>
+       <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Inhabilitar:</label></p></td>
+            <td><p><select name="estatus_p" type="text" id ="estatus_p" required>
+            <option value="'.$item["Estatus_p"].'"  selected>'.$estatusTexto.'</option>
+            <option value="1">Activo</option>
+            <option value="0">Inactivo</option>
+             </select></p></td>
+      </tr>
  
 
  
@@ -104,7 +107,7 @@ echo '
       <p  class = "negrita"><label>Nombre del producto:</label></p>
     </td>
     <td>
-      <p><input name="producto_nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar nombre del producto" id ="producto_nombre" required pattern="[A-ZÑ ]+" title="Ingresa nombre del producto " required value="'.$item["Nombre"].'"></p>
+      <p><input name="producto_nombre" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar nombre del producto" id ="producto_nombre" title="Ingresa nombre del producto " value="'.$item["Nombre"].'"></p>
     </td>
   </tr>
  
@@ -113,7 +116,7 @@ echo '
       <p  class = "negrita"><label>Descripción:</label></p>
     </td>
     <td>
-      <p><input name="descripcion" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar descripción del producto" id ="descripcion" required pattern="[A-ZÑ ]+" title="Agrega una breve descripción por favor " value="'.$item["Descripcion"].'"></p>
+      <p><input name="descripcion" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar descripción del producto" id ="descripcion" title="Agrega una breve descripción por favor " value="'.$item["Descripcion"].'"></p>
     </td>
       <td COLSPAN=2 style="text-align: right;">
       <p  class = "negrita"><label>Cantidad:</label></p>
