@@ -72,6 +72,11 @@
         </ul>
       </li>
 
+       <li class='nav-item dropdown'>
+        <a class='dropdown-item' href="actualizarInventario.php">Inventario</a>
+        
+      </li>
+
           <li class='nav-item dropdown'>
         <a class='nav-link dropdown-toggle' href='#' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
           Salir
@@ -81,6 +86,8 @@
           <li><a class='dropdown-item' href="modulos/mdl_logout.php">Serrar Sesión</a></li>
         </ul>
       </li>
+
+
 
 
     </ul>

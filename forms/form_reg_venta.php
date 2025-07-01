@@ -112,6 +112,7 @@ function previsualizarStock() {
     document.getElementById('existencias').innerText = stockRestante;
 }
 
+
 function consultarYEnfocar(codigo) {
     fetch('modulos/consultar_producto.php', {
         method: 'POST',
@@ -147,7 +148,6 @@ function consultarYEnfocar(codigo) {
         console.error('Error:', error);
     });
 }
-
 
 window.onload = function () {
     var fecha = new Date();
@@ -207,6 +207,8 @@ window.onload = function () {
     });
 };
 
+ 
+
 function limpiarCampos() {
     document.getElementById('codigo').value = '';
     document.getElementById('codigoOculto').value = '';
@@ -235,6 +237,7 @@ function calcularTotalGeneral() {
     }
 
     document.getElementById('total_general').innerText = total.toFixed(2);
+    document.getElementById('total_general_input').value = total.toFixed(2);
 }
 
 function agregarProductoYResetear() {
@@ -338,7 +341,7 @@ function agregarProductoYResetear() {
 	?>
 
 </p>
-<form  action="modulos/mdl_reg_venta.php"  style="width: 65vw; height:auto;" id="frm_agregar_producto_a_vender" name="frm_agregar_producto_a_vender">
+<form  action="modulos/mdl_reg_descuento.php"  style="width: 65vw; height:auto;" id="frm_agregar_producto_a_vender" name="frm_agregar_producto_a_vender">
     <input name="fecha_venta" type="hidden" id="fecha_venta" required>
     <input name="id_vendedor" type="hidden" id="id_vendedor" required placeholder="id del vendedor" value="<?php echo $id ?>">
     <input name="no_venta" type="hidden" id="no_venta" required placeholder="no de venta" value="<?php echo $no_venta_maximo + 1; ?>">
@@ -464,13 +467,93 @@ function agregarProductoYResetear() {
 
 <!-- Mostramos el total general -->
 <h2>Total: $<span id="total_general">0.00</span></h2>
+<input type="text" name="total_general_input" id="total_general_input" value="0.00">
       
         <input type="submit" value="Registrar Venta">
         <input type="button" id="cancelar" value="Cancelar">
-       <input type="button" id="regresar" value="Regresar" />
+        <input type="button" id="regresar" value="Regresar" />
 
     
-  
+<!-- Modal Bootstrap -->
+<div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="miModalLabel">Resumen de Venta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p>Total a pagar: $<span id="totalPagarModal"></span></p>
+
+        <label>Pagó con:</label>
+        <input type="number" id="pagoCliente" min="0" class="form-control mb-2">
+
+        <label>Descuento (%):</label>
+        <input type="number" id="descuentoPorcentaje" min="0" max="100" value="0" class="form-control mb-2">
+
+        <label>IVA (%):</label>
+        <input type="number" id="ivaPorcentaje" min="0" max="100" value="0" class="form-control mb-2">
+
+        <p>Cambio: $<span id="cambioCliente">0.00</span></p>
+      </div>
+      <div class="modal-footer">
+        <button id="confirmarModal" type="button" class="btn btn-primary">Proceder</button>
+        <button type="button" class="btn btn-secondary" id="cancelarModal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Campos ocultos adicionales -->
+<input type="hidden" name="descuento" id="descuentoInput">
+<input type="hidden" name="iva" id="ivaInput">
+<input type="hidden" name="pago" id="pagoInput">
+
+
 
 
 </form>
+<script>
+document.querySelector('input[type="submit"]').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    let total = parseFloat(document.getElementById('total_general_input').value);
+    document.getElementById('totalPagarModal').innerText = total.toFixed(2);
+
+    // Mostrar el modal usando Bootstrap 5
+    let modal = new bootstrap.Modal(document.getElementById('miModal'));
+    modal.show();
+});
+
+
+document.getElementById('pagoCliente').addEventListener('input', calcularCambio);
+document.getElementById('descuentoPorcentaje').addEventListener('input', calcularCambio);
+document.getElementById('ivaPorcentaje').addEventListener('input', calcularCambio);
+
+function calcularCambio() {
+    let total = parseFloat(document.getElementById('total_general_input').value);
+    let descuento = parseFloat(document.getElementById('descuentoPorcentaje').value) || 0;
+    let iva = parseFloat(document.getElementById('ivaPorcentaje').value) || 0;
+    let pago = parseFloat(document.getElementById('pagoCliente').value) || 0;
+
+    let totalConDescuento = total - (total * (descuento / 100));
+    let totalConIVA = totalConDescuento + (totalConDescuento * (iva / 100));
+
+    let cambio = pago - totalConIVA;
+
+    document.getElementById('cambioCliente').innerText = cambio >= 0 ? cambio.toFixed(2) : "Pago insuficiente";
+}
+
+document.getElementById('confirmarVenta').addEventListener('click', function () {
+    document.getElementById('descuentoInput').value = document.getElementById('descuentoPorcentaje').value;
+    document.getElementById('ivaInput').value = document.getElementById('ivaPorcentaje').value;
+    document.getElementById('pagoInput').value = document.getElementById('pagoCliente').value;
+    document.getElementById('enviar_ventas').submit();
+});
+
+document.getElementById('cancelarModal').addEventListener('click', function () {
+    document.getElementById('modalResumenVenta').style.display = 'none';
+    document.getElementById('filtroModal').style.display = 'none';
+});
+</script> 
+
+
