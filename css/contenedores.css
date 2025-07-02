@@ -1,7 +1,7 @@
 
 
 #listado{
-     height: 63vh;
+     height: 55vh;
    overflow-y: scroll; 
 }
 
@@ -13,6 +13,7 @@
 }
 
 #boton-centrado{
+  
      display: flex;
   justify-content: center;
   align-items: center;

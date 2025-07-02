@@ -50,11 +50,20 @@ class Producto extends DB {
 	}
 
 
-	public function consulta($sql){
+	/*public function consulta($sql){
 		$query = $this->connect()->prepare($sql);
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_ASSOC);
-	}
+	}*/
+
+
+public function consulta($sql, $params = []) {
+    $query = $this->connect()->prepare($sql);
+    $query->execute($params);
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 
 	public function consultarCodigo($codigo){
 		$query = $this->connect()->prepare('SELECT * FROM productos WHERE Codigo = :user');
@@ -139,6 +148,7 @@ public function actualizarStockDirecto() {
         'codigo' => $this->codigo
     ]);
 }
+
 
 	
 }

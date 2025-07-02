@@ -14,3 +14,27 @@ body {
     font-size: 14px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.celda-actualizada {
+    background-color: #d4edda !important; /* verde claro */
+    transition: background-color 0.5s ease;
+}
+
+.resultado-busqueda {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ced4da;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 300px; /* o el ancho que necesites */
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.resultado-busqueda div {
+    padding: 8px;
+}
+
+.resultado-busqueda div:hover {
+    background-color: #e9ecef;
+}
