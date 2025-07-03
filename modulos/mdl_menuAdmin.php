@@ -52,10 +52,10 @@
             Modificar
           </a>
           <ul class='dropdown-menu'>
-         <li><a class='dropdown-item' href="listActualizarUsuarios.php">Usuarios</a></li>
-         <li><a class='dropdown-item' href="listActualizarProductos.php">Productos</a></li>
+         <li><a class='dropdown-item'  href="listActualizarUsuarios.php">Usuarios</a></li>
+         <li><a class='dropdown-item'  href="listActualizarProductos.php">Productos</a></li>
          <li><a class='dropdown-item'  href="listActualizarClientes.php">Clientes</a></li>
-         <li><a class='dropdown-item' >Ventas</a></li>
+         <li><a class='dropdown-item'  href="actualizarVenta.php">Ventas</a></li>
           </ul>
         </li>
 

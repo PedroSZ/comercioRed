@@ -59,6 +59,21 @@ class Ventas extends DB {
         'tipo_pago'       => $this->tipo_pago
     ]);
 }
+
+public function consultarPorNoVenta($noVenta) {
+    $query = $this->connect()->prepare('SELECT * FROM ventas WHERE No_venta = :no_venta');
+    $query->execute(['no_venta' => $noVenta]);
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function eliminarVenta($noVenta) {
+    $query = $this->connect()->prepare('DELETE FROM ventas WHERE No_venta = :no_venta');
+    $query->execute(['no_venta' => $noVenta]);
+}
+
+
+
+
 }
 
 ?>
