@@ -42,11 +42,6 @@ if (!empty($_POST['codigoPro'])) {
     $produ = new Producto();
     $item = $produ->consultarCodigo($codigo);
 }
-
-include_once 'clases/venta.php';
-$ve = new Ventas();
-$ventas = $ve->consultarUltimo();
-$no_venta_maximo = $ventas[0]["MAX(No_venta)"];
 ?>
 
     <style>
@@ -54,10 +49,93 @@ $no_venta_maximo = $ventas[0]["MAX(No_venta)"];
     .ocultar {
         display: none;
     }
-</style>
+    </style>
+
 
 	   <script>
-let existenciasOriginal = 0;
+        let existenciasOriginal = 0;
+        function busqueda() {
+        let noVenta = document.getElementById('no_venta').value;
+
+    if (noVenta === '') {
+        alert('Ingresa un número de venta.');
+        return;
+    }
+
+    fetch('modulos/buscar_venta.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'no_venta=' + encodeURIComponent(noVenta)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.length > 0) {
+            cargarTabla(data);
+           let noVenta = document.getElementById('no_venta').value;
+
+        } else {
+            alert('No se encontraron productos para este número de venta.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function cargarTabla(data) {
+    let tabla = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
+    tabla.innerHTML = ''; // Limpiar tabla
+
+    // ✅ Aquí asignamos el número de venta al input oculto
+    document.getElementById('no_venta_registro').value = data[0].No_venta;
+
+    let total = 0;
+
+    data.forEach(item => {
+        let nuevaFila = tabla.insertRow();
+
+        function crearCeldaConInput(valor, nombre, ocultar) {
+            let celda = nuevaFila.insertCell();
+            if (ocultar) {
+                celda.classList.add('ocultar');
+            }
+            celda.innerHTML = `<input type="text" name="${nombre}[]" value="${valor}" readonly>`;
+        }
+
+        function crearCeldaConBoton() {
+            let celda = nuevaFila.insertCell();
+            let boton = document.createElement("button");
+            boton.type = "button";
+            boton.textContent = "Quitar";
+            boton.addEventListener("click", function () {
+                this.closest("tr").remove();
+                calcularTotalGeneral();
+            });
+            celda.appendChild(boton);
+        }
+
+        // AQUI OCULTAMOS LOS CAMPOS DE LA TABLA CON TRUE PARA LOS QUE NO QUERAMOS QUE SALGAN
+        crearCeldaConInput(item.Fecha_Venta, 'fecha_venta', true);
+        crearCeldaConInput(item.Id_Vendedor, 'id_vendedor', true);
+        crearCeldaConInput(item.No_venta, 'no_venta', true);
+        crearCeldaConInput(item.Cliente_Id, 'cliente', true);
+        crearCeldaConInput(item.Codigo_pro, 'codigoOculto', false);
+        crearCeldaConInput(item.Cantidad, 'cantidad', false);
+        crearCeldaConInput(item.Precio_al_dia, 'precio', false);
+        crearCeldaConInput(item.Tipo_Pago, 'tipo_pago', true);
+
+        let subtotal = (parseFloat(item.Cantidad) * parseFloat(item.Precio_al_dia)).toFixed(2);
+        crearCeldaConInput(subtotal, 'subtotal', false);
+        crearCeldaConBoton();
+
+        total += parseFloat(subtotal);
+    });
+
+    document.getElementById('total_general').innerText = total.toFixed(2);
+    document.getElementById('total_general_input').value = total.toFixed(2);
+}
+
+
 
 function consultar(codigo) {
     if (codigo === '') {
@@ -171,13 +249,13 @@ window.onload = function () {
         }
     }
 });
-/*
+
        function buscar(Id_Cliente) {
                  document.buscar_ticket.miIdCliente.value = Id_Cliente;
 			           //alert(Id_Cliente);
                    document.buscar_ticket.submit();
 	      	  }
-    */
+    
 
     document.getElementById('cantidad_v').addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
@@ -316,7 +394,7 @@ function agregarProductoYResetear() {
             });
             celda.appendChild(boton);
         }
-
+// AQUI OCULTAMOS LOS CAMPOS DE LA TABLA CON TRUE PARA LOS QUE NO QUERAMOS QUE SALGAN
         crearCeldaConInput(v_fecha_venta, 'fecha_venta', true);
         crearCeldaConInput(v_id_vendedor, 'id_vendedor', true);
         crearCeldaConInput(v_no_venta, 'no_venta', true);
@@ -336,16 +414,9 @@ function agregarProductoYResetear() {
 
  
  
- <?php
-       include_once 'clases/venta.php';
-        $ve = new Ventas();
-        $ventas = $ve->consultarUltimo();
-        $no_venta_maximo = $ventas[0]["MAX(No_venta)"];
-// Imprimir el valor
-//echo "El número de venta más alto es: " . $no_venta_maximo;   
-	?>
 
-</p><!--
+
+</p>
 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" id="buscar_ticket" name="buscar_ticket" method="post" style="width: 65vw; height:auto;">
     <table border="0" style="font-weight: 600; font-size: 17px;">
         <tr>
@@ -360,12 +431,12 @@ function agregarProductoYResetear() {
             </td>
         </tr>
     </table>
-</form>-->
+</form>
 
 <form  action="modulos/mdl_reg_descuento.php"  style="width: 65vw; height:auto;" id="frm_agregar_producto_a_vender" name="frm_agregar_producto_a_vender">
     <input name="fecha_venta" type="hidden" id="fecha_venta" required>
     <input name="id_vendedor" type="hidden" id="id_vendedor" required placeholder="id del vendedor" value="<?php echo $id ?>">
-    <input name="no_venta" type="hidden" id="no_venta" required placeholder="no de venta" value="<?php echo $no_venta_maximo + 1; ?>">
+    <input name="no_venta" type="hidden" id="no_venta_registro" required placeholder="no de venta">
     <input name="codigoOculto" placeholder="codigo oculto" type="hidden" id="codigoOculto" value="<?php echo $item["Codigo"]; ?>">
     <table border="0" style="font-weight: 600; font-size: 17px;">
 
@@ -519,7 +590,7 @@ function agregarProductoYResetear() {
       </div>
       <div class="modal-footer">
         <button id="confirmarModal" type="button" class="btn btn-primary">Proceder</button>
-        <button type="button" class="btn btn-secondary" id="cancelarModal">Cancelar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>
@@ -534,16 +605,40 @@ function agregarProductoYResetear() {
 
 </form>
 <script>
+
+  // Declarar el modal globalmente
+let modal = null;
+
+document.addEventListener('DOMContentLoaded', function () {
+    modal = new bootstrap.Modal(document.getElementById('miModal'));
+});
+
 document.querySelector('input[type="submit"]').addEventListener('click', function (event) {
     event.preventDefault();
 
     let total = parseFloat(document.getElementById('total_general_input').value);
-    document.getElementById('totalPagarModal').innerText = total.toFixed(2);
+    let noVenta = document.getElementById('no_venta_registro').value;
 
-    // Mostrar el modal usando Bootstrap 5
-    let modal = new bootstrap.Modal(document.getElementById('miModal'));
-    modal.show();
+    fetch('modulos/buscar_descuento.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'no_venta=' + encodeURIComponent(noVenta)
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('totalPagarModal').innerText = total.toFixed(2);
+        document.getElementById('descuentoPorcentaje').value = data.descuento;
+        document.getElementById('ivaPorcentaje').value = data.iva;
+
+        modal.show(); // Reutilizamos el modal
+        calcularCambio();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });
+
+
 
 
 document.getElementById('pagoCliente').addEventListener('input', calcularCambio);
@@ -564,17 +659,18 @@ function calcularCambio() {
     document.getElementById('cambioCliente').innerText = cambio >= 0 ? cambio.toFixed(2) : "Pago insuficiente";
 }
 
-document.getElementById('confirmarVenta').addEventListener('click', function () {
+document.getElementById('confirmarModal').addEventListener('click', function () {
     document.getElementById('descuentoInput').value = document.getElementById('descuentoPorcentaje').value;
     document.getElementById('ivaInput').value = document.getElementById('ivaPorcentaje').value;
     document.getElementById('pagoInput').value = document.getElementById('pagoCliente').value;
     document.getElementById('enviar_ventas').submit();
 });
 
-document.getElementById('cancelarModal').addEventListener('click', function () {
+/*document.getElementById('cancelarModal').addEventListener('click', function () {
     document.getElementById('modalResumenVenta').style.display = 'none';
     document.getElementById('filtroModal').style.display = 'none';
-});
+});*/
 </script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
