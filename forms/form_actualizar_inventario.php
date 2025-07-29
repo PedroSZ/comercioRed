@@ -183,11 +183,11 @@ function mostrarToast(mensaje) {
             if ($productos) {
                 echo "<table class='table table-bordered border-primary table-hover tabla-datos'><thead>
                         <tr>
-       
+        <th style='text-align:center'>Codigo</th>
         <th style='text-align:center'>Producto</th>
         <th style='text-align:center'>Descripcion</th>
         <th style='text-align:center'>Existencias</th>
-         <th style='text-align:center'>Modificar</th>
+        <th style='text-align:center'>Modificar</th>
        
                           
                         </tr></thead>";
@@ -201,7 +201,7 @@ function mostrarToast(mensaje) {
                         if ($coincideCdg && $coincideNombre) {
                             $encontroResultados = true;
                             echo "<tr>
-                                    
+                                        <td>".$producto['Codigo']."</td>
                                         <td>".$producto['Nombre']."</td>
                                         <td>".$producto['Descripcion']."</td>
                                         <td id='stock-".$producto['Codigo']."' style='text-align:center; color:blue'>".$producto['Stock']."</td>
@@ -219,7 +219,8 @@ function mostrarToast(mensaje) {
                 } else {
                     foreach ($productos as $producto) {
                         echo "<tr>
-                          
+
+                                        <td>".$producto['Codigo']."</td>
                                         <td>".$producto['Nombre']."</td>
                                         <td>".$producto['Descripcion']."</td>
                                         <td id='stock-".$producto['Codigo']."' style='text-align:center; color:blue'>".$producto['Stock']."</td>

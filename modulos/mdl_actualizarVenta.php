@@ -27,8 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($ventasOriginales as $venta) {
             $producto = new Producto();
             $producto->setCodigo($venta['Codigo_pro']);
-            $productoActual = $producto->consultarCodigo($venta['Codigo_pro']);
-            
+            $productoActual = $producto->consultarCodigo($venta['Codigo_pro']);           
             $nuevoStock = $productoActual['Stock'] + $venta['Cantidad'];
             $producto->setStock($nuevoStock);
             $producto->actualizarStockDirecto();

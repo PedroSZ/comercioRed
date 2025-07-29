@@ -533,7 +533,7 @@ function agregarProductoYResetear() {
   
 
  <!--<table border="0" style=font-weight: 600; font-size: 17px;"> -->  
-    <form  action="modulos/mdl_reg_venta.php" method="post" style="width: 65vw; height:auto;" id="enviar_ventas">
+    <form  action="modulos/mdl_actualizarVenta.php" method="post" style="width: 65vw; height:auto;" id="enviar_ventas">
  <div id="listaVentas">
     <table id="miTabla" class="table">
   <thead>
@@ -561,7 +561,7 @@ function agregarProductoYResetear() {
 <h2>Total: $<span id="total_general">0.00</span></h2>
 <input type="text" name="total_general_input" id="total_general_input" value="0.00">
       
-        <input type="submit" value="Registrar Venta">
+        <input type="submit" value="Actualizar Venta">
         <input type="button" id="cancelar" value="Cancelar">
         <input type="button" id="regresar" value="Regresar" />
 

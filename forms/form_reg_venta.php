@@ -55,10 +55,9 @@ $no_venta_maximo = $ventas[0]["MAX(No_venta)"];
         display: none;
     }
 </style>
-
 	   <script>
 let existenciasOriginal = 0;
-
+let nombreProductoGlobal = ''; 
 function consultar(codigo) {
     if (codigo === '') {
         document.getElementById('existencias').innerText = '0';
@@ -114,6 +113,7 @@ function previsualizarStock() {
 
 
 function consultarYEnfocar(codigo) {
+
     fetch('modulos/consultar_producto.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -126,6 +126,7 @@ function consultarYEnfocar(codigo) {
             document.getElementById('codigoOculto').value = data.Codigo;
             document.getElementById('existencias').innerText = data.Stock;
             existenciasOriginal = parseInt(data.Stock);
+            nombreProductoGlobal = data.Nombre; // Guardar el nombre aquí ✅
 
             // ✅ Mover el foco al campo de cantidad
             document.getElementById('cantidad_v').focus();
@@ -232,7 +233,7 @@ function calcularTotalGeneral() {
     let total = 0;
 
     for (let i = 0; i < filas.length; i++) {
-        let subtotal = parseFloat(filas[i].cells[8].getElementsByTagName('input')[0].value);
+        let subtotal = parseFloat(filas[i].cells[9].getElementsByTagName('input')[0].value);
         total += subtotal;
     }
 
@@ -270,8 +271,8 @@ function agregarProductoYResetear() {
         let codigoEnTabla = filas[i].cells[4].getElementsByTagName('input')[0].value;
 
         if (codigoEnTabla === v_codigo) {
-            let cantidadActual = parseInt(filas[i].cells[5].getElementsByTagName('input')[0].value);
-            let precioActual = parseFloat(filas[i].cells[6].getElementsByTagName('input')[0].value);
+            let cantidadActual = parseInt(filas[i].cells[6].getElementsByTagName('input')[0].value);
+            let precioActual = parseFloat(filas[i].cells[7].getElementsByTagName('input')[0].value);
             let nuevaCantidad = cantidadActual + v_cantidad;
 
             if (precioActual !== v_precio) {
@@ -281,7 +282,7 @@ function agregarProductoYResetear() {
             }
 
             filas[i].cells[5].getElementsByTagName('input')[0].value = nuevaCantidad;
-            let precioFinal = parseFloat(filas[i].cells[6].getElementsByTagName('input')[0].value);
+            let precioFinal = parseFloat(filas[i].cells[7].getElementsByTagName('input')[0].value);
             let subtotal = (precioFinal * nuevaCantidad).toFixed(2);
             filas[i].cells[8].getElementsByTagName('input')[0].value = subtotal;
             productoExiste = true;
@@ -297,7 +298,8 @@ function agregarProductoYResetear() {
             if (ocultar) {
                 celda.classList.add('ocultar');
             }
-            celda.innerHTML = `<input type="text" name="${nombre}[]" value="${valor}" readonly>`;
+            celda.innerHTML = `<input type="text" name="${nombre}[]" value="${valor}" readonly style="outline: none; border: none; background: transparent;">`;
+
         }
 
         function crearCeldaConBoton() {
@@ -317,6 +319,7 @@ function agregarProductoYResetear() {
         crearCeldaConInput(v_no_venta, 'no_venta', true);
         crearCeldaConInput(v_Cliente, 'cliente', true);
         crearCeldaConInput(v_codigo, 'codigoOculto', false);
+        crearCeldaConInput(nombreProductoGlobal, 'nombreOculto', false);
         crearCeldaConInput(v_cantidad, 'cantidad', false);
         crearCeldaConInput(v_precio, 'precio', false);
         crearCeldaConInput(v_tipo_pago, 'tipo_pago', true);
@@ -346,6 +349,7 @@ function agregarProductoYResetear() {
     <input name="id_vendedor" type="hidden" id="id_vendedor" required placeholder="id del vendedor" value="<?php echo $id ?>">
     <input name="no_venta" type="hidden" id="no_venta" required placeholder="no de venta" value="<?php echo $no_venta_maximo + 1; ?>">
     <input name="codigoOculto" placeholder="codigo oculto" type="hidden" id="codigoOculto" value="<?php echo $item["Codigo"]; ?>">
+ 
     <table border="0" style="font-weight: 600; font-size: 17px;">
 
         <tr>
@@ -441,7 +445,7 @@ function agregarProductoYResetear() {
   
 
  <!--<table border="0" style=font-weight: 600; font-size: 17px;"> -->  
-    <form  action="modulos/mdl_reg_venta.php" method="post" style="width: 65vw; height:auto;" id="enviar_ventas">
+    <form  action="modulos/mdl_reg_venta.php" method="post" style="width: 85vw; height:auto;" id="enviar_ventas">
  <div id="listaVentas">
     <table id="miTabla" class="table">
   <thead>
@@ -451,6 +455,7 @@ function agregarProductoYResetear() {
       <th class="ocultar">No. de venta</th>
       <th class="ocultar">Cliente</th>
       <th>Codigo</th>
+      <th>Nombre</th>
       <th>Cantidad</th>
       <th>Precio</th>
       <th class="ocultar">Tipo de Pago</th>
@@ -543,12 +548,26 @@ function calcularCambio() {
     document.getElementById('cambioCliente').innerText = cambio >= 0 ? cambio.toFixed(2) : "Pago insuficiente";
 }
 
-document.getElementById('confirmarVenta').addEventListener('click', function () {
+document.getElementById('confirmarModal').addEventListener('click', function () {
+    // Insertar los valores al formulario antes de enviarlo
     document.getElementById('descuentoInput').value = document.getElementById('descuentoPorcentaje').value;
     document.getElementById('ivaInput').value = document.getElementById('ivaPorcentaje').value;
     document.getElementById('pagoInput').value = document.getElementById('pagoCliente').value;
-    document.getElementById('enviar_ventas').submit();
+
+    // Clonar el formulario original
+    const form = document.getElementById('enviar_ventas');
+    const clone = form.cloneNode(true);
+    clone.style.display = 'none';
+    clone.target = '_blank'; // 🔁 Abrir en nueva pestaña
+    clone.action = 'imprimir_ticket.php';
+
+    document.body.appendChild(clone);
+    clone.submit(); // 🔁 Enviar directamente a imprimir_ticket.php
+
+    // Finalmente, envía también los datos reales a mdl_reg_venta.php
+    form.submit();
 });
+
 
 document.getElementById('cancelarModal').addEventListener('click', function () {
     document.getElementById('modalResumenVenta').style.display = 'none';

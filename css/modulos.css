@@ -5,7 +5,7 @@ body {
 
 #teclasRapidas {
     position: fixed;
-    bottom: 100px; /* Como tú lo ajustaste */
+    top: 190px; /* Como tú lo ajustaste */
     right: 20px;
     background: rgba(0, 0, 0, 0.7);
     color: white;
