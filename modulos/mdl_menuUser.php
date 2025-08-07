@@ -29,7 +29,7 @@
 
 
       <li class='nav-item dropdown'>
-         <a class='dropdown-item' onclick="#">Modificar</a>
+        <a class='dropdown-item' href="actualizarInventario.php">Inventario</a>
         </li>
 
 

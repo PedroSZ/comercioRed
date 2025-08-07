@@ -10,11 +10,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cantidades = $_POST["cantidad"];
     $precios = $_POST["precio"];
     $subtotales = $_POST["subtotal"];
-    $tipo_pago = $_POST["tipo_pago"][0];
+    $tipo_pago = isset($_POST["tipo_pago"][0]) ? strtoupper(trim($_POST["tipo_pago"][0])) : '';
+    $referencia = isset($_POST["referencia"]) ? trim($_POST["referencia"]) : '';
     $total = $_POST["total_general_input"];
     $descuento = $_POST["descuento"];
     $iva = $_POST["iva"];
     $pago = $_POST["pago"];
+   
 
     $totalDescuento = $total * $descuento / 100;
     $subtotalConDescuento = $total - $totalDescuento;
@@ -23,9 +25,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cambio = $pago - $totalFinal;
 
     // Crear instancia de PDF para impresora POS 58mm
-    $pdf = new FPDF('P', 'mm', array(58, 200));
-    $pdf->AddPage();
-    $pdf->SetMargins(2, 2, 2);
+    // Paso 1: Calcular alto dinámico
+// Calcular alto dinámico con margen extra
+$alto = 0;
+$lineHeight = 4;
+$alto += 6 * $lineHeight; // Encabezado de tienda + dirección
+$alto += 5 * $lineHeight; // Fecha, venta, cliente, tipo pago, referencia
+$alto += 1 * $lineHeight; // Espaciado
+$alto += 1 * $lineHeight; // Encabezado de tabla
+$alto += count($productos) * $lineHeight; // Por cada producto
+$alto += 4 * $lineHeight; // Línea + Subtotal + Descuento + IVA
+$alto += 3 * $lineHeight; // Total + Pago + Cambio
+$alto += 2 * $lineHeight; // Gracias por su compra + espaciado
+
+$alto += 25; // +10 mm extra para evitar corte y nuevos saltos de página
+
+// Crear el PDF con el alto calculado
+$pdf = new FPDF('P', 'mm', array(58, $alto));
+$pdf->AddPage();
+$pdf->SetMargins(2, 2, 2);
+
+
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->Cell(0, 4, 'La Piconeria de Ameca', 0, 1, 'C');
 
@@ -37,6 +57,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdf->Cell(0, 4, "Venta #: $no_venta", 0, 1);
     $pdf->Cell(0, 4, "Cliente: $cliente", 0, 1);
     $pdf->Cell(0, 4, "Tipo de pago: $tipo_pago", 0, 1);
+    $tipo_pago_limpio = strtoupper(trim($tipo_pago));
+        if (strpos($tipo_pago_limpio, 'TARJETA') !== false) {
+            if ($referencia !== '') {
+             $pdf->Cell(0, 4, "Referencia: $referencia", 0, 1);
+             } else {
+                $pdf->Cell(0, 4, "Referencia: (NO PROPORCIONADA)", 0, 1);
+                    }
+            }
+
+
+
     $pdf->Ln(1);
 
     // Encabezado de productos

@@ -1,0 +1,4 @@
+contraseña: 0r;epML*i8t,
+Nombre de usuario de FTP: lapiconeria@danielapradofigueroa1753917071620.1050049.misitiohostgator.com
+Servidor FTP: ftp.danielapradofigueroa1753917071620.1050049.misitiohostgator.com
+Puerto FTPS explícito de FTP &:  21

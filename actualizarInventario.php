@@ -41,7 +41,7 @@
     </div>
    
     <div id="boton-centrado">
-         <button class="btn btn-primary" onclick="location.href='menuAdmin.php'">regresar</button>
+         <button class="btn btn-primary" name="regresar_btn" id="regresar_btn"  onClick="regresar()">regresar</button>
     </div>
 <?php include_once 'modulos/mdl_footer.php'; ?>
     

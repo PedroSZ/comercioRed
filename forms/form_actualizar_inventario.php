@@ -6,6 +6,7 @@ $userSession = new Sesion();
 
 if (!isset($_SESSION['user'])) {
     header("location: index.php");
+    exit();
 }
 
 if (isset($_SESSION['user'])) {
@@ -14,7 +15,10 @@ if (isset($_SESSION['user'])) {
     $tipo = $user->getPuesto();
     $codigo = $user->getUsuario_id();
 
-    if ($tipo <> "Administrador") header('location: index.php');
+    if ($tipo !== "Administrador" && $tipo !== "Cajero") {
+        header('location: index.php');
+        exit();
+    }
 
     if (!isset($_SESSION['tiempo'])) {
         $_SESSION['tiempo'] = time();
@@ -27,7 +31,11 @@ if (isset($_SESSION['user'])) {
 } else {
     $userSession->closeSession();
     header("location: index.php");
+    exit();
 }
+
+/********************** CAPTURA DE FILTROS ****************/
+
 
 /********************** CAPTURA DE FILTROS ****************/
 error_reporting(0);
@@ -136,7 +144,8 @@ function mostrarToast(mensaje) {
             //alert ("Se ha seleccionado el producto con código: " + Codigo);
         }
         function regresar() {
-            location.href = 'index.php';
+           // location.href = 'index.php';
+            window.location.href="index.php";
         }
         function limpiarFiltros() {
             document.getElementById('FiltrarCodigo_actualizarProducto').value = '';
