@@ -22,8 +22,8 @@
 .superponer{
      position: absolute;
   top: 0.5px;
-  left: 30%;
-  width: 100px;
+  left: 20%;
+ 
   height: 100px;
  
   z-index: 1; 
@@ -33,3 +33,19 @@
      height: 30vh;
    overflow-y: scroll; 
 }
+
+
+
+  @media (max-width: 375px), (max-width: 430px),  handheld and (orientation: landscape) {
+
+.superponer{
+  position: absolute;
+  top: 0.5px;
+  left: 20%;
+ 
+  height: 100px;
+ 
+  z-index: 1; 
+}
+  
+ }

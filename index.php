@@ -3,7 +3,7 @@
 <!-- INDEX.PHP -->
 	<head>
 	 	<title>LA PICONERIA</title>
-		<!--<meta name="viewport" content="width=device-width, initialscale=1" /> -->
+		<meta name="viewport" content="width=device-width, initialscale=1" />
 		<link rel="shortcut icon" href="img/icono.ico" />
 
 	 	<style type="text/css">
