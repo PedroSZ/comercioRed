@@ -57,9 +57,9 @@
     
   <body>
      
-     <?php include_once 'modulos/mdl_header.php'; ?>
+     <?php include_once 'modulos/mdl_header.php';?>
      <?php include_once 'modulos/mdl_menuAdmin.php'; ?>
-    <div class="container">
+    <div class="container" id="bienvenida_user">
       <h3>Bienvenido</h3>
       <p> <?php 
      // echo $user->getUsuario(); 

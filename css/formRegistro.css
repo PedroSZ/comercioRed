@@ -1,0 +1,114 @@
+.form_registro{
+    width: 65vw;
+    height: auto;
+    margin: 0 auto;
+    font-weight: 600; 
+    font-size: 17px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.table_form_registro{
+    border: 0px;
+    font-weight: 600; 
+    font-size: 17px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    font-weight: 600; 
+    font-size: 17px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.container{
+   
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(5, minmax(50px, 1fr)) minmax(50px, 2fr);
+        gap: 10px;
+}
+
+.container-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;    
+ 
+}
+
+
+.grid-item{
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;    
+        
+        padding: 20px;
+        text-align: left;
+}
+
+
+.superponer{
+  position: absolute;
+  top: 0.5px;
+  left: 20%;
+  z-index: 1; 
+}
+
+ @media (max-width: 375px), (max-width: 430px),  handheld and (orientation: landscape) {
+
+    .container{
+     
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        /*gap: 10px;*/
+      
+}
+
+
+.grid-item{
+
+text-align: left;
+}
+
+.container-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;    
+ 
+}
+
+
+
+.superponer{
+  position: absolute;
+  top: 15vh;
+  height: 100px;
+  width: 60%;
+
+}
+
+.form_registro {
+    width: 100%;
+    /*margin: -80px;*/
+   
+    margin-left: -20vw;
+    margin-right: 10vw;
+    margin-bottom: 10vh;
+    font-weight: 600;
+    font-size: 17px;
+    padding: 10px;
+    background-color: #f8f9fa;
+   
+}
+
+ }
+
+
+ 
+
+
+ 

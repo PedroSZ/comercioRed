@@ -1,6 +1,6 @@
 
 body {
-    padding-bottom: 80px; /* Espacio suficiente para que no se oculte el contenido */
+    /*padding-bottom: 80px;  Espacio suficiente para que no se oculte el contenido */
 }
 
 #teclasRapidas {
@@ -37,4 +37,23 @@ body {
 
 .resultado-busqueda div:hover {
     background-color: #e9ecef;
+}
+
+#bienvenida_user{
+  margin-top: 20vh; /* Ajusta este valor según la altura de tu navbar */
+  text-align: left;
+}   
+
+@media (max-width: 375px), (max-width: 430px),  handheld and (orientation: landscape) {
+
+    #bienvenida_user{
+        margin-top: 70vh; /* Ajusta este valor según la altura de tu navbar */
+        text-align: center;
+    }
+    
+    #teclasRapidas {
+        top: 150px; /* Ajusta según sea necesario */
+        right: 10px; /* Ajusta según sea necesario */
+        width: 90%; /* Para que ocupe más espacio en pantallas pequeñas */
+    }
 }
