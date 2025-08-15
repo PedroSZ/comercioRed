@@ -24,7 +24,7 @@ if(isset($_SESSION['user'])){
         $user->establecerDatos($userForm);
     switch ($user->getPuesto()) {
     	case 'Administrador': echo "<script>window.location.href = 'menuAdmin.php';</script>"; exit; break;
-        case 'Cajero': echo "<script>window.location.href = 'menuUser.php';</script>"; exit; break;
+    	case 'Cajero': echo "<script>window.location.href = 'menuUser.php';</script>"; exit; break;
         case 'Cliente': echo "<script>window.location.href = 'menuCliente.php';</script>"; exit; break;
       default: echo "Usuario no exie";
 
@@ -40,6 +40,10 @@ if(isset($_SESSION['user'])){
 
 ?>
 
+
+
+            
+        
 
 
             

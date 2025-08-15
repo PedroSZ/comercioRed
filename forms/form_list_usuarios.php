@@ -107,14 +107,14 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
 
                 if ($filtro1 !== '' || $filtro2 !== '' || $filtro3 !== '') {
                     foreach ($usuarios as $user2) {
-                        $coincideId = ($filtro1 === '' || $filtro1 == $user2['Id_Usuario']);
+                        $coincideId = ($filtro1 === '' || $filtro1 == $user2['Id_usuario']);
                         $coincideNombre = ($filtro2 === '' || strtoupper($filtro2) == strtoupper($user2['Nombre']));
                         $coincideEstatus = ($filtro3 === '' || intval($filtro3) === intval($user2['Estatus_u']));
 
                         if ($coincideId && $coincideNombre && $coincideEstatus) {
                             $encontroResultados = true;
                             echo "<tr>
-                                    <td>{$user2['Id_Usuario']}</td>
+                                    <td>{$user2['Id_usuario']}</td>
                                     <td>{$user2['Nombre']}</td>
                                     <td>{$user2['A_paterno']}</td>
                                     <td>{$user2['A_Materno']}</td>
@@ -136,7 +136,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                 } else {
                     foreach ($usuarios as $user2) {
                         echo "<tr>
-                                <td>{$user2['Id_Usuario']}</td>
+                                <td>{$user2['Id_usuario']}</td>
                                 <td>{$user2['Nombre']}</td>
                                 <td>{$user2['A_paterno']}</td>
                                 <td>{$user2['A_Materno']}</td>

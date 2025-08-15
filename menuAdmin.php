@@ -1,4 +1,6 @@
 <?php
+
+
 	/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
     include_once 'clases/tipo_usuario.php';
     include_once 'clases/sesion.php';
@@ -38,6 +40,7 @@
 
 
 	/**********************************************************************************************/
+
 ?>
 
 
@@ -64,9 +67,9 @@
       <p> <?php 
      // echo $user->getUsuario(); 
 		include_once 'clases/usuario.php';
-		$idUs = $codigo;
+		$idUs = $id_usuario;
 		$user2 = new Usuario();
-		$miUsuario = $user2->consultarId($codigo);
+		$miUsuario = $user2->consultarId($id_usuario);
 		echo $miUsuario["Nombre"]. " " . $miUsuario["A_paterno"]. " " . $miUsuario["A_Materno"];?></p>
 
 

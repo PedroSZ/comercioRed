@@ -71,7 +71,7 @@ class Usuario extends DB {
 
 
 	public function consultarId($id_usuario){
-		$query = $this->connect()->prepare('SELECT * FROM usuario INNER JOIN tipo_usuario ON Usuario.Id_Usuario = tipo_usuario.Usuario_id WHERE Id_Usuario = :user');
+		$query = $this->connect()->prepare('SELECT * FROM usuario INNER JOIN tipo_usuario ON usuario.Id_usuario = tipo_usuario.usuario_id WHERE Id_usuario = :user');
 		$query->execute(['user' => $id_usuario]);
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}

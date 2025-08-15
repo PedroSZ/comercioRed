@@ -1,6 +1,6 @@
 <?php
 /********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
-include_once 'clases/tipo_usuario.php';
+/*include_once 'clases/tipo_usuario.php';
 include_once 'clases/sesion.php';
 $userSession = new Sesion();
 
@@ -33,14 +33,14 @@ if (isset($_SESSION['user'])) {
     header("location: index.php");
     exit();
 }
-
+*/
 /********************** CAPTURA DE FILTROS ****************/
 
 
-/********************** CAPTURA DE FILTROS ****************/
+/********************** CAPTURA DE FILTROS ****************//*
 error_reporting(0);
 $filtro1 = isset($_POST['FiltrarCodigo_actualizarProducto']) ? trim($_POST['FiltrarCodigo_actualizarProducto']) : '';
-$filtro2 = isset($_POST['FiltarNom_actualizar_producto']) ? trim($_POST['FiltarNom_actualizar_producto']) : '';
+$filtro2 = isset($_POST['FiltarNom_actualizar_producto']) ? trim($_POST['FiltarNom_actualizar_producto']) : '';*/
 ?>
 
    
