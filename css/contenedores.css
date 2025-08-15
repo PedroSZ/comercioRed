@@ -34,4 +34,20 @@
    overflow-y: scroll; 
 }
 
+#contenedor-venta {
+   margin-top: 15vh;
+  margin-bottom: 0px;    
+  position: relative;
 
+}
+
+@media (max-width: 375px), (max-width: 430px),  handheld and (orientation: landscape) {
+
+
+
+  #contenedor-venta {
+ margin-left: -10vw;
+
+}
+
+}

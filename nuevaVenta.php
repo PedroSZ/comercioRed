@@ -33,12 +33,13 @@
   </head>
   <body>
      <?php include_once 'modulos/mdl_header.php'; ?>
-    <div class="container">
-      <div class="superponer">
-    <h1 class="text-center mt-4">Nueva Venta</h1>
+    <div class="container" id="contenedor-venta">
+      
+    <h2 class="text-center mt-4">Nueva Venta</h2>
     <p class="text-center">Por favor, complete el formulario a continuación para registrar una nueva venta.</p>
-    </div>
-    <?php include_once 'forms/form_reg_venta.php' ?>
+    
+
+    <?php include_once 'forms/form_reg_venta.php'; ?>
   
     </div>
     <div id="teclasRapidas">
@@ -51,6 +52,6 @@
 </div>
    
 
-    <?php include_once 'modulos/mdl_footer.php'; ?>
+    <?php include_once 'modulos/mdl_footer.php';?>
   </body>
 </html>

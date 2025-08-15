@@ -8,9 +8,9 @@ if(isset($_SESSION['user'])){
     $user = new Tipo_Usuario();//******AUTENTICAR USUARIOS (RF-01) (RF-02) (RF-03)
    	$user->establecerDatos($userSession->getCurrentUser());
     switch ($user->getPuesto()) {
-    	case 'Administrador': header('location: menuAdmin.php'); break;
-    	case 'Cajero': header('location: menuUser.php'); break;
-    	case 'Cliente': header('location: menuCliente.php');	break;
+    	case 'Administrador': echo "<script>window.location.href = 'menuAdmin.php';</script>"; exit; break;
+        case 'Cajero': echo "<script>window.location.href = 'menuUser.php';</script>"; exit; break;
+        case 'Cliente': echo "<script>window.location.href = 'menuCliente.php';</script>"; exit; break;
 
 
 	}
@@ -23,9 +23,9 @@ if(isset($_SESSION['user'])){
         $userSession->setCurrentUser($userForm);
         $user->establecerDatos($userForm);
     switch ($user->getPuesto()) {
-    	case 'Administrador': header('location: menuAdmin.php'); break;
-    	case 'Cajero': header('location: menuUser.php'); break;
-    	case 'Cliente': header('location: menuCliente.php');	break;
+    	case 'Administrador': echo "<script>window.location.href = 'menuAdmin.php';</script>"; exit; break;
+        case 'Cajero': echo "<script>window.location.href = 'menuUser.php';</script>"; exit; break;
+        case 'Cliente': echo "<script>window.location.href = 'menuCliente.php';</script>"; exit; break;
       default: echo "Usuario no exie";
 
     	//default:header('location: ../index.php');				break;

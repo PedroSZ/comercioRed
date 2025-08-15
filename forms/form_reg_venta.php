@@ -359,7 +359,7 @@ function agregarProductoYResetear() {
 	?>
 
 </p>
-<form action="modulos/mdl_reg_descuento.php" style="width: 65vw; height:auto;" id="frm_agregar_producto_a_vender"
+<form class="form_venta" action="modulos/mdl_reg_descuento.php" style="width: 65vw; height:auto;" id="frm_agregar_producto_a_vender"
     name="frm_agregar_producto_a_vender">
     <input name="fecha_venta" type="hidden" id="fecha_venta" required>
     <input name="id_vendedor" type="hidden" id="id_vendedor" required placeholder="id del vendedor"

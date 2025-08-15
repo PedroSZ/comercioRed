@@ -31,11 +31,11 @@
   </head>
   <body>
      <?php include_once 'modulos/mdl_header.php'; ?>
-    <div class="superponer">
+    
     <h1 class="text-center mt-4">Nuevo Usuario</h1>
     <p class="text-center">Por favor, complete el formulario a continuación para registrar un nuevo usuario.</p>
     <?php include_once 'forms/form_reg_usuario.php' ?>
-    </div>
+  
    
    
 

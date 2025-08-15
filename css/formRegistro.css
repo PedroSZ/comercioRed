@@ -60,7 +60,8 @@
  @media (max-width: 375px), (max-width: 430px),  handheld and (orientation: landscape) {
 
     .container{
-     
+        position: relative;
+        width: 100%;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -70,7 +71,6 @@
 
 
 .grid-item{
-
 text-align: left;
 }
 
@@ -78,7 +78,7 @@ text-align: left;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;    
- 
+
 }
 
 
@@ -95,14 +95,17 @@ text-align: left;
     width: 100%;
     /*margin: -80px;*/
    
-    margin-left: -20vw;
-    margin-right: 10vw;
+   /* margin-left: 5vw;
+    margin-right: 5vw;*/
+    /*padding-left: 30vw;
+    padding-right: 30vw;*/
     margin-bottom: 10vh;
     font-weight: 600;
     font-size: 17px;
     padding: 10px;
     background-color: #f8f9fa;
-   
+    width: 95%;
+    margin-left: -3vw;
 }
 
  }

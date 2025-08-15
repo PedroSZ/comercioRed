@@ -8,7 +8,7 @@ background: linear-gradient(273deg,rgba(237, 221, 83, 1) 0%, rgba(105, 184, 148,
 #menuNavar {
   background: red;
   position: fixed;
-  top: 13vh;
+  top: 15vh;
   left: 20vw;
 
 }
@@ -35,7 +35,13 @@ html {
 }
 
 body{
-  height: 100%;
+ position: relative;
+  width: 100%;
+  height: 70%;
+  margin-top: 10%;
+  margin-bottom:5%;
+  background: #f9f9fb;
+  font-family: "Varela Round", sans-serif;
  /*padding-top: 10%;*/
 }
 
@@ -135,9 +141,17 @@ html {
 body{
   width: 100%;
   height: 100%;
+  position: relative;
+  margin-top: 30%;
+  margin-bottom:30%;
   background: #f9f9fb;
   font-family: "Varela Round", sans-serif;
+ 
 }
+
+
+
+
 html {
   width: 100%;
   height: 100%;
