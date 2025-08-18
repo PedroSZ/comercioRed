@@ -25,12 +25,19 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.container{
+/*.container{
    
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: repeat(5, minmax(50px, 1fr)) minmax(50px, 2fr);
         gap: 10px;
+        grid-auto-rows: auto;
+}*/
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* dos columnas */
+  grid-auto-rows: minmax(50px, auto); /* cada fila mide mínimo 50px y se expande según contenido */
+  gap: 10px;
 }
 
 .container-grid{
@@ -63,8 +70,8 @@
      
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        /*gap: 10px;*/
+        grid-auto-rows: auto;
+       
       
 }
 

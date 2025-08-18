@@ -34,9 +34,11 @@
              
    
    
-  <div class= "grid-item">  <input type="submit" value="Registrar">
-      <input type="button" value="Cancelar" onclick="limpiar()">
-       <input type="button" onclick="location='menuAdmin.php'" value="Regresar" /></div>
+  <div class= "grid-item">  
+    <input type="submit" value="Registrar">
+    <input type="button" value="Cancelar" onclick="limpiar()">
+    <input type="button" onclick="location='menuAdmin.php'" value="Regresar" />
+  </div>
   
   </div>
 

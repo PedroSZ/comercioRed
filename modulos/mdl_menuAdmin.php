@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" id="menuNavar">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
   
 
 

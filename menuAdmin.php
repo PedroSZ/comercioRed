@@ -67,6 +67,11 @@
       <p> <?php 
      // echo $user->getUsuario(); 
 		include_once 'clases/usuario.php';
+
+      $user = new Tipo_Usuario();
+      $user->establecerDatos($userSession->getCurrentUser());
+      $id_usuario = $user->getUsuario_id();
+
 		$idUs = $id_usuario;
 		$user2 = new Usuario();
 		$miUsuario = $user2->consultarId($id_usuario);

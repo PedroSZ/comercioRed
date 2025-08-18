@@ -57,8 +57,8 @@ class Tipo_Usuario extends DB{
         $query = $this->connect()->prepare('SELECT * FROM tipo_usuario WHERE Usuario = :user');
         $query->execute(['user' => $user]);
         foreach ($query as $currentUser) {
-            $this->usuario_id = $currentUser['Usuario_id'];
-            $this->usuario =$currentUser['Usuario'];
+           $this->usuario_id = $currentUser['Usuario_Id'];
+           $this->usuario =$currentUser['Usuario'];
             $this->pasword = $currentUser['Pasword'];
             $this->puesto = $currentUser['Puesto'];
             $this->estatus_u = $currentUser['Estatus_u'];

@@ -44,7 +44,7 @@ class Ventas extends DB {
 
 
 	public function guardar() {
-    $sql = "INSERT INTO ventas (Codigo_pro, Id_Vendedor, cliente_Id, Fecha_Venta, No_venta, Cantidad, Precio_al_dia, Tipo_Pago)
+    $sql = "INSERT INTO ventas (Codigo_pro, Id_Vendedor, Cliente_Id, Fecha_Venta, No_venta, Cantidad, Precio_al_dia, Tipo_Pago)
             VALUES (:codigo_producto, :id_vendedor, :cliente_id, :fecha_venta, :no_venta, :cantidad, :precio_al_dia, :tipo_pago)";
     
     $query = $this->connect()->prepare($sql);

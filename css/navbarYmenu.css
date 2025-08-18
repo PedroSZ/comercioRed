@@ -6,7 +6,7 @@ background: linear-gradient(273deg,rgba(237, 221, 83, 1) 0%, rgba(105, 184, 148,
 }
 
 #menuNavar {
-  background: red;
+
   position: fixed;
   top: 13vh;
   left: 20vw;
@@ -166,6 +166,7 @@ html {
     width: 100%;
     padding: 10px 15px;
     font-size: 18px;
+     color: #0c0718;
   }
 
   /* Quitamos el fondo animado en móvil */

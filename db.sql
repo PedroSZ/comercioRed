@@ -21,8 +21,8 @@ CREATE TABLE `productos` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `tipo_usuario` (
-  `usuario_id` int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  `usuario` varchar(20) NOT NULL,
+  `Usuario_Id` int AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  `Usuario` varchar(20) NOT NULL,
   `Pasword` varchar(50) NOT NULL,
   `Puesto` varchar(20) NOT NULL,
   `Estatus_u` int
@@ -60,10 +60,10 @@ CREATE TABLE `cliente` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `ventas` (
-  `id_venta` int AUTO_INCREMENT PRIMARY KEY,
+  `Id_Venta` int AUTO_INCREMENT PRIMARY KEY,
   `Codigo_pro` varchar(20) NOT NULL,
   `Id_Vendedor` int NOT NULL,
-  `cliente_Id` int NOT NULL,
+  `Cliente_Id` int NOT NULL,
   `Fecha_Venta` date DEFAULT NULL,
   `No_venta` int NOT NULL,
   `Cantidad` int NOT NULL,
@@ -83,8 +83,8 @@ CREATE TABLE `descuentos` (
 ) ENGINE=InnoDB;
 
 
-INSERT INTO tipo_usuario (usuario, Pasword, Puesto, Estatus_u) VALUES('admin', MD5('123'), 'Administrador',1);
-INSERT INTO tipo_usuario (usuario, Pasword, Puesto, Estatus_u) VALUES('Cajero', MD5('123'), 'Cajero',1);
+INSERT INTO tipo_usuario (Usuario, Pasword, Puesto, Estatus_u) VALUES('admin', MD5('123'), 'Administrador',1);
+INSERT INTO tipo_usuario (Usuario, Pasword, Puesto, Estatus_u) VALUES('Cajero', MD5('123'), 'Cajero',1);
 
 
 INSERT INTO usuario (Id_Tipo, Rfc, Nombre, A_paterno, A_Materno, Fecha_Registro, Fecha_Nacimiento,Telefono, Email, Domicilio) 

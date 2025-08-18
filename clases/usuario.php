@@ -46,30 +46,12 @@ class Usuario extends DB {
 	//******************************************************************
 
 	public function listar(){
-		$query = $this->connect()->prepare('SELECT * FROM usuario INNER JOIN tipo_usuario WHERE usuario.Id_Tipo = tipo_usuario.Usuario_id');
+		$query = $this->connect()->prepare('SELECT * FROM usuario INNER JOIN tipo_usuario WHERE usuario.Id_Tipo = tipo_usuario.Usuario_Id');
 		$query->execute();
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	public function listarConsultaCompleta(){
-		$query = $this->connect()->prepare('SELECT estudiante.curp,
-			estudiante.nombre as nomest,
-			estudiante.apellidos,
-			estudiante.carrera,
-			estudiante.grado,
-			estudiante.grupo,
-			taller.nombre as tallnom,
-			taller.area,
-			taller.horario
-			FROM estudiante
-			LEFT join estudiante_por_taller on estudiante.curp = estudiante_por_taller.estudiante
-			left join taller on estudiante_por_taller.taller = taller.id');
-					$query->execute();
-					return $query->fetchAll(PDO::FETCH_ASSOC);
-				}
-
-
-
+	
 	public function consultarId($id_usuario){
 		$query = $this->connect()->prepare('SELECT * FROM usuario INNER JOIN tipo_usuario ON usuario.Id_usuario = tipo_usuario.usuario_id WHERE Id_usuario = :user');
 		$query->execute(['user' => $id_usuario]);
