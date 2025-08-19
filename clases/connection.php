@@ -8,20 +8,21 @@ class DB {
    private $psw;
    private $charset;
 public function __construct() {
-      $this-> host   = '162.241.203.102';
+     $this-> host   = '162.241.203.102';
       $this-> db     = 'danie384_comercioRed';
       $this-> user   = 'danie384_user';
       $this-> psw    = 'Piconeria2025@';
       $this-> charset= 'utf8_spanish2_ci';
 }
   /* 
-
-      $this-> server  = 'mysql';
+  
+ $this-> server  = 'mysql';
       $this-> host   = 'localhost';
       $this-> db     = 'comerciored';
       $this-> user   = 'root';
       $this-> psw    = '';
       $this-> charset= 'utf8mb4';
+      
    */
 
    function connect() {

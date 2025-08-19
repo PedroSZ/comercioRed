@@ -99,3 +99,30 @@ INSERT INTO cliente (Id_cliente, Rfc, Nombre, A_paterno, A_Materno, Fecha_Regist
 VALUES('1', 'NO APLICA', 'cliente', 'GENERAL', 'NONE', '2025-06-14', '1989-05-18', '0000000000', 'cliente@company.dominio',
 'Domicilio de prueba No. 49 Col. Prueba C.P. 46600', '0', '0');
 
+/* inner join para obtener datos de ventas
+SELECT 
+    v.Id_Venta,
+    v.No_venta,
+    v.Fecha_Venta,
+    -- Datos del vendedor
+    u.Nombre AS Vendedor_Nombre,
+    u.A_paterno AS Vendedor_ApellidoP,
+    u.A_Materno AS Vendedor_ApellidoM,
+    -- Datos del cliente
+    c.Nombre AS Cliente_Nombre,
+    c.A_paterno AS Cliente_ApellidoP,
+    c.A_Materno AS Cliente_ApellidoM,
+    -- Datos del producto
+    p.Nombre AS Producto,
+    p.Descripcion,
+    v.Cantidad,
+    v.Precio_al_dia,
+    -- Descuento (si existe)
+    IFNULL(d.Descuento, 0) AS Descuento,
+    v.Tipo_Pago
+FROM ventas v
+INNER JOIN usuario u ON v.Id_Vendedor = u.Id_Usuario
+INNER JOIN cliente c ON v.Cliente_Id = c.Id_cliente
+INNER JOIN productos p ON v.Codigo_pro = p.Codigo
+LEFT JOIN descuentos d ON v.No_venta = d.No_venta AND v.Cliente_Id = d.Id_De_cliente;
+*/
