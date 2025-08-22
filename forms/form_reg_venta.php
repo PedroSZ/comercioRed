@@ -295,10 +295,10 @@ function agregarProductoYResetear() {
                 filas[i].cells[6].getElementsByTagName('input')[0].value = precioPromedio;
             }
 
-            filas[i].cells[5].getElementsByTagName('input')[0].value = nuevaCantidad;
+            filas[i].cells[6].getElementsByTagName('input')[0].value = nuevaCantidad;
             let precioFinal = parseFloat(filas[i].cells[7].getElementsByTagName('input')[0].value);
             let subtotal = (precioFinal * nuevaCantidad).toFixed(2);
-            filas[i].cells[8].getElementsByTagName('input')[0].value = subtotal;
+            filas[i].cells[9].getElementsByTagName('input')[0].value = subtotal;
             productoExiste = true;
             break;
         }

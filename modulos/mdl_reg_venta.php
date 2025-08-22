@@ -4,6 +4,7 @@ include_once '../clases/venta.php';
 include_once '../clases/producto.php';
 include_once '../clases/connection.php';
 
+$hora = date("H:i:s");
 $fechas     = $_POST['fecha_venta'];
 $vendedores = $_POST['id_vendedor'];
 $ventas     = $_POST['no_venta'];
@@ -31,6 +32,7 @@ for ($i = 0; $i < count($codigos); $i++) {
         // Registrar la venta
         $venta = new Ventas();
         $venta->setFeca_venta($fechas[$i]);
+        $venta->setHora_venta($hora);
         $venta->setId_vendedor($vendedores[$i]);
         $venta->setNo_venta($ventas[$i]);
         $venta->setCliente_id($clientes[$i]);

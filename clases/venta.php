@@ -7,6 +7,7 @@ class Ventas extends DB {
 	private $id_vendedor;
 	private $cliente_id;
 	private $feca_venta;
+    private $hora_venta;
 	private $no_venta;
 	private $cantidad;
 	private $precio_al_dia;
@@ -19,6 +20,7 @@ class Ventas extends DB {
     public function setId_vendedor($id_vendedor){ $this->id_vendedor = $id_vendedor; }
     public function setCliente_id($cliente_id){ $this->cliente_id = $cliente_id; }
     public function setFeca_venta($feca_venta){ $this->feca_venta = $feca_venta; }
+    public function setHora_venta($hora_venta){ $this->hora_venta = $hora_venta; }
 	public function setNo_venta($no_venta){ $this->no_venta = $no_venta; }
     public function setCantidad($cantidad){ $this->cantidad = $cantidad; }
     public function setPrecio_al_dia($precio_al_dia){ $this->precio_al_dia = $precio_al_dia; }
@@ -30,6 +32,7 @@ class Ventas extends DB {
     public function getId_vendedor(){return $this->id_vendedor; }
     public function getCliente_id(){return $this->cliente_id; }
     public function getFeca_venta(){return $this->feca_venta; }
+    public function getHora_venta(){return $this->hora_venta; }
 	public function getNo_venta(){return $this->no_venta; }
     public function getCantidad(){return $this->cantidad; }
     public function getPrecio_al_dia(){return $this->precio_al_dia; }
@@ -44,8 +47,8 @@ class Ventas extends DB {
 
 
 	public function guardar() {
-    $sql = "INSERT INTO ventas (Codigo_pro, Id_Vendedor, Cliente_Id, Fecha_Venta, No_venta, Cantidad, Precio_al_dia, Tipo_Pago)
-            VALUES (:codigo_producto, :id_vendedor, :cliente_id, :fecha_venta, :no_venta, :cantidad, :precio_al_dia, :tipo_pago)";
+    $sql = "INSERT INTO ventas (Codigo_pro, Id_Vendedor, Cliente_Id, Fecha_Venta, Hora_Venta, No_venta, Cantidad, Precio_al_dia, Tipo_Pago)
+            VALUES (:codigo_producto, :id_vendedor, :cliente_id, :fecha_venta, :hora_venta, :no_venta, :cantidad, :precio_al_dia, :tipo_pago)";
     
     $query = $this->connect()->prepare($sql);
     $query->execute([
@@ -53,6 +56,7 @@ class Ventas extends DB {
         'id_vendedor'     => $this->id_vendedor,
         'cliente_id'      => $this->cliente_id,
         'fecha_venta'     => $this->feca_venta,
+        'hora_venta'      => $this->hora_venta,
         'no_venta'        => $this->no_venta,
         'cantidad'        => $this->cantidad,
         'precio_al_dia'   => $this->precio_al_dia,

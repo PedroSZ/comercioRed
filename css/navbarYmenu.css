@@ -21,18 +21,18 @@ background: linear-gradient(273deg,rgba(237, 221, 83, 1) 0%, rgba(105, 184, 148,
   height: 90px;}
 
 
-html {
+/*html {
   box-sizing: border-box;
-}
+}*/
 
-*,
+/**,
 *:before,
 *:after {
   box-sizing: inherit;
   padding: 0;
   margin: 0;
   letter-spacing: 1.1px;
-}
+}*/
 
 body{
   height: 100%;
@@ -101,6 +101,14 @@ html {
   height: 100%; 
 }
 
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(173, 130, 37);
+  color: white;
+  text-align: center;
+ }
 
  @media (max-width: 375px), (max-width: 430px),  handheld and (orientation: landscape) {
 /*NAVBAR RESPONSIVO*/
@@ -119,7 +127,7 @@ html {
   height: 80px;
 }
 
-html {
+/*html {
   box-sizing: border-box;
 }
 
@@ -130,7 +138,7 @@ html {
   padding: 0;
   margin: 0;
   letter-spacing: 1.1px;
-}
+}*/
 
 body{
   width: 100%;

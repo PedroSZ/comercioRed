@@ -33,13 +33,13 @@
    <div class= "grid-item"><div class= "container-grid"><div class= "grid-item-container"><p><label>Confirmar Contraseña:</label></p></div><div class= "grid-item-container"><p><input name="pasword" type="password" placeholder="Vuelve a escribir la Contraseña"  id ="psw2" required ></p></div></div></div>
              
    
+  
    
-  <div class= "grid-item">  
+
+  </div>  
+  <div id="boton-centrado">
     <input type="submit" value="Registrar">
     <input type="button" value="Cancelar" onclick="limpiar()">
     <input type="button" onclick="location='menuAdmin.php'" value="Regresar" />
-  </div>
-  
-  </div>
-
+    </div>
 </form>

@@ -65,6 +65,7 @@ CREATE TABLE `ventas` (
   `Id_Vendedor` int NOT NULL,
   `Cliente_Id` int NOT NULL,
   `Fecha_Venta` date DEFAULT NULL,
+  `Hora_Venta` TIME NOT NULL,
   `No_venta` int NOT NULL,
   `Cantidad` int NOT NULL,
   `Precio_al_dia` DOUBLE NOT NULL,
@@ -80,6 +81,46 @@ CREATE TABLE `descuentos` (
   `No_venta` int,
   `Descuento` DOUBLE,
   FOREIGN KEY (Id_De_cliente) REFERENCES cliente(Id_cliente) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+
+CREATE TABLE `corte_caja` (
+  `Id_Corte` int AUTO_INCREMENT PRIMARY KEY,
+  `Id_Usuario` int NOT NULL,
+  `Fecha_Corte` date DEFAULT NULL,
+  `Monto_Inicial` DOUBLE NOT NULL,
+  `Monto_Final` DOUBLE NOT NULL,
+  `Hora_Inicial` time NOT NULL,
+  `Hora_Final` time NOT NULL,
+  FOREIGN KEY (Id_Usuario) REFERENCES usuario(Id_usuario) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+
+CREATE TABLE `sucursal` (
+  `Id_Comercio` int AUTO_INCREMENT PRIMARY KEY,
+  `Id_Administrador` int NOT NULL,
+  `Nombre_Sucursal` date DEFAULT NULL,
+  `Telefono` varchar(12),
+  `Email` varchar(30),
+  `Domicilio` varchar(50),
+  `Logotipo` varchar(100),
+  `color_background_principal` varchar(20),
+  `color_background_secundario` varchar(20), 
+  `color_texto_principal` varchar(20),
+  `color_texto_secundario` varchar(20), 
+  `color_header_principal` varchar(20),
+  `color_header_secundario` varchar(20),
+  `color_footer_principal` varchar(20), 
+  `color_footer_secundario` varchar(20),
+  `color_texto_header_principal` varchar(20),
+  `color_texto_header_secundario` varchar(20),
+  `color_texto_footer_principal` varchar(20),
+  `color_texto_footer_secundario` varchar(20),
+  `color_boton_principal` varchar(20),
+  `color_boton_secundario` varchar(20), 
+  `color_boton_texto_principal` varchar(20),
+  `color_boton_texto_secundario` varchar(20), 
+  FOREIGN KEY (Id_Administrador) REFERENCES tipo_usuario(Usuario_Id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 
@@ -125,4 +166,6 @@ INNER JOIN usuario u ON v.Id_Vendedor = u.Id_Usuario
 INNER JOIN cliente c ON v.Cliente_Id = c.Id_cliente
 INNER JOIN productos p ON v.Codigo_pro = p.Codigo
 LEFT JOIN descuentos d ON v.No_venta = d.No_venta AND v.Cliente_Id = d.Id_De_cliente;
+
+ALTER TABLE ventas ADD COLUMN Hora_Venta TIME NOT NULL AFTER Fecha_Venta;
 */
