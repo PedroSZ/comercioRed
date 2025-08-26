@@ -56,12 +56,13 @@ try {
     $conexion = new DB();
     $db = $conexion->connect();
 
-    $sql = "INSERT INTO descuentos (Id_De_Cliente, No_venta, Descuento) VALUES (:cliente_id, :no_venta, :descuento)";
+    $sql = "INSERT INTO descuentos (Id_De_Cliente, No_venta, Descuento, Iva) VALUES (:cliente_id, :no_venta, :descuento, :iva)";
     $query = $db->prepare($sql);
     $query->execute([
         'cliente_id' => $clientes[0], // Tomamos el primer cliente (toda la venta tiene mismo cliente)
         'no_venta' => $ventas[0],
-        'descuento' => $descuento
+        'descuento' => $descuento,
+        'iva' => $iva
     ]);
 } catch (PDOException $e) {
     echo '<script type="text/javascript">

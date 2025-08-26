@@ -247,25 +247,40 @@ function calcularTotalGeneral() {
     let total = 0;
 
     for (let i = 0; i < filas.length; i++) {
-        let subtotal = parseFloat(filas[i].cells[9].getElementsByTagName('input')[0].value);
-        total += subtotal;
+        // Buscar el input de subtotal por name
+        let inputSubtotal = filas[i].querySelector('input[name="subtotal[]"]');
+        if (inputSubtotal) {
+            let subtotal = parseFloat(inputSubtotal.value);
+            if (!isNaN(subtotal)) {
+                total += subtotal;
+            }
+        }
     }
 
     document.getElementById('total_general').innerText = total.toFixed(2);
     document.getElementById('total_general_input').value = total.toFixed(2);
 }
 
+
 function agregarProductoYResetear() {
+    // Valores del formulario
     let v_fecha_venta = document.getElementById('fecha_venta').value;
     let v_id_vendedor = document.getElementById('id_vendedor').value;
     let v_no_venta = document.getElementById('no_venta').value;
-    let v_Cliente = document.getElementById('Cliente').value;
+
+    // Cliente seleccionado
+    let clienteSelect = document.getElementById('Cliente');
+    let v_Cliente = clienteSelect.options[clienteSelect.selectedIndex].value;
+    let v_ClienteNombre = clienteSelect.options[clienteSelect.selectedIndex].text;
+
     let v_codigo = document.getElementById('codigoOculto').value;
     let v_cantidad = parseInt(document.getElementById('cantidad_v').value);
     let v_precio = parseFloat(document.getElementById('precio_v').value);
     let v_tipo_pago = document.getElementById('tipo_pago').value;
     let v_existencias = parseInt(document.getElementById('existencias').innerText);
+    let v_referencia = document.getElementById('referencia').value.trim();
 
+    // Validaciones
     if (v_existencias === 0) {
         alert('El producto se ha agotado.');
         limpiarCampos();
@@ -277,27 +292,31 @@ function agregarProductoYResetear() {
         return;
     }
 
+    if ((v_tipo_pago === "TARJETA DE CREDITO" || v_tipo_pago === "TARJETA DE DEBITO") && v_referencia === "") {
+        alert("Por favor, ingresa una referencia de pago para tarjetas.");
+        return;
+    }
+
+    // Tabla
     let tabla = document.getElementById('miTabla').getElementsByTagName('tbody')[0];
     let filas = tabla.getElementsByTagName('tr');
     let productoExiste = false;
 
     for (let i = 0; i < filas.length; i++) {
         let codigoEnTabla = filas[i].cells[4].getElementsByTagName('input')[0].value;
-
         if (codigoEnTabla === v_codigo) {
             let cantidadActual = parseInt(filas[i].cells[6].getElementsByTagName('input')[0].value);
             let precioActual = parseFloat(filas[i].cells[7].getElementsByTagName('input')[0].value);
             let nuevaCantidad = cantidadActual + v_cantidad;
 
+            // Actualizar precio promedio si es distinto
             if (precioActual !== v_precio) {
                 let precioPromedio = ((precioActual * cantidadActual) + (v_precio * v_cantidad)) / nuevaCantidad;
-                precioPromedio = precioPromedio.toFixed(2);
-                filas[i].cells[6].getElementsByTagName('input')[0].value = precioPromedio;
+                filas[i].cells[7].getElementsByTagName('input')[0].value = precioPromedio.toFixed(2);
             }
 
             filas[i].cells[6].getElementsByTagName('input')[0].value = nuevaCantidad;
-            let precioFinal = parseFloat(filas[i].cells[7].getElementsByTagName('input')[0].value);
-            let subtotal = (precioFinal * nuevaCantidad).toFixed(2);
+            let subtotal = (parseFloat(filas[i].cells[7].getElementsByTagName('input')[0].value) * nuevaCantidad).toFixed(2);
             filas[i].cells[9].getElementsByTagName('input')[0].value = subtotal;
             productoExiste = true;
             break;
@@ -309,12 +328,8 @@ function agregarProductoYResetear() {
 
         function crearCeldaConInput(valor, nombre, ocultar) {
             let celda = nuevaFila.insertCell();
-            if (ocultar) {
-                celda.classList.add('ocultar');
-            }
-            celda.innerHTML =
-                `<input type="text" name="${nombre}[]" value="${valor}" readonly style="outline: none; border: none; background: transparent;">`;
-
+            if (ocultar) celda.classList.add('ocultar');
+            celda.innerHTML = `<input type="text" name="${nombre}[]" value="${valor}" readonly style="outline: none; border: none; background: transparent;">`;
         }
 
         function crearCeldaConBoton() {
@@ -332,19 +347,22 @@ function agregarProductoYResetear() {
         crearCeldaConInput(v_fecha_venta, 'fecha_venta', true);
         crearCeldaConInput(v_id_vendedor, 'id_vendedor', true);
         crearCeldaConInput(v_no_venta, 'no_venta', true);
-        crearCeldaConInput(v_Cliente, 'cliente', true);
+        crearCeldaConInput(v_Cliente, 'cliente', true);           // ID del cliente
+       // crearCeldaConInput(v_ClienteNombre, 'cliente_nombre', false); // Nombre del cliente
         crearCeldaConInput(v_codigo, 'codigoOculto', false);
         crearCeldaConInput(nombreProductoGlobal, 'nombreOculto', false);
         crearCeldaConInput(v_cantidad, 'cantidad', false);
         crearCeldaConInput(v_precio, 'precio', false);
         crearCeldaConInput(v_tipo_pago, 'tipo_pago', true);
-        crearCeldaConInput((v_precio * v_cantidad).toFixed(2), 'subtotal');
+        crearCeldaConInput(v_referencia, 'referencia', true);
+        crearCeldaConInput((v_precio * v_cantidad).toFixed(2), 'subtotal', false);
         crearCeldaConBoton();
     }
 
     calcularTotalGeneral();
     limpiarCampos();
 }
+
 </script>
 
 
@@ -380,7 +398,7 @@ function agregarProductoYResetear() {
 
 
             <td>
-                <p><select name="Cliente" type="text" id="Cliente" required>
+                <p><select name="Cliente" id="Cliente" required>
 
                         <?php
         include_once 'clases/cliente.php';
@@ -488,7 +506,7 @@ function agregarProductoYResetear() {
                     <th class="ocultar">Fecha</th>
                     <th class="ocultar">Vendedor</th>
                     <th class="ocultar">No. de venta</th>
-                    <th class="ocultar">Cliente</th>
+                    <th class="ocultar">Cliente</th><!--volver a ocultar------------------------------------------------------------>
                     <th>Codigo</th>
                     <th>Nombre</th>
                     <th>Cantidad</th>

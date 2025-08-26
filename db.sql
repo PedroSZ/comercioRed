@@ -80,6 +80,7 @@ CREATE TABLE `descuentos` (
   `Id_De_cliente` int,
   `No_venta` int,
   `Descuento` DOUBLE,
+  `Iva` DOUBLE,
   FOREIGN KEY (Id_De_cliente) REFERENCES cliente(Id_cliente) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
@@ -92,6 +93,9 @@ CREATE TABLE `corte_caja` (
   `Monto_Final` DOUBLE NOT NULL,
   `Hora_Inicial` time NOT NULL,
   `Hora_Final` time NOT NULL,
+  `Subtotal` DOUBLE,
+  `Total_Descuento` DOUBLE,
+  `Total_Iva` DOUBLE,
   FOREIGN KEY (Id_Usuario) REFERENCES usuario(Id_usuario) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 

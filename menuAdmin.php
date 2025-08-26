@@ -100,10 +100,14 @@ $cajaAbierta = $corte->cajaAbierta($codigo);
             .then(data => {
                 console.log("Respuesta PHP:", data);
                if (data.status === "ok") {
-    alert("Caja cerrada correctamente.\n" +
-          "Monto inicial: " + data.monto_inicial +
-          "\nTotal ventas: " + data.total_ventas +
-          "\nMonto final en caja: " + data.monto_final);
+   alert("Caja cerrada correctamente.\n" +
+      "Monto inicial: " + data.monto_inicial +
+      "\nSubtotal ventas: " + data.subtotal +
+      "\nDescuentos aplicados: -" + data.total_descuento +
+      "\nIVA aplicado: +" + data.total_iva +
+      "\nTotal ventas neto: " + data.total_ventas +
+      "\nMonto final en caja: " + data.monto_final);
+
 
     let btn = document.querySelector("#btnCaja");
     btn.classList.remove("btn-danger");

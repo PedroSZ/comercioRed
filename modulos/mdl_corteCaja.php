@@ -41,16 +41,20 @@ try {
 
     if ($resultado) {
         $response = [
-            "status" => "ok",
-            "id_corte" => $id_corte,
-            "monto_inicial" => $resultado["monto_inicial"],
-            "total_ventas" => $resultado["total_ventas"],
-            "monto_final" => $resultado["monto_final"],
-            "hora_inicial" => $resultado["hora_inicial"],
-            "hora_final" => $resultado["hora_final"],
-            "fecha" => $resultado["fecha"],
-            "msg" => "Caja cerrada"
-        ];
+    "status"         => "ok",
+    "id_corte"       => $id_corte,
+    "monto_inicial"  => $resultado["monto_inicial"],
+    "subtotal"       => $resultado["subtotal"],
+    "total_descuento"=> $resultado["total_descuento"],
+    "total_iva"      => $resultado["total_iva"],
+    "total_ventas"   => $resultado["total_ventas"], // neto
+    "monto_final"    => $resultado["monto_final"],
+    "hora_inicial"   => $resultado["hora_inicial"],
+    "hora_final"     => $resultado["hora_final"],
+    "fecha"          => $resultado["fecha"],
+    "msg"            => "Caja cerrada"
+];
+
     } else {
         $response["msg"] = "No se pudo cerrar la caja";
     }
