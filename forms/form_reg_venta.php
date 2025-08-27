@@ -269,9 +269,9 @@ function agregarProductoYResetear() {
     let v_no_venta = document.getElementById('no_venta').value;
 
     // Cliente seleccionado
-    let clienteSelect = document.getElementById('Cliente');
-    let v_Cliente = clienteSelect.options[clienteSelect.selectedIndex].value;
-    let v_ClienteNombre = clienteSelect.options[clienteSelect.selectedIndex].text;
+    let clienteSelect = document.getElementById('cliente');
+    let v_cliente = clienteSelect.options[clienteSelect.selectedIndex].value;
+    let v_clienteNombre = clienteSelect.options[clienteSelect.selectedIndex].text;
 
     let v_codigo = document.getElementById('codigoOculto').value;
     let v_cantidad = parseInt(document.getElementById('cantidad_v').value);
@@ -347,8 +347,8 @@ function agregarProductoYResetear() {
         crearCeldaConInput(v_fecha_venta, 'fecha_venta', true);
         crearCeldaConInput(v_id_vendedor, 'id_vendedor', true);
         crearCeldaConInput(v_no_venta, 'no_venta', true);
-        crearCeldaConInput(v_Cliente, 'cliente', true);           // ID del cliente
-       // crearCeldaConInput(v_ClienteNombre, 'cliente_nombre', false); // Nombre del cliente
+        crearCeldaConInput(v_cliente, 'cliente', true);           // ID del cliente
+       // crearCeldaConInput(v_clienteNombre, 'cliente_nombre', false); // Nombre del cliente
         crearCeldaConInput(v_codigo, 'codigoOculto', false);
         crearCeldaConInput(nombreProductoGlobal, 'nombreOculto', false);
         crearCeldaConInput(v_cantidad, 'cantidad', false);
@@ -362,6 +362,54 @@ function agregarProductoYResetear() {
     calcularTotalGeneral();
     limpiarCampos();
 }
+
+
+/*codigo para manejar el salto del select al input de referencia*/
+const tipoPago = document.getElementById('tipo_pago');
+const grupoReferencia = document.getElementById('grupoReferencia');
+const referencia = document.getElementById('referencia');
+
+function manejarReferencia() {
+    const valor = tipoPago.value;
+    if (valor === 'TARJETA DE CREDITO' || valor === 'TARJETA DE DEBITO') {
+        grupoReferencia.style.display = 'inline-block';
+        referencia.focus();
+    } else {
+        grupoReferencia.style.display = 'none';
+    }
+}
+
+// Abrir select con espacio y cerrar con enter o escape
+tipoPago.addEventListener('keydown', function(event) {
+    if (event.code === 'Space') {
+        event.preventDefault();
+        this.size = this.options.length; // Abrir dropdown
+        this.focus();
+    } else if (event.code === 'Enter') {
+        event.preventDefault();
+        this.size = 1;
+        manejarReferencia();
+    } else if (event.code === 'Escape') {
+        this.size = 1;
+    }
+});
+
+// Cuando se cambia la opción
+tipoPago.addEventListener('change', function() {
+    this.size = 1;
+    manejarReferencia();
+});
+
+// Cuando el select pierde foco
+tipoPago.addEventListener('blur', function() {
+    setTimeout(() => { // Espera un instante por si se hizo click en opción
+        this.size = 1;
+        manejarReferencia();
+    }, 100);
+});
+
+// Por si ya hay valor preseleccionado
+tipoPago.dispatchEvent(new Event('change'));
 
 </script>
 
@@ -398,7 +446,7 @@ function agregarProductoYResetear() {
 
 
             <td>
-                <p><select name="Cliente" id="Cliente" required>
+                <p><select name="cliente" id="cliente" required>
 
                         <?php
         include_once 'clases/cliente.php';
@@ -407,7 +455,7 @@ function agregarProductoYResetear() {
         if($clientees){
             echo "<option value='1' selected>CLIENTE GENERAL</option>";
                 foreach ($clientees as $cliente) {
-                        echo "<option value='".$cliente['Id_Cliente']."'>".$cliente['Nombre']." ".$cliente['A_paterno']."</option>";
+                        echo "<option value='".$cliente['Id_cliente']."'>".$cliente['Nombre']." ".$cliente['A_paterno']."</option>";
 
                                                 }
   	        }
@@ -463,26 +511,29 @@ function agregarProductoYResetear() {
             <p><label>Tipo de Pago:</label></p>
         </td>
         <!-- Campo tipo_pago -->
-<td>
-    <p>
-        <select name="tipo_pago" id="tipo_pago" required>
-            <option value="" disabled>Seleccione:</option>
-            <option value="EFECTIVO" selected>EFECTIVO</option>
-            <option value="TARJETA DE CREDITO">TARJETA DE CRÉDITO</option>
-            <option value="TARJETA DE DEBITO">TARJETA DE DÉBITO</option>
-            <option value="CREDITO DE LA TIENDA">CREDITO DE LA TIENDA</option>
-        </select>
-    </p>
-</td>
-
-<!-- Campo referencia (todo dentro de una sola celda con colspan) -->
-<td colspan="2" id="grupoReferencia" style="display: none; text-align: right;">
-    <p><label for="referencia">Referencia:</label>
-    
+            <td COLSPAN=2 style="text-align: right;">
+                <p><label>Tipo de Pago:</label></p>
+            </td>
+            <td style="white-space: nowrap;">
+                <p style="display: flex; align-items: center; gap: 10px;">
+                    <select name="tipo_pago" id="tipo_pago" required>
+                        <option value="" disabled>Seleccione:</option>
+                        <option value="EFECTIVO" selected>EFECTIVO</option>
+                        <option value="TARJETA DE CREDITO">TARJETA DE CRÉDITO</option>
+                        <option value="TARJETA DE DEBITO">TARJETA DE DÉBITO</option>
+                        <option value="CREDITO DE LA TIENDA">CRÉDITO DE LA TIENDA</option>
+                    </select>
+                </p>
+            </td>
+            <!-- Campo referencia (mantiene la celda fija, solo ocultamos el contenido) -->
+<td colspan="2" style="text-align: right;">
+    <div id="grupoReferencia" style="display: none; white-space: nowrap;">
+        <label for="referencia">Referencia:</label>
         <input name="referencia" type="text" placeholder="Ingresar referencia de pago" id="referencia"
                title="Ingrese la referencia de pago">
-    </p>
+    </div>
 </td>
+
 
 
         </tr>
@@ -651,7 +702,8 @@ document.addEventListener('DOMContentLoaded', function() {
     tipoPago.addEventListener('change', function() {
         const valor = tipoPago.value;
         if (valor === 'TARJETA DE CREDITO' || valor === 'TARJETA DE DEBITO') {
-            grupoReferencia.style.display = 'block';
+            //grupoReferencia.style.display = 'block';
+             grupoReferencia.style.display = 'inline-block'; // 👈 mantiene espacio en tabla
         } else {
             grupoReferencia.style.display = 'none';
         }
@@ -660,4 +712,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Por si ya hay valor preseleccionado
     tipoPago.dispatchEvent(new Event('change'));
 });
+
+
+// Capturar Enter en el botón "Proceder" del modal
+const btnProceder = document.getElementById('confirmarModal');
+
+btnProceder.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Evita que el foco cambie
+        this.click(); // Ejecuta el mismo comportamiento que un click
+    }
+});
+
 </script>

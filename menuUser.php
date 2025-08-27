@@ -55,56 +55,75 @@ $cajaAbierta = $corte->cajaAbierta($codigo);
     <script src="js/modulos.js" type="text/javascript"></script>
 
     <script>
-        function abrirCaja() {
-            let monto = prompt("Ingrese el monto inicial en la caja:");
-            if (monto && !isNaN(monto)) {
-                fetch("modulos/mdl_corteCaja.php", {
-                    method: "POST",
-                    body: new URLSearchParams({
-                        accion: "abrir",
-                        monto: monto
-                    })
+    function abrirCaja() {
+        let monto = prompt("Ingrese el monto inicial en la caja:");
+        if (monto && !isNaN(monto)) {
+            fetch("modulos/mdl_corteCaja.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                    accion: "abrir",
+                    monto: monto
                 })
-                .then(res => res.text())
-                .then(data => {
-                    if (data.trim() === "ok") {
-                        alert("Caja abierta correctamente con monto inicial: " + monto);
-                        location.reload();
-                    } else {
-                        alert("Error al abrir caja");
-                    }
-                });
-            }
-        }
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log("Respuesta PHP:", data);
+                if (data.status === "ok") {
+                    alert("Caja abierta correctamente con monto inicial: " + monto);
 
-        function cerrarCaja(id_corte) {
-            if (confirm("¿Seguro que deseas cerrar la caja?")) {
-                fetch("modulos/mdl_corteCaja.php", {
-                    method: "POST",
-                    body: new URLSearchParams({
-                        accion: "cerrar",
-                        id_corte: id_corte
-                    })
-                })
-                .then(res => res.text())
-                .then(data => {
-                    if (data.trim() === "ok") {
-                        // Obtener monto final desde la BD
-                        fetch("modulos/mdl_getMontoFinal.php?id_corte=" + id_corte)
-                            .then(res => res.json())
-                            .then(info => {
-                                alert("Caja cerrada correctamente.\nMonto inicial: " + info.monto_inicial +
-                                      "\nTotal ventas: " + info.total_ventas +
-                                      "\nMonto final en caja: " + info.monto_final);
-                                location.reload();
-                            });
-                    } else {
-                        alert("Error al cerrar caja");
-                    }
-                });
-            }
+                    // Actualizar botón sin recargar
+                    let btn = document.querySelector("#btnCaja");
+                    btn.classList.remove("btn-success");
+                    btn.classList.add("btn-danger");
+                    btn.textContent = "Cerrar Caja";
+                    btn.setAttribute("onclick", "cerrarCaja(" + data.id_corte + ")");
+                } else {
+                    alert("Error al abrir caja: " + (data.msg ?? "Desconocido"));
+                }
+            })
+            .catch(err => console.error("Error fetch:", err));
         }
-    </script>
+    }
+
+    function cerrarCaja(id_corte) {
+        if (confirm("¿Seguro que deseas cerrar la caja?")) {
+            fetch("modulos/mdl_corteCaja.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                    accion: "cerrar",
+                    id_corte: id_corte
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log("Respuesta PHP:", data);
+               if (data.status === "ok") {
+   alert("Caja cerrada correctamente.\n" +
+      "Monto inicial: " + data.monto_inicial +
+      "\nSubtotal ventas: " + data.subtotal +
+      "\nDescuentos aplicados: -" + data.total_descuento +
+      "\nIVA aplicado: +" + data.total_iva +
+      "\nTotal ventas neto: " + data.total_ventas +
+      "\nMonto final en caja: " + data.monto_final);
+
+
+    let btn = document.querySelector("#btnCaja");
+    btn.classList.remove("btn-danger");
+    btn.classList.add("btn-success");
+    btn.textContent = "Abrir Caja";
+    btn.setAttribute("onclick", "abrirCaja()");
+}
+ else {
+                    alert("Error al cerrar caja: " + (data.msg ?? "Desconocido"));
+                }
+            })
+            .catch(err => console.error("Error fetch:", err));
+        }
+    }
+</script>
+
 </head>
 <body>
 
@@ -116,12 +135,16 @@ $cajaAbierta = $corte->cajaAbierta($codigo);
 
     <div class="mt-3">
         <?php if (!$cajaAbierta): ?>
-            <button class="btn btn-success" onclick="abrirCaja()">Abrir Caja</button>
+        <button id="btnCaja" class="btn btn-success" onclick="abrirCaja()">Abrir Caja</button>
         <?php else: ?>
-            <button class="btn btn-danger" onclick="cerrarCaja(<?php echo $cajaAbierta['Id_Corte']; ?>)">Cerrar Caja</button>
+        <button id="btnCaja" class="btn btn-danger" onclick="cerrarCaja(<?php echo $cajaAbierta['Id_Corte']; ?>)">Cerrar Caja</button>
         <?php endif; ?>
     </div>
 </div>
+<?php 
+date_default_timezone_set("America/Mexico_City");
+echo "PHP hora actual: " . date("Y-m-d H:i:s");
+?>
 
 <?php include_once 'modulos/mdl_footer.php'; ?>
 </body>

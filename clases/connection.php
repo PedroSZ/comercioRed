@@ -36,6 +36,8 @@ public function __construct() {
          ];
          
          $pdo = new PDO($conexion, $this->user, $this->psw, $options);
+         // 🔹 Forzar zona horaria de MySQL (ejemplo: CDMX)
+         $pdo->exec("SET time_zone = '-06:00'");
          //echo "PDO OK";
          return $pdo;
       }catch(PDOException $e){

@@ -141,6 +141,10 @@ $cajaAbierta = $corte->cajaAbierta($codigo);
         <?php endif; ?>
     </div>
 </div>
+<?php 
+date_default_timezone_set("America/Mexico_City");
+echo "PHP hora actual: " . date("Y-m-d H:i:s");
+?>
 
 <?php include_once 'modulos/mdl_footer.php'; ?>
 </body>
