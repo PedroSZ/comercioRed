@@ -1,11 +1,8 @@
-                    <?php
-
+<?php
 class Sesion {
 	function __construct() {
 		session_start();
-
 	}
-
 	public function setCurrentUser($user){
         $_SESSION['user'] = $user;
     }
@@ -16,8 +13,6 @@ class Sesion {
         session_unset();
         session_destroy();
     }
-    
-
 }
 
 ?>          

@@ -1,4 +1,3 @@
-
 </!DOCTYPE html>
 <html lang="es">
 <!-- INDEX.PHP -->
@@ -11,8 +10,6 @@
 			html, body, div, iframe {
 				margin:0;
 				padding:0;
-				
-
 			}
 			/*IFRAME PARA OCULTAR URL*/
 			iframe {
@@ -26,6 +23,5 @@
 	</head>
 	<body>
 	 	<iframe src="login.php"></iframe>
-
 	</body>
 </html>

@@ -14,16 +14,18 @@ public function __construct() {
       $this-> user   = 'root';
       $this-> psw    = '';
       $this-> charset= 'utf8mb4';
+        
+  
 }
   
 /*
-   $this-> host   = '162.241.203.102';
+ 
+ $this-> host   = '162.241.203.102';
       $this-> db     = 'danie384_comercioRed';
       $this-> user   = 'danie384_user';
       $this-> psw    = 'Piconeria2025@';
       $this-> charset= 'utf8_spanish2_ci'; 
-  
- 
+
       
    */
 

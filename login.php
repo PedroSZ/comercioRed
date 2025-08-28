@@ -41,20 +41,7 @@
              </article>
          </section>
  </section>
-
-
      </div>
-
-
-
-
-
-
-
-
-
-
-
      <?php include_once 'modulos/mdl_footer.php'; ?>
   </body>
 </html>

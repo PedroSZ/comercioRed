@@ -4,7 +4,6 @@ include_once 'clases/sesion.php';
 include_once 'clases/usuario.php';
 
 $userSession = new Sesion();
-
 // Redirigir si no hay sesión
 if (!isset($_SESSION['user'])){
     header("location: index.php");
