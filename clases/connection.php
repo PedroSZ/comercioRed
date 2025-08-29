@@ -1,5 +1,4 @@
 <?php
-
 class DB {
    private $server;
    private $host;
@@ -7,45 +6,41 @@ class DB {
    private $user;
    private $psw;
    private $charset;
-public function __construct() {
-  $this-> server  = 'mysql';
-      $this-> host   = 'localhost';
-      $this-> db     = 'comerciored';
-      $this-> user   = 'root';
-      $this-> psw    = '';
-      $this-> charset= 'utf8mb4';
-        
-  
-}
-  
-/*
- 
- $this-> host   = '162.241.203.102';
-      $this-> db     = 'danie384_comercioRed';
-      $this-> user   = 'danie384_user';
-      $this-> psw    = 'Piconeria2025@';
-      $this-> charset= 'utf8_spanish2_ci'; 
 
-      
+   public function __construct() {
+      $this->server  = 'mysql';
+      $this->host    = 'localhost';
+      $this->db      = 'comerciored';
+      $this->user    = 'root';
+      $this->psw     = '';
+      $this->charset = 'utf8mb4';
+   }
+
+   /*
+   // 🔹 Configuración para servidor remoto
+   $this->host    = '162.241.203.102';
+   $this->db      = 'danie384_comercioRed';
+   $this->user    = 'danie384_user';
+   $this->psw     = 'Piconeria2025@';
+   $this->charset = 'utf8_spanish2_ci';
    */
 
    function connect() {
-      try{
-         $conexion = 'mysql:host='.$this->host.'; dbname='.$this->db.'; chartset='.$this->charset;
+      try {
+         $conexion = 'mysql:host='.$this->host.';dbname='.$this->db.';charset='.$this->charset;
          $options = [
-            PDO::ATTR_ERRMODE          => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_EMULATE_PREPARES => false,
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_EMULATE_PREPARES   => false,
          ];
-         
+
          $pdo = new PDO($conexion, $this->user, $this->psw, $options);
-         // 🔹 Forzar zona horaria de MySQL (ejemplo: CDMX)
+         // 🔹 Ajustar zona horaria (ejemplo: CDMX)
          $pdo->exec("SET time_zone = '-06:00'");
-         //echo "PDO OK";
          return $pdo;
-      }catch(PDOException $e){
-         print_r('Error de conexion: ' . $e->getMessage());
+      } catch (PDOException $e) {
+         die('Error de conexión: ' . $e->getMessage());
       }
    }
- }
-
+}
 ?>
+

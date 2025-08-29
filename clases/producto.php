@@ -50,11 +50,21 @@ class Producto extends DB {
 	}
 
 
-	/*public function consulta($sql){
-		$query = $this->connect()->prepare($sql);
-		$query->execute();
-		return $query->fetchAll(PDO::FETCH_ASSOC);
-	}*/
+public function getStock(){ return $this->stock; }  // corregido
+
+public function sumarStock($codigo, $cantidad) {
+    $query = $this->connect()->prepare("
+        UPDATE productos
+        SET Stock = Stock + :cantidad
+        WHERE Codigo = :codigo
+    ");
+    return $query->execute([
+        'cantidad' => $cantidad,
+        'codigo'   => $codigo
+    ]);
+}
+
+
 
 
 public function consulta($sql, $params = []) {

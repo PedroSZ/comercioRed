@@ -112,10 +112,39 @@ function cargarTabla(data) {
             let boton = document.createElement("button");
             boton.type = "button";
             boton.textContent = "Quitar";
-            boton.addEventListener("click", function () {
-                this.closest("tr").remove();
+           
+                    boton.addEventListener("click", function () {
+    let fila = this.closest("tr");
+    let noVenta = fila.querySelector('input[name="no_venta[]"]').value;
+    let codigo = fila.querySelector('input[name="codigoOculto[]"]').value;
+    let cantidad = fila.querySelector('input[name="cantidad[]"]').value;
+
+    if (confirm("¿Seguro que deseas eliminar este producto de la venta?")) {
+        fetch("modulos/eliminar_producto_venta.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "no_venta=" + encodeURIComponent(noVenta) +
+                  "&codigo=" + encodeURIComponent(codigo) +
+                  "&cantidad=" + encodeURIComponent(cantidad)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                fila.remove(); // quitar visualmente
                 calcularTotalGeneral();
-            });
+                alert(data.mensaje);
+            } else {
+                alert(data.mensaje);
+            }
+        })
+        .catch(err => console.error("Error:", err));
+    }
+});
+
+
+
+
+
             celda.appendChild(boton);
         }
 
@@ -254,8 +283,33 @@ window.onload = function() {
     document.getElementById('fecha_venta').value = ano + "-" + mes + "-" + dia;
 
     let campo = document.getElementById('codigo');
-    campo.focus();
-    campo.select();
+    // 1️⃣ Foco inicial en #no_venta
+    let noVentaInput = document.getElementById('no_venta');
+    let btnBuscar = document.getElementById('btnBuscar');
+    let campoCodigo = document.getElementById('codigo');
+
+    noVentaInput.focus();
+    noVentaInput.select();
+
+    // 2️⃣ Presionar Enter en #no_venta → foco al botón Buscar
+    noVentaInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            btnBuscar.focus();
+        }
+    });
+
+    // 3️⃣ Presionar Enter en el botón Buscar → ejecutar busqueda() y foco en #codigo
+    btnBuscar.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            busqueda(); // Ejecuta la búsqueda
+            campoCodigo.focus();
+            campoCodigo.select();
+        }
+    });
+
+
 
     campo.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
@@ -522,7 +576,7 @@ tipoPago.dispatchEvent(new Event('change'));
                 <p><input name="no_venta" type="text" placeholder="Número de venta" id="no_venta" required></p>
             </td>
             <td COLSPAN=2 style="text-align: right;">
-                <p><input type="button" value="Buscar" onclick="busqueda()"></p>
+                 <p> <input type="button" id="btnBuscar" value="Buscar" onclick="busqueda()"></p>
             </td>
         </tr>
     </table>

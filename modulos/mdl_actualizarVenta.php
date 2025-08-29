@@ -1,5 +1,9 @@
 <?php
-// mdl_actualizarVenta.php
+// Depuración inicial
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
+
 include_once '../clases/venta.php';
 include_once '../clases/producto.php';
 include_once '../clases/connection.php';
@@ -13,55 +17,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cantidades = $_POST['cantidad'];
     $precios = $_POST['precio'];
     $pagos = $_POST['tipo_pago'];
-    
+
     try {
         $conexion = new DB();
         $db = $conexion->connect();
 
-        // Consultar ventas actuales
-        $query = $db->prepare("SELECT * FROM ventas WHERE No_venta = :no_venta");
-        $query->execute(['no_venta' => $noVenta]);
-        $ventasOriginales = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        // Reponer stock de los productos originales
-        foreach ($ventasOriginales as $venta) {
-            $producto = new Producto();
-            $producto->setCodigo($venta['Codigo_pro']);
-            $productoActual = $producto->consultarCodigo($venta['Codigo_pro']);           
-            $nuevoStock = $productoActual['Stock'] + $venta['Cantidad'];
-            $producto->setStock($nuevoStock);
-            $producto->actualizarStockDirecto();
+        // -------------------------
+        // 1. Agrupar filas por No_venta
+        // -------------------------
+        $ventasPorNumero = [];
+        for ($i = 0; $i < count($codigos); $i++) {
+            $no = $noVenta[$i];
+            $ventasPorNumero[$no][] = [
+                'fecha' => $nuevasFechas[$i],
+                'vendedor' => $vendedores[$i],
+                'cliente' => $clientes[$i],
+                'codigo' => $codigos[$i],
+                'cantidad' => $cantidades[$i],
+                'precio' => $precios[$i],
+                'pago' => $pagos[$i]
+            ];
         }
 
-        // Eliminar las ventas actuales
-        $deleteQuery = $db->prepare("DELETE FROM ventas WHERE No_venta = :no_venta");
-        $deleteQuery->execute(['no_venta' => $noVenta]);
+        // -------------------------
+        // 2. Reponer stock y eliminar ventas originales
+        // -------------------------
+        $numerosDeVenta = array_keys($ventasPorNumero);
+        if (count($numerosDeVenta) > 0) {
+            $placeholders = implode(',', array_fill(0, count($numerosDeVenta), '?'));
 
-        // Registrar los nuevos productos de la venta
-        for ($i = 0; $i < count($codigos); $i++) {
-            $producto = new Producto();
-            $producto->setCodigo($codigos[$i]);
-            $productoActual = $producto->consultarCodigo($codigos[$i]);
+            // Consultar ventas originales
+            $query = $db->prepare("SELECT * FROM ventas WHERE No_venta IN ($placeholders)");
+            $query->execute($numerosDeVenta);
+            $ventasOriginales = $query->fetchAll(PDO::FETCH_ASSOC);
 
-            if ($productoActual['Stock'] >= $cantidades[$i]) {
-                $nuevoStock = $productoActual['Stock'] - $cantidades[$i];
+            foreach ($ventasOriginales as $venta) {
+                $producto = new Producto();
+                $producto->setCodigo($venta['Codigo_pro']);
+                $productoActual = $producto->consultarCodigo($venta['Codigo_pro']);
+                $nuevoStock = $productoActual['Stock'] + $venta['Cantidad'];
                 $producto->setStock($nuevoStock);
                 $producto->actualizarStockDirecto();
+            }
 
-                $venta = new Ventas();
-                $venta->setFeca_venta($nuevasFechas[$i]);
-                $venta->setId_vendedor($vendedores[$i]);
-                $venta->setNo_venta($noVenta);
-                $venta->setCliente_id($clientes[$i]);
-                $venta->setCodigo_pro($codigos[$i]);
-                $venta->setCantidad($cantidades[$i]);
-                $venta->setPrecio_al_dia($precios[$i]);
-                $venta->setTipo_pago($pagos[$i]);
-                $venta->guardar();
-            } else {
-                echo '<script>alert("ERROR: No hay suficiente stock para el producto con c\u00f3digo ' . $codigos[$i] . '");
-                      window.location.href="../actualizarVenta.php";</script>';
-                exit();
+            // Eliminar ventas originales
+            $deleteQuery = $db->prepare("DELETE FROM ventas WHERE No_venta IN ($placeholders)");
+            $deleteQuery->execute($numerosDeVenta);
+        }
+
+        // -------------------------
+        // 3. Insertar ventas nuevas
+        // -------------------------
+        foreach ($ventasPorNumero as $numVenta => $filas) {
+            foreach ($filas as $fila) {
+                $producto = new Producto();
+                $producto->setCodigo($fila['codigo']);
+                $productoActual = $producto->consultarCodigo($fila['codigo']);
+
+                if ($productoActual['Stock'] >= $fila['cantidad']) {
+                    $nuevoStock = $productoActual['Stock'] - $fila['cantidad'];
+                    $producto->setStock($nuevoStock);
+                    $producto->actualizarStockDirecto();
+
+                    $venta = new Ventas();
+                    $venta->setFeca_venta($fila['fecha']);
+                    $venta->setId_vendedor($fila['vendedor']);
+                    $venta->setNo_venta($numVenta);
+                    $venta->setCliente_id($fila['cliente']);
+                    $venta->setCodigo_pro($fila['codigo']);
+                    $venta->setCantidad($fila['cantidad']);
+                    $venta->setPrecio_al_dia($fila['precio']);
+                    $venta->setTipo_pago($fila['pago']);
+                    $venta->setHora_venta(date('H:i:s')); // Hora actual
+                    $venta->guardar();
+                } else {
+                    exit("ERROR: No hay suficiente stock para el producto con código " . $fila['codigo']);
+                }
             }
         }
 
