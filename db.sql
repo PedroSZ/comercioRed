@@ -26,6 +26,8 @@ CREATE TABLE `tipo_usuario` (
   `Pasword` varchar(50) NOT NULL,
   `Puesto` varchar(20) NOT NULL,
   `Estatus_u` int
+   `configuracion` int
+  FOREIGN KEY (configuracion) REFERENCES sucursal(Id_Comercio) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE `usuario` (
@@ -110,6 +112,7 @@ CREATE TABLE `sucursal` (
   `Logotipo` varchar(100),
   `color_background_principal` varchar(20),
   `color_background_secundario` varchar(20), 
+  `color_radial` varchar(20), 
   `color_texto_principal` varchar(20),
   `color_texto_secundario` varchar(20), 
   `color_header_principal` varchar(20),
@@ -123,8 +126,7 @@ CREATE TABLE `sucursal` (
   `color_boton_principal` varchar(20),
   `color_boton_secundario` varchar(20), 
   `color_boton_texto_principal` varchar(20),
-  `color_boton_texto_secundario` varchar(20), 
-  FOREIGN KEY (Id_Administrador) REFERENCES tipo_usuario(Usuario_Id) ON DELETE CASCADE
+  `color_boton_texto_secundario` varchar(20)
 ) ENGINE=InnoDB;
 
 
