@@ -50,7 +50,7 @@ $pdf->SetMargins(2, 2, 2);
     $pdf->Cell(0, 4, 'La Piconeria de Ameca', 0, 1, 'C');
 
     $pdf->SetFont('Arial', '', 7);
-    $pdf->MultiCell(0, 3, "Av. Patria No.\nCol. Santuario\nC.P. 46620 Ameca, Jal.\nTel: 375 100 3330\ne-mail: lapiconeria@gmail.com", 0, 'C');
+    $pdf->MultiCell(0, 3, "Av. Patria No 204.\nCol. Santuario\nC.P. 46620 Ameca, Jal.\nTel: 375 100 3330\ne-mail: lapiconeria@gmail.com", 0, 'C');
 
     $pdf->Ln(1);
     $pdf->Cell(0, 4, "Fecha: $fecha", 0, 1);

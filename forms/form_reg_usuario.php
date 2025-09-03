@@ -1,3 +1,8 @@
+<?php
+include_once 'clases/sucursal.php';
+$sucursal = new Sucursal();
+$listaSucursales = $sucursal->listarSucursales();
+?>
 <script>
     window.onload = function() {
         //AQUI RECETEAMOS LA FECHA ACTUAL PARA EL CAMPO FECHA_VENTA
@@ -31,7 +36,21 @@
    <div class= "grid-item"><div class= "container-grid"><div class= "grid-item-container"><p><label>Domicilio:</label></p></div><div class= "grid-item-container"><p><input name="domicilio" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Dirección" id ="domicilio" title="Ingresa al menos una dirección por favor" ></p></div></div></div>       
    <div class= "grid-item"><div class= "container-grid"><div class= "grid-item-container"><p><label>Contraseña:</label></p></div><div class= "grid-item-container"><p><input name="psw1" type="password" placeholder="Ingresar Contraseña"  id ="psw1"  title="Por favor ingresa una contraseña que inicie con una letra y tenga al menos 8 caracteres y un número como mínimo" required ></p></div></div></div>         
    <div class= "grid-item"><div class= "container-grid"><div class= "grid-item-container"><p><label>Confirmar Contraseña:</label></p></div><div class= "grid-item-container"><p><input name="pasword" type="password" placeholder="Vuelve a escribir la Contraseña"  id ="psw2" required ></p></div></div></div>
-             
+   
+   <div class="grid-item"><div class="container-grid"><div class="grid-item-container"><p><label>Sucursal:</label></p></div>
+    <div class="grid-item-container"> <p>
+        <select name="id_sucursal" id="id_sucursal" required>
+          <option value="" disabled selected>Seleccione una sucursal</option>
+          <?php foreach($listaSucursales as $row): ?>
+            <option value="<?php echo $row['Id_Comercio']; ?>">
+              <?php echo $row['Nombre_Sucursal']; ?>
+            </option>
+          <?php endforeach; ?>
+        </select></p></div></div>
+</div>
+
+   
+
    
   
    

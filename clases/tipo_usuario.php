@@ -6,6 +6,7 @@ class Tipo_Usuario extends DB{
     private $pasword;
     private $puesto;
     private $estatus_u;
+    private $configuracion;
    
     
     //stters and getters ***********************************************
@@ -14,12 +15,14 @@ class Tipo_Usuario extends DB{
     public function setPasword($pasword){ $this->pasword = $pasword; } 
     public function setPuesto($puesto){ $this->puesto = $puesto; }
     public function setEstatus_u($estatus_u){ $this->estatus_u = $estatus_u; }
+    public function setConfiguracion($configuracion){ $this->configuracion = $configuracion; }
     //******************************************************************    
     public function getUsuario_id(){ return $this->usuario_id; }
     public function getUsuario(){ return $this->usuario; }
     public function getPasword(){ return $this->pasword; }
     public function getPuesto(){ return $this->puesto; }
     public function getEstatus_u(){ return $this->estatus_u; }
+    public function getConfiguracion(){ return $this->configuracion; }
     //******************************************************************
 
 
@@ -72,12 +75,13 @@ class Tipo_Usuario extends DB{
     }
 
     public function guardar(){
-        $sql = "INSERT INTO tipo_usuario (Usuario, Pasword, Puesto, Estatus_u) VALUES(:usuario, :psw, :tipo, 1)";
+        $sql = "INSERT INTO tipo_usuario (Usuario, Pasword, Puesto, Estatus_u, configuracion) VALUES(:usuario, :psw, :tipo, 1, :configuracion)";
         $query = $this->connect()->prepare($sql);
         $query->execute([
             'usuario' => $this->usuario,
             'psw' => $this->pasword,
-            'tipo' => $this->puesto]);
+            'tipo' => $this->puesto,
+            'configuracion' => $this->configuracion]);
     }
 
 	public function actualizar(){

@@ -32,6 +32,7 @@
 			$tipo_usuario->setUsuario($_POST['email']);
 			$tipo_usuario->setPuesto($_POST['tipo_usuario']);
 			$tipo_usuario->setPasword(md5($_POST['pasword']));
+			$tipo_usuario->setConfiguracion($_POST['id_sucursal']);
 			$tipo_usuario->guardar();
 				
 				$tipo_u = $tipo_usuario->consultarUltimoCodigo();
