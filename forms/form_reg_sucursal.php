@@ -54,7 +54,7 @@
         <div class="grid-item-container"><p>
           <input name="logotipo" type="file" accept="image/*" >
           <br>
-          <img src="../img/logotipos/1756919785_Logotipo.png" width="120" alt="Logo actual">
+          <img src="img/logotipos/1756919785_Logotipo.png" width="120" alt="Logo actual">
         </p></div>
       </div>
     </div>

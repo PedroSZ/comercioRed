@@ -147,7 +147,7 @@ VALUES('1', 'NO APLICA', 'cliente', 'GENERAL', 'NONE', '2025-06-14', '1989-05-18
 'Domicilio de prueba No. 49 Col. Prueba C.P. 46600', '0', '0');
 
 INSERT INTO sucursal (Id_Comercio, Nombre_Sucursal, Telefono, Email, Domicilio, Logotipo, color_background_principal, color_background_secundario, color_radial, color_texto_principal, color_texto_secundario, color_header_principal, color_header_secundario, color_footer_principal, color_footer_secundario, color_texto_header_principal, color_texto_header_secundario, color_texto_footer_principal, color_texto_footer_secundario, color_boton_principal, color_boton_secundario, color_boton_texto_principal, color_boton_texto_secundario) VALUES
-(2, 'Patria', '375 100 3330', 'lapiconeria@gmail.com', 'Av. Patria No. , Colonia Santuario, C.P. 46620. Am', '../img/logotipos/1756919785_Logotipo.png', '#fcf8f8', '#f7f7f7', '#69b894', '#000000', '#4e4b4b', '#2259f2', '#eddd53', '#ad8225', '#2259f2', '#000000', '#7d7d7d', '#fafafa', '#666060', '#4665e2', '#394660', '#fefbfb', '#fcfcfc');
+(1, 'Patria', '375 100 3330', 'lapiconeria@gmail.com', 'Av. Patria No. , Colonia Santuario, C.P. 46620. Am', '../img/logotipos/1756919785_Logotipo.png', '#fcf8f8', '#f7f7f7', '#69b894', '#000000', '#4e4b4b', '#2259f2', '#eddd53', '#ad8225', '#2259f2', '#000000', '#7d7d7d', '#fafafa', '#666060', '#4665e2', '#394660', '#fefbfb', '#fcfcfc');
 
 /* inner join para obtener datos de ventas
 SELECT 

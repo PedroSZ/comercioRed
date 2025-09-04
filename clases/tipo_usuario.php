@@ -65,6 +65,7 @@ class Tipo_Usuario extends DB{
             $this->pasword = $currentUser['Pasword'];
             $this->puesto = $currentUser['Puesto'];
             $this->estatus_u = $currentUser['Estatus_u'];
+            $this->configuracion = $currentUser['configuracion'];
 
         }
     }

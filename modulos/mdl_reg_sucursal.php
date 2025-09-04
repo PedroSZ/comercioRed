@@ -29,7 +29,7 @@ $sucursal->setColor_boton_texto_principal($_POST['color_boton_texto_principal'])
 $sucursal->setColor_boton_texto_secundario($_POST['color_boton_texto_secundario']);
 
 // --- SUBIR LOGOTIPO ---
-$carpetaLogos = "../img/logotipos/";
+$carpetaLogos = "img/logotipos/";
 if (!file_exists($carpetaLogos)) {
     mkdir($carpetaLogos, 0777, true);
 }

@@ -122,38 +122,39 @@ public function registrarSucursal() {
     }
 
    
-public function listarSucursales(): array {
-    try {
-        $pdo = $this->connect(); // debe devolver un PDO desde connection.php
-        $stmt = $pdo->query("
-            SELECT Id_Comercio, Nombre_Sucursal, Telefono, Email, Domicilio, Logotipo
-            FROM sucursal
-            ORDER BY Nombre_Sucursal ASC
-        ");
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $rows ?: [];
-    } catch (PDOException $e) {
-        error_log("Error listarSucursales: " . $e->getMessage());
-        return [];
+   // ================== MÉTODOS ==================
+    public function obtenerSucursalPorId(int $id) {
+        $sql = "SELECT Id_Comercio, Nombre_Sucursal, Domicilio, Telefono, Email, Logotipo 
+                FROM sucursal 
+                WHERE Id_Comercio = :id 
+                LIMIT 1";
+        $query = $this->connect()->prepare($sql);
+        $query->execute(['id' => $id]);
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $this->id_comercio = $row['Id_Comercio'];
+            $this->nombre_sucursal = $row['Nombre_Sucursal'];
+            $this->domicilio = $row['Domicilio'];
+            $this->telefono = $row['Telefono'];
+            $this->email = $row['Email'];
+            $this->logotipo = $row['Logotipo'];
+            return $row; // 🔥 devuelve array asociativo con todos los datos
+        } else {
+            return null;
+        }
+    }
+
+    // Por si quieres listar todas las sucursales en el sistema
+    public function listarSucursales() {
+        $sql = "SELECT Id_Comercio, Nombre_Sucursal, Domicilio, Telefono, Email, Logotipo FROM sucursal";
+        $query = $this->connect()->query($sql);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
 
-public function obtenerSucursalPorId(int $id): ?array {
-    try {
-        $stmt = $this->connect()->prepare("SELECT * FROM sucursal WHERE Id_Comercio = ?");
-        $stmt->execute([$id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row ?: null;
-    } catch (PDOException $e) {
-        error_log("Error obtenerSucursalPorId: " . $e->getMessage());
-        return null;
-    }
-}
 
-
-
-}
 
    
 

@@ -16,6 +16,7 @@ $user->establecerDatos($userSession->getCurrentUser());
 $tipo = $user->getPuesto();
 $codigo = $user->getUsuario_id();
 
+
 // Validar privilegios
 if($tipo !== "Administrador") header('location: index.php');
 
