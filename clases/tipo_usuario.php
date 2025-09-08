@@ -26,16 +26,18 @@ class Tipo_Usuario extends DB{
     //******************************************************************
 
 
-    public function verificarPsw($user, $pass){
-        $md5pass = md5($pass);
-        $query = $this->connect()->prepare('SELECT * FROM tipo_usuario WHERE Usuario = :user AND Pasword = :pass');
-        $query->execute(['user' => $user, 'pass' => $md5pass]);
-        if($query->rowCount()){
-            return true;
-        }else{
-            return false;
-        }
+   public function verificarPsw($user, $pass){
+    $md5pass = md5($pass);
+    $query = $this->connect()->prepare('SELECT * FROM tipo_usuario WHERE Usuario = :user AND Pasword = :pass');
+    $query->execute(['user' => $user, 'pass' => $md5pass]);
+
+    if($query->rowCount()){
+        return $query->fetch(PDO::FETCH_ASSOC); // devuelve los datos del usuario
+    }else{
+        return false;
     }
+}
+
 
      
     public function consultarCodigo($codigo){
@@ -96,6 +98,22 @@ class Tipo_Usuario extends DB{
             'estatus_u' => $this->estatus_u
         ]);
 	}
+    
+    public function establecerDatosPorId($usuario_id){
+    $query = $this->connect()->prepare('SELECT * FROM tipo_usuario WHERE Usuario_Id = :id');
+    $query->execute(['id' => $usuario_id]);
+    $currentUser = $query->fetch(PDO::FETCH_ASSOC);
+
+    if ($currentUser) {
+        $this->usuario_id = $currentUser['Usuario_Id'];
+        $this->usuario    = $currentUser['Usuario'];
+        $this->pasword    = $currentUser['Pasword'];
+        $this->puesto     = $currentUser['Puesto'];
+        $this->estatus_u  = $currentUser['Estatus_u'];
+        $this->configuracion = $currentUser['configuracion'];
+    }
+}
+
 
 }
 ?>

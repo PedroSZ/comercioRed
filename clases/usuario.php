@@ -64,10 +64,6 @@ class Usuario extends DB {
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}
 
-	public function eliminar($codigo){
-		$query = $this->connect()->prepare('DELETE FROM estudiante WHERE curp = :user');
-		$query->execute(['user' => $codigo]);
-	}
 
 	public function actualizar(){
 		$sql = "UPDATE usuario SET Id_Tipo = :id_tipo, Rfc = :rfc, 
@@ -125,6 +121,26 @@ public function guardar() {
         $query = $this->connect()->prepare('DELETE FROM usuario WHERE Id_Tipo = :user');
         $query->execute(['user' => $id_tipo]);
     }
+
+/*consultar sucursal por id de usuario.*/
+	public function consultarSucursalPorIdUsuario($id_usuario){
+		$query = $this->connect()->prepare('SELECT s.* 
+        FROM usuario u
+        INNER JOIN tipo_usuario tu ON u.Id_Tipo = tu.Usuario_Id
+        INNER JOIN sucursal s ON tu.configuracion = s.Id_Comercio
+        WHERE u.Id_Usuario = :user');
+		$query->execute(['user' => $id_usuario]);
+		return $query->fetch(PDO::FETCH_ASSOC);
+
+	}
+
+
+
+
+
+
+
+	
 }
 
 ?>

@@ -1,4 +1,3 @@
-
 <!doctype html>
 <!-- menuAdmin.php -->
 <html lang="en">

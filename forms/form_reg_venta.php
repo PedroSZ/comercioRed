@@ -1,36 +1,13 @@
 <?php
 /********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
-include_once 'clases/tipo_usuario.php';
-include_once 'clases/sesion.php';
-$userSession = new Sesion();
 
-if (!isset($_SESSION['user'])) {
-    header("location: index.php");
-}
+include_once 'clases/helpers.php';
+include_once 'clases/auth.php'; // Verifica sesión y redirige si no hay
+include_once 'modulos/mdl_header.php';
+$usuarioLogueado = getUsuarioLogueado();
+$id = $usuarioLogueado ? $usuarioLogueado->getUsuario_id() : 0;
 
-if (isset($_SESSION['user'])) {
-    $user = new Tipo_Usuario();
-    $user->establecerDatos($userSession->getCurrentUser());
-    $tipo = $user->getPuesto();
-    $id = $user->getUsuario_id();
 
-    if ($tipo != "Administrador" && $tipo != "Cajero") {
-        header('location: index.php');
-        exit;
-    }
-
-    if (!isset($_SESSION['tiempo'])) {
-        $_SESSION['tiempo'] = time();
-    } else if (time() - $_SESSION['tiempo'] > 500) {
-        session_destroy();
-        header("location: index.php");
-        die();
-    }
-    $_SESSION['tiempo'] = time();
-} else {
-    $userSession->closeSession();
-    header("location: index.php");
-}
 
 error_reporting(0);
 $item = $_POST['Stock'];
@@ -416,19 +393,18 @@ tipoPago.dispatchEvent(new Event('change'));
 
 
 <?php
-       include_once 'clases/venta.php';
-        $ve = new Ventas();
-        $ventas = $ve->consultarUltimo();
-        $no_venta_maximo = $ventas[0]["MAX(No_venta)"];
-// Imprimir el valor
-//echo "El número de venta más alto es: " . $no_venta_maximo;   
+      
+// obtener el número de venta más alto
+$ventas = $ve->consultarUltimo();
+$no_venta_maximo = $ventas["ultimo"];
+//echo "El número de venta más alto es: " . $no_venta_maximo;
 	?>
 
 </p>
 <form action="modulos/mdl_reg_descuento.php" style="width: 65vw; height:auto;" id="frm_agregar_producto_a_vender"
     name="frm_agregar_producto_a_vender">
     <input name="fecha_venta" type="hidden" id="fecha_venta" required>
-    <input name="id_vendedor" type="hidden" id="id_vendedor" required placeholder="id del vendedor" value="<?php echo $id ?>">
+    <input name="id_vendedor" type="text" id="id_vendedor" required placeholder="id del vendedor" value="<?php echo $id ?>">
     <input name="no_venta" type="hidden" id="no_venta" required placeholder="no de venta"
         value="<?php echo $no_venta_maximo + 1; ?>">
     <input name="codigoOculto" placeholder="codigo oculto" type="hidden" id="codigoOculto"

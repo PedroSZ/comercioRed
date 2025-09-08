@@ -1,4 +1,7 @@
-
+<?php
+include_once 'clases/auth.php'; // Verifica sesión y redirige si no hay
+include_once 'modulos/mdl_header.php';
+?>
 <!doctype html>
 <!-- menuAdmin.php -->
 <html lang="en">

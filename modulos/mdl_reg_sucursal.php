@@ -28,18 +28,30 @@ $sucursal->setColor_boton_secundario($_POST['color_boton_secundario']);
 $sucursal->setColor_boton_texto_principal($_POST['color_boton_texto_principal']);
 $sucursal->setColor_boton_texto_secundario($_POST['color_boton_texto_secundario']);
 
-// --- SUBIR LOGOTIPO ---
-$carpetaLogos = "img/logotipos/";
-if (!file_exists($carpetaLogos)) {
-    mkdir($carpetaLogos, 0777, true);
+/// --- SUBIR LOGOTIPO ---
+// Carpeta física (desde el punto de vista de este archivo en /modulos/)
+$carpetaFisica = dirname(__DIR__) . "/logotipos/";
+
+// Carpeta relativa que quieres guardar en BD
+$carpetaRelativa = "logotipos/";
+
+if (!file_exists($carpetaFisica)) {
+    mkdir($carpetaFisica, 0777, true);
 }
 
 $nombreArchivo = $_FILES['logotipo']['name'];
 $tmpArchivo    = $_FILES['logotipo']['tmp_name'];
-$rutaDestino   = $carpetaLogos . time() . "_" . basename($nombreArchivo);
+$nombreFinal   = time() . "_logo" . strrchr($nombreArchivo, '.'); // mantiene extensión
 
-if (move_uploaded_file($tmpArchivo, $rutaDestino)) {
-    $sucursal->setLogotipo($rutaDestino);
+// Ruta física donde se guarda el archivo
+$rutaDestinoFisica = $carpetaFisica . $nombreFinal;
+
+// Ruta relativa que se guardará en la BD
+$rutaDestinoRelativa = $carpetaRelativa . $nombreFinal;
+
+if (move_uploaded_file($tmpArchivo, $rutaDestinoFisica)) {
+    // Guardamos en BD solo la ruta relativa
+    $sucursal->setLogotipo($rutaDestinoRelativa);
 } else {
     die("Error al subir el logotipo");
 }

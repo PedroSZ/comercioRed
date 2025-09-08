@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // LOGO si existe
     if (!empty($datosSucursal['Logotipo']) && file_exists($datosSucursal['Logotipo'])) {
-        $pdf->Image($datosSucursal['Logotipo'], 5, 5, 50);
+        $pdf->Image($datosSucursal['Logotipo'], 5, 5, 50); // x=18, y=2, ancho=20mm
         $pdf->Ln(22); // espacio después del logo
     }
 
@@ -70,21 +70,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdf->SetFont('Arial', '', 7);
     $pdf->MultiCell(0, 3,
         utf8_decode($datosSucursal['Domicilio']) . "\n" .
-        "Tel: " . utf8_decode($datosSucursal['Telefono']) . "\n" .
-        "E-mail: " . utf8_decode($datosSucursal['Email']),
+        "Tel: " . $datosSucursal['Telefono'] . "\n" .
+        "E-mail: " . $datosSucursal['Email'],
     0, 'C');
 
     $pdf->Ln(1);
-    $pdf->Cell(0, 4, utf8_decode("Fecha: $fecha"), 0, 1);
-    $pdf->Cell(0, 4, utf8_decode("Venta #: $no_venta"), 0, 1);
-    $pdf->Cell(0, 4, utf8_decode("Cliente: $cliente"), 0, 1);
-    $pdf->Cell(0, 4, utf8_decode("Tipo de pago: $tipo_pago"), 0, 1);
+    $pdf->Cell(0, 4, "Fecha: $fecha", 0, 1);
+    $pdf->Cell(0, 4, "Venta #: $no_venta", 0, 1);
+    $pdf->Cell(0, 4, "Cliente: $cliente", 0, 1);
+    $pdf->Cell(0, 4, "Tipo de pago: $tipo_pago", 0, 1);
     $tipo_pago_limpio = strtoupper(trim($tipo_pago));
     if (strpos($tipo_pago_limpio, 'TARJETA') !== false) {
         if ($referencia !== '') {
-            $pdf->Cell(0, 4, utf8_decode("Referencia: $referencia"), 0, 1);
+            $pdf->Cell(0, 4, "Referencia: $referencia", 0, 1);
         } else {
-            $pdf->Cell(0, 4, utf8_decode("Referencia: (NO PROPORCIONADA)"), 0, 1);
+            $pdf->Cell(0, 4, "Referencia: (NO PROPORCIONADA)", 0, 1);
         }
     }
 
@@ -105,8 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cant = $cantidades[$i];
         $precio = number_format($precios[$i], 2);
         $subt = number_format($subtotales[$i], 2);
-
-        $pdf->Cell(22, 4, utf8_decode("$codigo - $nombre"), 0, 0);
+        $pdf->Cell(22, 4, "$codigo - $nombre", 0, 0);
         $pdf->Cell(8, 4, $cant, 0, 0, 'R');
         $pdf->Cell(12, 4, "$$precio", 0, 0, 'R');
         $pdf->Cell(14, 4, "$$subt", 0, 1, 'R');
@@ -119,19 +118,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Totales
     $pdf->SetFont('Arial', '', 8);
-    $pdf->Cell(0, 4, utf8_decode("Subtotal: $" . number_format($total, 2)), 0, 1, 'R');
-    $pdf->Cell(0, 4, utf8_decode("Descuento: {$descuento}%"), 0, 1, 'R');
-    $pdf->Cell(0, 4, utf8_decode("IVA: {$iva}%"), 0, 1, 'R');
+    $pdf->Cell(0, 4, "Subtotal: $" . number_format($total, 2), 0, 1, 'R');
+    $pdf->Cell(0, 4, "Descuento: {$descuento}%", 0, 1, 'R');
+    $pdf->Cell(0, 4, "IVA: {$iva}%", 0, 1, 'R');
     $pdf->SetFont('Arial', 'B', 9);
-    $pdf->Cell(0, 5, utf8_decode("Total: $" . number_format($totalFinal, 2)), 0, 1, 'R');
+    $pdf->Cell(0, 5, "Total: $" . number_format($totalFinal, 2), 0, 1, 'R');
 
     $pdf->SetFont('Arial', '', 8);
-    $pdf->Cell(0, 4, utf8_decode("Pago con: $" . number_format($pago, 2)), 0, 1, 'R');
-    $pdf->Cell(0, 4, utf8_decode("Cambio: $" . number_format($cambio, 2)), 0, 1, 'R');
+    $pdf->Cell(0, 4, "Pago con: $" . number_format($pago, 2), 0, 1, 'R');
+    $pdf->Cell(0, 4, "Cambio: $" . number_format($cambio, 2), 0, 1, 'R');
 
     $pdf->Ln(2);
     $pdf->SetFont('Arial', 'I', 7);
-    $pdf->Cell(0, 4, utf8_decode("Gracias por su compra"), 0, 1, 'C');
+    $pdf->Cell(0, 4, "Gracias por su compra", 0, 1, 'C');
     $pdf->Ln(2);
 
     // Salida del PDF

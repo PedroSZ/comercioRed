@@ -36,12 +36,12 @@ class Ventas extends DB {
     public function getPrecio_al_dia(){return $this->precio_al_dia; }
     public function getTipo_pago(){return $this->tipo_pago; }
 
-    // Consultar último número de venta
+    // Consultar el último número de venta
     public function consultarUltimo(){
-        $query = $this->connect()->prepare('SELECT MAX(No_venta) AS ultimo FROM ventas;');
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $query = $this->connect()->prepare('SELECT MAX(No_venta) AS ultimo FROM ventas;');
+    $query->execute();
+    return $query->fetch(PDO::FETCH_ASSOC);
+}
 
     // Guardar un nuevo registro
     public function guardar() {

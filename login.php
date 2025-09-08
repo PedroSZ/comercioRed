@@ -1,47 +1,42 @@
-
 <?php include_once 'modulos/mdl_login.php'; ?>
 <!doctype html>
-<!-- login.php -->
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-     <link rel="stylesheet" href="css/navbarYmenu.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/navbarYmenu.css">
     <title>LA PICONERIA</title>
-  </head>
-  <body>
-     <?php include_once 'modulos/mdl_header.php'; ?>
+</head>
+<body>
+<?php include_once 'modulos/mdl_header.php'; ?>
 
- <script src="js/fecha.js"></script>
-   <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script> -->
-    <div id="contenedor">
- <section>
-         <section id="contenidoLogin">
-             <article style="text-align: center;">
+<div id="contenedor">
+    <section id="contenidoLogin">
+        <article style="text-align: center; max-width: 400px; margin: auto;">
+            <form action="login.php" method="POST">
+                <h2>Iniciar sesión</h2>
 
-                	<form action="login.php" method="POST" style="margin: 0px; width: 100%; height: 80%">
+                <div class="mb-3">
+                    <label for="codigo" class="form-label">Usuario:</label>
+                    <input type="text" class="form-control" id="codigo" name="codigo" required>
+                </div>
 
-                     <h2>Iniciar sesión</h2>
-                     <p>Usuario: <br>
-                     <input type="text" name="codigo"></p>
-                     <p>Password: <br>
-                     <input type="password" name="password"></p>
-                     <p class="center"><input type="submit" value="Iniciar Sesión"></p>
-                 </form>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
 
-                 <p style="color: RED;">
-                     <?php if(isset($alert)) echo $alert; ?>
-                 </p>
+                <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+            </form>
 
+            <p class="mt-3 text-danger">
+                <?php if(isset($alert)) echo $alert; ?>
+            </p>
+        </article>
+    </section>
+</div>
 
-             </article>
-         </section>
- </section>
-     </div>
-     <?php include_once 'modulos/mdl_footer.php'; ?>
-  </body>
+<?php include_once 'modulos/mdl_footer.php'; ?>
+</body>
 </html>

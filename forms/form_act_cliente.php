@@ -17,18 +17,18 @@
 
 		//mensaje de que no tiene privilegios
         if($tipo <> "Administrador") header('location: index.php');
-        /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
+       
         if (!isset($_SESSION['tiempo'])) {
             $_SESSION['tiempo']=time();
         }
         else if (time() - $_SESSION['tiempo'] > 500) {
             session_destroy();
-            /* Aquí redireccionas a la url especifica */
+           
             header("location: index.php");
             die();
         }
         $_SESSION['tiempo']=time(); //Si hay actividad seteamos el valor al tiempo actual
-        /*////////////////////FIN SIERRE POR INACTIVIDAD/////////////////////////*/
+       
 
     }
     else{
