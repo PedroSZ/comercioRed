@@ -31,7 +31,7 @@ $listaSucursales = $sucursal->listarSucursales();
    <div class= "grid-item"><div class= "container-grid"><div class= "grid-item-container"><p><label>Tipo de Usuario:</label></p></div><div class= "grid-item-container"><p><select name="tipo_usuario" type="text" id ="tipo_usuario" required>
     <option value="" disabled selected>Seleccione:</option> 
     <option value="Administrador">ADMINISTRADOR</option>
-    <option value="Cajero">USUARIO</option>
+    <option value="Cajero">CAJERO</option>
     </select></p></div></div></div>     
    <div class= "grid-item"><div class= "container-grid"><div class= "grid-item-container"><p><label>Domicilio:</label></p></div><div class= "grid-item-container"><p><input name="domicilio" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Dirección" id ="domicilio" title="Ingresa al menos una dirección por favor" ></p></div></div></div>       
    <div class= "grid-item"><div class= "container-grid"><div class= "grid-item-container"><p><label>Contraseña:</label></p></div><div class= "grid-item-container"><p><input name="psw1" type="password" placeholder="Ingresar Contraseña"  id ="psw1"  title="Por favor ingresa una contraseña que inicie con una letra y tenga al menos 8 caracteres y un número como mínimo" required ></p></div></div></div>         

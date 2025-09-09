@@ -20,7 +20,7 @@
   <body>
      <?php include_once 'modulos/mdl_header.php'; ?>
    <div class="superponer">
-    <h1 class="text-center mt-4">Lista de Usuarios</h1>
+    <h1 class="text-center mt-4">Lista de Sucursales</h1>
     </div>
     <?php include_once 'forms/form_list_sucursales.php' ?>
    

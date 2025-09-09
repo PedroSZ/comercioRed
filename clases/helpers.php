@@ -1,7 +1,7 @@
 <?php
-include_once 'clases/sesion.php';
-include_once 'clases/tipo_usuario.php';
 
+include_once __DIR__ . '/../clases/sesion.php';
+include_once __DIR__ . '/../clases/tipo_usuario.php';
 /**
  * Devuelve un objeto Tipo_Usuario con los datos del usuario logueado.
  * Retorna null si no hay sesión iniciada.

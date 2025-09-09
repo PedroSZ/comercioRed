@@ -1,7 +1,6 @@
 <?php
-include_once 'clases/helpers.php';
-include_once 'clases/usuario.php'; // evita "class not found"
-
+include_once __DIR__ . '/../clases/helpers.php';
+include_once __DIR__ . '/../clases/usuario.php'; // evita "class not found"
 $usuario = getUsuarioLogueado();
 
 if ($usuario) {

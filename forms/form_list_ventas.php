@@ -6,7 +6,7 @@
 error_reporting(0);
 $filtro1 = isset($_POST['filtrar_ticket']) ? trim($_POST['filtrar_ticket']) : '';
 $filtro2 = isset($_POST['filtrar_codigo_venta']) ? trim($_POST['filtrar_codigo_venta']) : '';
-$filtro3 = isset($_POST['Filtrar_Empleado']) ? trim($_POST['Filtrar_Empleado']) : '';
+$filtro3 = isset($_POST['Filtrar_Venta']) ? trim($_POST['Filtrar_Venta']) : '';
 ?>
 
    
@@ -18,7 +18,7 @@ $filtro3 = isset($_POST['Filtrar_Empleado']) ? trim($_POST['Filtrar_Empleado']) 
         function limpiarFiltros() {
             document.getElementById('filtrar_ticket').value = '';
             document.getElementById('filtrar_codigo_venta').value = '';
-            document.getElementById('Filtrar_Empleado').selectedIndex = 0;
+            document.getElementById('Filtrar_Venta').selectedIndex = 0;
             document.getElementById('form_filtro_listar_ventas').submit();
         }
         function filtrarPorSelect() {
@@ -36,11 +36,13 @@ $filtro3 = isset($_POST['Filtrar_Empleado']) ? trim($_POST['Filtrar_Empleado']) 
                 <tr>
                     <td width="100%" style="text-align: right;">
                         <input name="filtrar_ticket" type="text" placeholder="Buscar por ticket" id="filtrar_ticket" onkeyup="this.value = this.value.toUpperCase()" value="<?php echo htmlspecialchars($filtro1); ?>">
-                        <input name="filtrar_codigo_venta" type="text" title="Busqueda por Nombre" placeholder="Buscar por Nombre" id="filtrar_codigo_venta" onkeyup="this.value = this.value.toUpperCase()" value="<?php echo htmlspecialchars($filtro2); ?>">
-                        <select name="Filtrar_Empleado" id="Filtrar_Empleado" onchange="filtrarPorSelect()">
-                            <option value="" disabled <?php echo ($filtro3 === '') ? 'selected' : ''; ?>>Buscar por empleado</option>
-                            <option value="1" <?php echo ($filtro3 === '1') ? 'selected' : ''; ?>>Activo</option>
-                            <option value="0" <?php echo ($filtro3 === '0') ? 'selected' : ''; ?>>Inactivo</option>
+                        <input name="filtrar_codigo_venta" type="text" title="Busqueda por vendedor" placeholder="Buscar por id vendedor" id="filtrar_codigo_venta" onkeyup="this.value = this.value.toUpperCase()" value="<?php echo htmlspecialchars($filtro2); ?>">
+                        <select name="Filtrar_Venta" id="Filtrar_Venta" onchange="filtrarPorSelect()">
+                            <option value="" disabled <?php echo ($filtro3 === '') ? 'selected' : ''; ?>>Tipo Pago</option>
+                            <option value="EFECTIVO" <?php echo ($filtro3 === 'EFECTIVO') ? 'selected' : ''; ?>>Efectivo</option>
+                            <option value="TARJETA DE CREDITO" <?php echo ($filtro3 === 'TARJETA DE CREDITO') ? 'selected' : ''; ?>>Credito</option>
+                            <option value="TARJETA DE DEBITO" <?php echo ($filtro3 === 'TARJETA DE DEBITO') ? 'selected' : ''; ?>>Debito</option>
+                            <option value="CREDITO DE LA TIENDA" <?php echo ($filtro3 === 'CREDITO DE LA TIENDA') ? 'selected' : ''; ?>>Credito de la tienda</option>
                         </select>
                         <br>
                         <input type="submit" value="Buscar">
@@ -76,9 +78,9 @@ $filtro3 = isset($_POST['Filtrar_Empleado']) ? trim($_POST['Filtrar_Empleado']) 
 
                 if ($filtro1 !== '' || $filtro2 !== '' || $filtro3 !== '') {
                     foreach ($ventas as $venta) {
-                        $coincideCdg = ($filtro1 === '' || $filtro1 == $venta['Codigo']);
-                        $coincideNombre = ($filtro2 === '' || strtoupper($filtro2) == strtoupper($venta['Nombre']));
-                        $coincideEstatus = ($filtro3 === '' || intval($filtro3) === intval($venta['Estatus_p']));
+                        $coincideCdg = ($filtro1 === '' || $filtro1 == $venta['No_venta']);
+                        $coincideNombre = ($filtro2 === '' || strtoupper($filtro2) == strtoupper($venta['Id_Vendedor']));
+                        $coincideEstatus = ($filtro3 === '' || intval($filtro3) === intval($venta['Tipo_Pago']));
 
                         if ($coincideCdg && $coincideNombre && $coincideEstatus) {
                             $encontroResultados = true;

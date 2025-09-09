@@ -51,7 +51,7 @@ $datosSucursal = $sucursalObj->obtenerSucursalPorId((int)$idSucursal);
     $alto += count($productos) * $lineHeight; // Por cada producto
     $alto += 4 * $lineHeight; // Línea + Subtotal + Descuento + IVA
     $alto += 3 * $lineHeight; // Total + Pago + Cambio
-    $alto += 2 * $lineHeight; // Gracias por su compra + espaciado
+    $alto += 3 * $lineHeight; // Gracias por su compra + espaciado
     $alto += 13; // extra para evitar corte
 
     // ================== CREAR PDF ==================

@@ -27,7 +27,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
 
              function consultar(Id_Cliente) {
                  document.lista_actualizar_cliente.miIdCliente.value = Id_Cliente;
-			           //alert(Id_Cliente);
+			         //  alert(Id_Cliente);
                    document.lista_actualizar_cliente.submit();
 	      	  }
       
@@ -130,10 +130,10 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                                 <td>{$cliente['Email']}</td>
                                 <td>{$cliente['Domicilio']}</td>
                                 <td>{$cliente['Fecha_Registro']}</td>
-                                <td>{$cliente['Limite_credito']}</td>
+                                <td>{$cliente['Limite_Credito']}</td>
                                 <td>{$cliente['Credito_Usado']}</td>
                                 <td>" . ($cliente['Estatus_c'] == 1 ? 'Activo' : 'Inactivo') . "</td>
-                                 <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$cliente['Id_Cliente']."\");'></td>
+                                 <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$cliente['Id_cliente']."\");'></td>
                                    
                                 </tr>";
                         }
@@ -154,10 +154,10 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                                 <td>{$cliente['Email']}</td>
                                 <td>{$cliente['Domicilio']}</td>
                                 <td>{$cliente['Fecha_Registro']}</td>
-                                <td>{$cliente['Limite_credito']}</td>
+                                <td>{$cliente['Limite_Credito']}</td>
                                 <td>{$cliente['Credito_Usado']}</td>
                                 <td>" . ($cliente['Estatus_c'] == 1 ? 'Activo' : 'Inactivo') . "</td>
-                                 <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$cliente['Id_Cliente']."\");'></td>
+                                 <td style='text-align:center'><img width='30' height='30' src='img/Actualizar.png' onClick='consultar(\"".$cliente['Id_cliente']."\");'></td>
                                 
                             </tr>";
                     }

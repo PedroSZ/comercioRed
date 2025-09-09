@@ -1,7 +1,6 @@
 <?php
 /********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
-
-
+//include_once __DIR__ . '/../clases/auth.php';
 /********************** CAPTURA DE FILTROS ****************/
 //error_reporting(0);
 $filtro1 = isset($_POST['FiltarId_actualizar_usuario']) ? trim($_POST['FiltarId_actualizar_usuario']) : '';
@@ -95,7 +94,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
 
                 if ($filtro1 !== '' || $filtro2 !== '' || $filtro3 !== '') {
                     foreach ($usuarios as $user2) {
-                        $coincideId = ($filtro1 === '' || $filtro1 == $user2['Id_usuario']);
+                        $coincideId = ($filtro1 === '' || $filtro1 == $user2['Id_Usuario']);
                         $coincideNombre = ($filtro2 === '' || strtoupper($filtro2) == strtoupper($user2['Nombre']));
                         $coincideEstatus = ($filtro3 === '' || intval($filtro3) === intval($user2['Estatus_u']));
 

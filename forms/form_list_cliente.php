@@ -98,7 +98,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                                 <td>{$cliente['Email']}</td>
                                 <td>{$cliente['Domicilio']}</td>
                                 <td>{$cliente['Fecha_Registro']}</td>
-                                <td>{$cliente['Limite_credito']}</td>
+                                <td>{$cliente['Limite_Credito']}</td>
                                 <td>{$cliente['Credito_Usado']}</td>
                                 <td>" . ($cliente['Estatus_c'] == 1 ? 'Activo' : 'Inactivo') . "</td>
                                    
@@ -121,7 +121,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                                 <td>{$cliente['Email']}</td>
                                 <td>{$cliente['Domicilio']}</td>
                                 <td>{$cliente['Fecha_Registro']}</td>
-                                <td>{$cliente['Limite_credito']}</td>
+                                <td>{$cliente['Limite_Credito']}</td>
                                 <td>{$cliente['Credito_Usado']}</td>
                                 <td>" . ($cliente['Estatus_c'] == 1 ? 'Activo' : 'Inactivo') . "</td>
                                 

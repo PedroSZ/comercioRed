@@ -80,7 +80,9 @@ $filtro2 = isset($_POST['$$Filtrar_sucursal_Nombre']) ? trim($_POST['$$Filtrar_s
                                     <td>{$lugar['Telefono']}</td>
                                     <td>{$lugar['Email']}</td>
                                     <td>{$lugar['Domicilio']}</td>
-                                    <td>{$lugar['Logotipo']}</td>
+                                    <td style='background-color: #938F96; text-align: center; vertical-align: middle;'>
+                                    <img id='logotipo' src='{$lugar['Logotipo']}' height='100' width='100'/>
+                                    </td>
                                    
                                 </tr>";
                         }
@@ -96,8 +98,9 @@ $filtro2 = isset($_POST['$$Filtrar_sucursal_Nombre']) ? trim($_POST['$$Filtrar_s
                                     <td>{$lugar['Telefono']}</td>
                                     <td>{$lugar['Email']}</td>
                                     <td>{$lugar['Domicilio']}</td>
-                                    <td>{$lugar['Logotipo']}</td>
-                                
+                                     <td style='background-color: #938F96; text-align: center; vertical-align: middle;'>
+                                    <img id='logotipo' src='{$lugar['Logotipo']}' height='100' width='100'/>
+                                    </td>
                             </tr>";
                     }
                 }

@@ -58,6 +58,8 @@ class Usuario extends DB {
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}
 
+	
+
 	public function consultarEmail($email){
 		$query = $this->connect()->prepare('SELECT * FROM usuario WHERE Email = :user');
 		$query->execute(['user' => $email]);

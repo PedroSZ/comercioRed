@@ -142,7 +142,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                                 <td>{$cliente['Limite_credito']}</td>
                                 <td>{$cliente['Credito_Usado']}</td>
                                 <td>" . ($cliente['Estatus_c'] == 1 ? 'Activo' : 'Inactivo') . "</td>
-                                  <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='borrar(\"".$cliente['Id_Cliente']."\");'></td>
+                                  <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='borrar(\"".$cliente['Id_cliente']."\");'></td>
                                    
                                 </tr>";
                         }
@@ -166,7 +166,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                                 <td>{$cliente['Limite_credito']}</td>
                                 <td>{$cliente['Credito_Usado']}</td>
                                 <td>" . ($cliente['Estatus_c'] == 1 ? 'Activo' : 'Inactivo') . "</td>
-                                   <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='borrar(\"".$cliente['Id_Cliente']."\");'></td>
+                                   <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='borrar(\"".$cliente['Id_cliente']."\");'></td>
                                 
                             </tr>";
                     }

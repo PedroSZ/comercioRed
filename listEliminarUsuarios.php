@@ -28,30 +28,29 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
 
               function consultar(Id_Usuario) {
                   var mensaje;
-      var opcion = confirm("El Usuario será eliminado totalmente de la base de datos, ¿seguro que desea continuar con esta acción?");
-      if (opcion == true) {
-                 document.lista_eliminar_usuario.miIdUsuario.value = Id_Usuario;
-			           // alert(codigo);
-                   document.lista_eliminar_usuario.submit();
-	      	  mensaje = "Usuario eliminado con éxito.";
-    } else {
-        mensaje = "No se realizado ninguna acción.";
-    }
-		}
-      
-        function regresar() {
-            location.href = 'index.php';
-        }
-        function limpiarFiltros() {
-            document.getElementById('FiltarId_actualizar_usuario').value = '';
-            document.getElementById('FiltarNom_actualizar_usuario').value = '';
-            document.getElementById('Filtrar_Status').selectedIndex = 0;
-            document.getElementById('form_filtro_listar_usuarios').submit();
-        }
-        function filtrarPorSelect() {
-            document.getElementById('form_filtro_listar_usuarios').submit();
-        }
-    </script>
+                  var opcion = confirm("El Usuario será eliminado totalmente de la base de datos, ¿seguro que desea continuar con esta acción?");
+                    if (opcion == true) {
+                        document.lista_eliminar_usuario.miIdUsuario.value = Id_Usuario;
+                        
+                         document.lista_eliminar_usuario.submit();
+	      	             mensaje = "Usuario eliminado con éxito.";
+                             } else {
+                                    mensaje = "No se realizado ninguna acción.";
+                                     }
+		            }
+                    function regresar() {
+                            location.href = 'index.php';
+                                       }           
+                                function limpiarFiltros() {
+                                    document.getElementById('FiltarId_actualizar_usuario').value = '';
+                                    document.getElementById('FiltarNom_actualizar_usuario').value = '';
+                                    document.getElementById('Filtrar_Status').selectedIndex = 0;
+                                    document.getElementById('form_filtro_listar_usuarios').submit();
+                                }
+                                function filtrarPorSelect() {
+                                    document.getElementById('form_filtro_listar_usuarios').submit();
+                                }
+             </script>
 
     </head>
     <body>
@@ -139,7 +138,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                                     <td>{$user2['Fecha_Registro']}</td>
                                     <td>{$user2['Puesto']}</td>
                                     <td>" . ($user2['Estatus_u'] == 1 ? 'Activo' : 'Inactivo') . "</td>
-                                     <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='consultar(\"".$user2['Usuario_Id']."\");'></td>
+                                     <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
                                    
                                 </tr>";
                         }
@@ -163,7 +162,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
                                 <td>{$user2['Fecha_Registro']}</td>
                                 <td>{$user2['Puesto']}</td>
                                 <td>" . ($user2['Estatus_u'] == 1 ? 'Activo' : 'Inactivo') . "</td>
-                                 <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='consultar(\"".$user2['Usuario_id']."\");'></td>
+                                 <td style='text-align:center'><img width='30' height='30' src='img/delete.png' onClick='consultar(\"".$user2['Id_Usuario']."\");'></td>
                                 
                             </tr>";
                     }

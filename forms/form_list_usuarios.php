@@ -80,7 +80,7 @@ $filtro3 = isset($_POST['Filtrar_Status']) ? trim($_POST['Filtrar_Status']) : ''
 
                 if ($filtro1 !== '' || $filtro2 !== '' || $filtro3 !== '') {
                     foreach ($usuarios as $user2) {
-                        $coincideId = ($filtro1 === '' || $filtro1 == $user2['Id_usuario']);
+                        $coincideId = ($filtro1 === '' || $filtro1 == $user2['Id_Usuario']);
                         $coincideNombre = ($filtro2 === '' || strtoupper($filtro2) == strtoupper($user2['Nombre']));
                         $coincideEstatus = ($filtro3 === '' || intval($filtro3) === intval($user2['Estatus_u']));
 

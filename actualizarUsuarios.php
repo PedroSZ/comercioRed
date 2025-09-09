@@ -1,46 +1,6 @@
 <?php
 /********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
-    include_once 'clases/tipo_usuario.php';
-    //include_once 'clases/sesion.php';
-    
-    //MADAR A INDEX SI NO HAY SESION INICIADA
-    
-    /*if (!isset($_SESSION['user'])){
-    header("location: index.php");
-    }
-
-    if (!isset($_SESSION['user'])){
-    header("location: index.php");
-    }
-
-    if(isset($_SESSION['user'])){
-        $user = new Tipo_Usuario();
-        $user->establecerDatos($userSession->getCurrentUser());
-        $tipo = $user->getTipo();
-      
-*/
-
-		//mensaje de que no tiene privilegios
-      //  if($tipo <> "Administrador") header('location: index.php');
-        /*////////////////////////SIERRE POR INACTIVIDAD/////////////////////////*/
-      /*  if (!isset($_SESSION['tiempo'])) {
-            $_SESSION['tiempo']=time();
-        }
-        else if (time() - $_SESSION['tiempo'] > 500) {
-            session_destroy();
-            /* Aquí redireccionas a la url especifica */
-     /*       header("location: index.php");
-            die();
-        }/*
-        $_SESSION['tiempo']=time(); //Si hay actividad seteamos el valor al tiempo actual
-        /*////////////////////FIN SIERRE POR INACTIVIDAD/////////////////////////*/
-/*
-    }
-    else{
-        $userSession->closeSession();
-         header("location: index.php");
-    }
-*/
+    include_once __DIR__ . '/../clases/tipo_usuario.php';
 /**********************************************************************************************/
 error_reporting(0);//para que no me muestre errores
 $filtro1 = $_POST['FiltarId_actualizar_usuario']; //para obtener la curp a buscar del fitro

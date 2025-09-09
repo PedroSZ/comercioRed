@@ -1,22 +1,4 @@
-<?php
-	/********************** VALIDAMOS QUE ESTA PAGINA SEA PARA LA SESION INICIADA ****************/
-   
-/**********************************************************************************************/
 
-	if(!empty($_POST['miIdUsuario'])){
-		include_once '../clases/usuario.php';
-		include_once '../clases/tipo_usuario.php';
-		$id = $_POST['miIdUsuario'];
-		$user = new Usuario();
-    $tipo = new Tipo_Usuario();
-		$tipo->establecerDatos($id);
-		$tipo_user = $tipo->getPuesto();
-		$miUsuario = $user->consultarId($id);
-	}
-	else{
-
-	}
-?>
 </!DOCTYPE html>
 <html>
     <head>
@@ -50,6 +32,20 @@
   <table  class="table">
 
   <?php
+  if(!empty($_POST['miIdUsuario'])){
+   // echo $_POST['miIdUsuario'];
+		include_once '../clases/usuario.php';
+		include_once '../clases/tipo_usuario.php';
+		$id = $_POST['miIdUsuario'];
+		$user = new Usuario();
+    $tipo = new Tipo_Usuario();
+		//$tipo->establecerDatos($id);
+		$tipo_user = $tipo->getPuesto();
+		$miUsuario = $user->consultarId($id);
+	}
+	else{
+
+	}
   // Evaluamos el estatus para mostrar el texto correspondiente
 $estatusTexto = ($miUsuario["Estatus_u"] == 1) ? 'Activo' : 'Inactivo';
 echo '
@@ -99,7 +95,7 @@ echo '
             <td><p><select name="tipo_usuario" type="text" id ="tipo_usuario" required>
             <option value="'.$miUsuario["Puesto"].'" selected>'.$miUsuario["Puesto"].'</option>
             <option value="Administrador">ADMINISTRADOR</option>
-            <option value="Usuario">USUARIO</option>
+            <option value="Cajero">CAJERO</option>
              </select></p></td>
      <td COLSPAN=2 style="text-align: right;"><p class = "negrita"><label>Domicilio:</label></p></td><td>
       <p><input name="domicilio" type="text" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Ingresar Dirección" id ="domicilio" title="Ingresa al menos una dirección por favor" required value="'.$miUsuario["Domicilio"].'"></p></td>

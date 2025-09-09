@@ -1,5 +1,5 @@
 <?php
-include_once 'helpers.php';
+include_once __DIR__ . '/../clases/helpers.php';
 
 // Verifica si hay un usuario logueado
 $usuario = getUsuarioLogueado();
