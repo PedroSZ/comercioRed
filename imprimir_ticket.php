@@ -28,15 +28,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cambio = $pago - $totalFinal;
 
     // ================== DATOS DE LA SUCURSAL ==================
-    $sesion = new Sesion();
-    $currentUser = $sesion->getCurrentUser();
+   include_once 'clases/helpers.php';
 
-    $user = new Tipo_Usuario();
-    $user->establecerDatos($currentUser);
-    $idSucursal = $user->getConfiguracion(); // Id_Comercio de la sucursal
+$usuarioLogueado = getUsuarioLogueado();
 
-    $sucursalObj = new Sucursal();
-    $datosSucursal = $sucursalObj->obtenerSucursalPorId($idSucursal);
+if ($usuarioLogueado) {
+    $idSucursal = $usuarioLogueado->getConfiguracion(); // debe devolver el id de sucursal
+} else {
+    // si por alguna razón no hay usuario logueado
+    $idSucursal = 0;
+}
+$sucursalObj = new Sucursal();
+$datosSucursal = $sucursalObj->obtenerSucursalPorId((int)$idSucursal);
 
     // ================== ALTO DINÁMICO DEL TICKET ==================
     $alto = 0;
