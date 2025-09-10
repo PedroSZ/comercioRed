@@ -151,6 +151,14 @@ public function registrarSucursal() {
         $query = $this->connect()->query($sql);
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function consultarCodigo($id_comercio){
+		$query = $this->connect()->prepare('SELECT * FROM sucursal WHERE Id_Comercio = :user');
+		$query->execute(['user' => $id_comercio]);
+		return $query->fetch(PDO::FETCH_ASSOC);
+	}
+
+
 }
 
 

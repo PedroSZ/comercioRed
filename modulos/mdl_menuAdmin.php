@@ -74,7 +74,7 @@
          <li><a class='dropdown-item'  href="listActualizarProductos.php">Producto</a></li>
          <li><a class='dropdown-item'  href="listActualizarClientes.php">Cliente</a></li>
          <li><a class='dropdown-item'  href="actualizarVenta.php">Venta</a></li>
-          <li><a class='dropdown-item'  href="actualizarSucursal.php">Sucursal</a></li>
+          <li><a class='dropdown-item'  href="listActualizarSucursales.php">Sucursal</a></li>
           </ul>
         </li>
 
